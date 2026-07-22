@@ -550,6 +550,119 @@ document.addEventListener('DOMContentLoaded', () => {
         note.prepend('Prices shown are indicative nightly planning bands. ');
     });
 
+    // Shared navigation and contact details keep the expanded site easy to reach from every page.
+    document.querySelectorAll('.nav-links').forEach(navList => {
+        if (navList.querySelector('a[href="reviews.html"]')) return;
+
+        const reviewItem = document.createElement('li');
+        const reviewLink = document.createElement('a');
+        reviewLink.href = 'reviews.html';
+        reviewLink.textContent = 'Reviews';
+        reviewItem.append(reviewLink);
+        navList.append(reviewItem);
+    });
+
+    document.querySelectorAll('.footer-links-wrapper').forEach(wrapper => {
+        const footerColumn = wrapper.querySelector('.footer-column');
+
+        if (!footerColumn || footerColumn.querySelector('a[href="reviews.html"]')) return;
+
+        const reviewLink = document.createElement('a');
+        reviewLink.href = 'reviews.html';
+        reviewLink.textContent = 'Traveller Reviews';
+        footerColumn.append(reviewLink);
+    });
+
+    document.querySelectorAll('.footer-bottom').forEach(footerBottom => {
+        if (footerBottom.querySelector('.footer-contact')) return;
+
+        const contact = document.createElement('a');
+        contact.className = 'footer-contact';
+        contact.href = 'tel:+914712321132';
+        contact.innerHTML = '<i class="fa-solid fa-phone" aria-hidden="true"></i> Kerala Tourism: +91 471 232 1132';
+        footerBottom.append(contact);
+    });
+
+    // Reviews are intentionally stored in the current browser because this static site has no server-side review system.
+    const reviewList = document.getElementById('review-list');
+    const reviewForm = document.getElementById('review-form');
+
+    if (reviewList && reviewForm) {
+        const reviewStorageKey = 'visitKeralaReviews';
+        const starterReviews = [
+            { name: 'Aisha M.', plan: '5-Day Hills + Houseboat', rating: 5, message: 'The Munnar to Alappuzha contrast was the whole trip for me. Tea hills in the morning, quiet water by the fourth evening.' },
+            { name: 'Rohan S.', plan: '3-Day Kochi + Backwaters', rating: 5, message: 'Short but never rushed. Fort Kochi was perfect for the first evening, and the houseboat schedule made the second day feel much longer.' },
+            { name: 'Nina D.', plan: '7-Day Classic Kerala', rating: 4, message: 'Munnar needed the extra day. The route notes helped us avoid trying to fit too much into a transfer day.' }
+        ];
+
+        const getStoredReviews = () => {
+            try {
+                const saved = JSON.parse(localStorage.getItem(reviewStorageKey));
+                return Array.isArray(saved) ? saved : [];
+            } catch {
+                return [];
+            }
+        };
+
+        const createReviewCard = review => {
+            const card = document.createElement('article');
+            const stars = document.createElement('div');
+            const quote = document.createElement('blockquote');
+            const footer = document.createElement('footer');
+            const avatar = document.createElement('div');
+            const identity = document.createElement('div');
+            const name = document.createElement('strong');
+            const plan = document.createElement('span');
+            const initials = review.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
+
+            card.className = 'review-card reveal active';
+            stars.className = 'review-stars';
+            stars.setAttribute('aria-label', `${review.rating} out of 5 stars`);
+
+            for (let index = 1; index <= 5; index += 1) {
+                const star = document.createElement('i');
+                star.className = index <= review.rating ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                star.setAttribute('aria-hidden', 'true');
+                stars.append(star);
+            }
+
+            quote.textContent = `“${review.message}”`;
+            avatar.className = 'review-avatar';
+            avatar.textContent = initials;
+            name.textContent = review.name;
+            plan.textContent = review.plan;
+            identity.append(name, plan);
+            footer.append(avatar, identity);
+            card.append(stars, quote, footer);
+            return card;
+        };
+
+        const renderReviews = () => {
+            reviewList.replaceChildren();
+            [...getStoredReviews(), ...starterReviews].forEach(review => reviewList.append(createReviewCard(review)));
+        };
+
+        renderReviews();
+
+        reviewForm.addEventListener('submit', event => {
+            event.preventDefault();
+            const name = document.getElementById('review-name').value.trim();
+            const plan = document.getElementById('review-plan').value;
+            const rating = Number(document.querySelector('input[name="rating"]:checked')?.value || 5);
+            const message = document.getElementById('review-message').value.trim();
+            const status = document.getElementById('review-status');
+
+            if (!name || !message) return;
+
+            const reviews = getStoredReviews();
+            reviews.unshift({ name, plan, rating, message });
+            localStorage.setItem(reviewStorageKey, JSON.stringify(reviews));
+            reviewForm.reset();
+            renderReviews();
+            status.textContent = 'Your review is saved on this device.';
+        });
+    }
+
     // Profile preferences stay on the visitor's device.
     const profileForm = document.getElementById('profile-form');
 

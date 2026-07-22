@@ -3196,3 +3196,406 @@ footer {
         transition: none;
     }
 }
+
+/* ========================================================================== 
+   Visit Kerala Brand, Islands, and Traveller Reviews
+   ========================================================================== */
+.logo {
+    font-size: 1.45rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+}
+
+.offbeat-destinations .section-header {
+    margin-bottom: 42px;
+}
+
+.section-intro {
+    max-width: 620px;
+    margin: 20px auto 0;
+}
+
+.offbeat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.offbeat-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    border: 1px solid rgba(10, 50, 34, 0.1);
+    border-radius: 6px;
+    background: #fff;
+    color: inherit;
+    overflow: hidden;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.offbeat-card:hover {
+    border-color: rgba(197, 160, 89, 0.65);
+    box-shadow: 0 20px 42px rgba(25, 45, 36, 0.1);
+    transform: translateY(-4px);
+}
+
+.offbeat-card:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 4px;
+}
+
+.offbeat-card img {
+    width: 100%;
+    height: 205px;
+    object-fit: cover;
+}
+
+.offbeat-card > div {
+    display: flex;
+    min-height: 250px;
+    flex-direction: column;
+    padding: 24px;
+}
+
+.offbeat-card h3 {
+    margin: 4px 0 10px;
+    color: var(--primary-green);
+    font-size: 1.55rem;
+}
+
+.offbeat-card p {
+    font-size: 0.82rem;
+}
+
+.offbeat-card .place-row-action {
+    margin-top: auto;
+}
+
+.island-route-meta {
+    grid-template-columns: 1fr;
+}
+
+.island-guide-list {
+    display: grid;
+    gap: 24px;
+}
+
+.island-guide {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    min-height: 325px;
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.island-guide:nth-child(even) {
+    grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.island-guide:nth-child(even) img {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.island-guide:nth-child(even) > div {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.island-guide > div {
+    align-self: center;
+    padding: 42px;
+}
+
+.island-guide h2 {
+    margin: 5px 0 13px;
+    color: var(--primary-green);
+    font-size: 2rem;
+}
+
+.island-guide img {
+    width: 100%;
+    height: 100%;
+    min-height: 325px;
+    object-fit: cover;
+}
+
+.island-guide-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 16px;
+    margin-top: 24px;
+}
+
+.island-guide-facts span {
+    color: #4d5953;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.island-guide-facts i {
+    margin-right: 6px;
+    color: #b4532f;
+}
+
+.review-summary-section {
+    background: #f2f6f1;
+}
+
+.review-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(290px, 0.5fr);
+    gap: 56px;
+    align-items: center;
+}
+
+.review-summary h2 {
+    margin: 8px 0 12px;
+    color: var(--primary-green);
+    font-size: 2.35rem;
+}
+
+.review-score {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.review-score > strong {
+    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 4.4rem;
+    line-height: 1;
+}
+
+.review-stars {
+    display: flex;
+    gap: 4px;
+    color: var(--accent-gold);
+    font-size: 0.92rem;
+}
+
+.review-score p {
+    margin-top: 8px;
+    color: #68716c;
+    font-size: 0.72rem;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.review-card {
+    display: flex;
+    min-height: 272px;
+    flex-direction: column;
+    padding: 28px;
+    border: 1px solid rgba(10, 50, 34, 0.1);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.review-card .review-stars {
+    margin-bottom: 20px;
+    font-size: 0.75rem;
+}
+
+.review-card blockquote {
+    color: #46514b;
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+.review-card footer {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: auto;
+    padding-top: 22px;
+}
+
+.review-avatar {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #e3ece1;
+    color: var(--primary-green);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.review-card footer strong,
+.review-card footer span {
+    display: block;
+}
+
+.review-card footer strong {
+    color: var(--primary-green);
+    font-size: 0.76rem;
+}
+
+.review-card footer span {
+    margin-top: 2px;
+    color: #77817b;
+    font-size: 0.66rem;
+}
+
+.review-form-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(380px, 1.2fr);
+    gap: 70px;
+    align-items: start;
+}
+
+.review-form {
+    display: grid;
+    gap: 20px;
+    padding: 34px;
+    border: 1px solid rgba(10, 50, 34, 0.12);
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(10, 50, 34, 0.05);
+}
+
+.review-field {
+    display: grid;
+    gap: 8px;
+}
+
+.review-field label,
+.rating-field legend {
+    color: var(--primary-green);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.review-field input,
+.review-field select,
+.review-field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 14px;
+    border: 1px solid rgba(10, 50, 34, 0.18);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--dark-charcoal);
+    font-family: var(--font-sans);
+}
+
+.review-field textarea {
+    min-height: 128px;
+    resize: vertical;
+}
+
+.rating-field {
+    display: grid;
+    gap: 10px;
+    border: 0;
+}
+
+.rating-options {
+    display: flex;
+    gap: 9px;
+}
+
+.rating-options label {
+    position: relative;
+}
+
+.rating-options input {
+    position: absolute;
+    opacity: 0;
+}
+
+.rating-options span {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(10, 50, 34, 0.15);
+    border-radius: 50%;
+    color: #6c746f;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.rating-options input:checked + span,
+.rating-options input:focus-visible + span {
+    border-color: var(--accent-gold);
+    background: var(--accent-gold);
+    color: var(--primary-green);
+}
+
+.review-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.review-form-actions .btn-primary {
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-sans);
+}
+
+#review-status {
+    color: var(--primary-green);
+    font-size: 0.78rem;
+}
+
+.footer-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.74rem;
+    text-decoration: none;
+}
+
+.footer-contact:hover {
+    color: var(--accent-gold);
+}
+
+@media(max-width: 1180px) {
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 0.82rem; }
+}
+
+@media(max-width: 1050px) {
+    .offbeat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media(max-width: 768px) {
+    .logo { font-size: 1.15rem; }
+    .offbeat-grid,
+    .review-grid,
+    .review-summary,
+    .review-form-layout,
+    .island-guide,
+    .island-guide:nth-child(even) { grid-template-columns: 1fr; }
+    .offbeat-card > div { min-height: 0; }
+    .island-guide:nth-child(even) img,
+    .island-guide:nth-child(even) > div { grid-column: auto; grid-row: auto; }
+    .island-guide > div { padding: 28px 24px; }
+    .island-guide img { min-height: 230px; height: 230px; }
+    .review-summary { gap: 26px; }
+    .review-summary h2 { font-size: 1.85rem; }
+    .review-score { justify-content: flex-start; }
+    .review-score > strong { font-size: 3.5rem; }
+    .review-form-layout { gap: 36px; }
+    .review-form { padding: 26px 22px; }
+}
