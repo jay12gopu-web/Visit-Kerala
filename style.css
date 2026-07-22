@@ -612,6 +612,39 @@ p {
     filter: grayscale(0%);
 }
 
+.gallery-item figcaption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 30px 20px 16px;
+    background: linear-gradient(to top, rgba(4, 28, 19, 0.82), transparent);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.gallery-credit,
+.media-credit {
+    color: #68736d;
+    font-size: 0.68rem;
+}
+
+.gallery-credit {
+    margin-top: 14px;
+    text-align: right;
+}
+
+.media-credit {
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.gallery-credit a,
+.media-credit a {
+    color: var(--primary-green);
+}
+
 .item-tall {
     grid-row: span 2;
 }

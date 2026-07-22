@@ -266,14 +266,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         'plan-7-days.html': [
             {
-                place: 'Fort Kochi, Mattancherry and central Kochi',
+                place: 'Fort Kochi, Kadamakkudy Islands and Mattancherry',
                 time: '2 days',
-                transfer: 'Airport 1.5-2 hr; local ferry, auto or cab',
+                transfer: 'Airport 1.5-2 hr; Kadamakkudy about 45-60 min each way',
                 stay: '2 nights in Fort Kochi',
                 meals: 'Daily breakfast; seafood and Kerala dinner options',
-                summary: 'Two nights let you separate the heritage sights from food, galleries and cultural experiences instead of racing through everything after arrival.',
-                schedule: [['Day 1, 2 PM', 'Check in, walk the Fort Kochi waterfront and watch sunset.'], ['Day 1, 7 PM', 'Kathakali performance followed by dinner.'], ['Day 2, 9 AM', 'Visit Mattancherry, the palace area, spice streets and nearby heritage lanes.'], ['Day 2, 2 PM', 'Choose museums, galleries, cafes or a ferry ride.'], ['Day 2, 6 PM', 'Slow waterfront evening and an early dinner.']],
-                note: 'Many heritage stops are easier earlier in the day. Keep one indoor option ready for heat or rain.'
+                summary: 'Use the first afternoon for Fort Kochi, then give Day 2 an offbeat opening among Kadamakkudy\'s island roads before returning to Kochi\'s heritage quarter.',
+                schedule: [['Day 1, 2 PM', 'Check in, walk the Fort Kochi waterfront and watch sunset.'], ['Day 1, 7 PM', 'Relaxed seafood or Kerala dinner near the heritage quarter.'], ['Day 2, 6 AM', 'Leave for Kadamakkudy for sunrise, wetlands, fishing scenes and a slow island drive or cycle.'], ['Day 2, 11 AM', 'Return for Mattancherry, the palace area and spice streets.'], ['Day 2, 6 PM', 'Kathakali performance followed by dinner.']],
+                note: 'Kadamakkudy is most atmospheric early and has limited visitor infrastructure. Carry water, respect working villages and avoid blocking narrow island roads.'
             },
             {
                 place: 'Kochi to Munnar and the tea country',
@@ -296,55 +296,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 note: 'Choose one main afternoon activity. Reporting times, weather and availability should be checked directly with the operator.'
             },
             {
-                place: 'Thekkady to Kumarakom or Alappuzha',
-                time: '7:30 AM-9:00 PM',
-                transfer: '3.5-5 hr depending on chosen backwater base',
-                stay: 'Houseboat or Vembanad Lake resort',
-                meals: 'Breakfast, lunch, tea and dinner',
-                summary: 'Pick one backwater style: Alappuzha for the classic canal cruise, or Kumarakom for a quieter resort and lake experience.',
-                schedule: [['7:30 AM', 'Breakfast, checkout and start the downhill drive.'], ['12:00 PM', 'Reach the selected jetty or lake resort and check in.'], ['1:00 PM', 'Lunch followed by a backwater cruise or resort downtime.'], ['4:30 PM', 'Village scenery, birding or sunset by the lake.'], ['8:00 PM', 'Dinner and overnight by the water.']],
-                note: 'Choose the base before booking transport. The jetty, hotel and next-day coastal route should all match the same option.'
+                place: 'Thekkady to Munroe Island via Kollam district',
+                time: '7:00 AM-9:00 PM',
+                transfer: 'About 5-6.5 hr by road',
+                stay: 'Munroe Island homestay',
+                meals: 'Breakfast, road lunch and homestay dinner',
+                summary: 'This is the route\'s offbeat backwater day: arrive in time for a small-canoe journey through narrow canals and a quiet island evening.',
+                schedule: [['7:00 AM', 'Breakfast, checkout and depart Thekkady.'], ['12:30 PM', 'Lunch stop before continuing toward Munroe Island.'], ['3:00 PM', 'Check into the homestay and take a short rest.'], ['4:00 PM', 'Join a pre-booked canoe ride through palm-lined village canals.'], ['7:30 PM', 'Local dinner and overnight on the island.']],
+                note: 'Use a small canoe for the narrow canals and confirm the meeting point with the homestay. Water level, rain and local conditions can change the route.'
             },
             {
-                place: 'Backwaters to Varkala or Kovalam',
+                place: 'Munroe Island to Varkala and Thiruvananthapuram',
                 time: '7:00 AM onward',
-                transfer: '3-5 hr to the coast; then onward to departure',
+                transfer: 'About 1.5 hr to Varkala; 1.5-2 hr onward to airport',
                 stay: 'Departure day or add one beach night',
                 meals: 'Breakfast and coastal lunch',
-                summary: 'A coastal finish works best with a late Thiruvananthapuram departure or an extra beach night. Otherwise, use the morning for wellness near the backwaters.',
-                schedule: [['7:00 AM', 'Breakfast and checkout from the backwater stay.'], ['9:00 AM', 'Depart for Varkala or Kovalam.'], ['1:00 PM', 'Coastal lunch and a relaxed cliff, beach or wellness stop.'], ['4:30 PM', 'Begin the transfer toward Thiruvananthapuram.'], ['Evening', 'Depart or check in for an added beach night.']],
-                note: 'Do not force the beach stop before an early flight. For Kochi departures, skip the southern coast and travel north instead.'
+                summary: 'Finish with Varkala\'s cliff path, beach and cafes before continuing to Thiruvananthapuram. A late flight or an extra beach night makes this day work best.',
+                schedule: [['7:00 AM', 'Breakfast, an optional short island walk and checkout.'], ['9:00 AM', 'Depart Munroe Island for Varkala.'], ['10:30 AM', 'Walk the cliff path and choose beach time or a wellness session.'], ['1:30 PM', 'Coastal lunch with a generous weather buffer.'], ['4:00 PM', 'Leave for Thiruvananthapuram or check in for an added night.']],
+                note: 'Do not force the coast before an early departure. Varkala is about 35 km from Munroe Island by the official activity guidance, but road time varies.'
             }
         ],
         'plan-10-days.html': [
             {
-                place: 'Fort Kochi, Mattancherry and central Kochi',
+                place: 'Fort Kochi, Kadamakkudy Islands and Mattancherry',
                 time: '2 days',
-                transfer: 'Airport 1.5-2 hr; local ferry, auto or cab',
+                transfer: 'Airport 1.5-2 hr; Kadamakkudy about 45-60 min each way',
                 stay: '2 nights in Fort Kochi',
                 meals: 'Daily breakfast plus two local dinners',
-                summary: 'Use Day 1 for arrival and the waterfront, then give Day 2 to Mattancherry, museums, galleries, food and performance.',
-                schedule: [['Day 1, 2 PM', 'Check in and explore the Fort Kochi waterfront.'], ['Day 1, 7 PM', 'Kathakali and a relaxed dinner.'], ['Day 2, 9 AM', 'Mattancherry heritage area and spice streets.'], ['Day 2, 2 PM', 'Museums, galleries, ferry ride or cafe time.'], ['Day 2, 6 PM', 'Sunset and food-led evening.']],
-                note: 'Keep Day 2 geographically compact so the long Kerala circuit begins without unnecessary fatigue.'
+                summary: 'Use Day 1 for Fort Kochi, then start Day 2 in Kadamakkudy\'s quieter island landscape before returning for Mattancherry, culture and food.',
+                schedule: [['Day 1, 2 PM', 'Check in and explore the Fort Kochi waterfront.'], ['Day 1, 7 PM', 'Relaxed local dinner in the heritage quarter.'], ['Day 2, 6 AM', 'Sunrise drive or cycle through Kadamakkudy\'s island roads and wetlands.'], ['Day 2, 11 AM', 'Return for Mattancherry heritage area and spice streets.'], ['Day 2, 6 PM', 'Kathakali performance and a food-led evening.']],
+                note: 'Treat Kadamakkudy as a living village, not a staged attraction. Keep the visit quiet, carry water and return before midday heat.'
             },
             {
-                place: 'Kochi to Alappuzha backwaters',
+                place: 'Kochi to Munroe Island',
                 time: '8:00 AM-9:00 PM',
-                transfer: '1.5-2.5 hr by road',
-                stay: 'Houseboat or Kumarakom lake resort',
-                meals: 'Breakfast, lunch, tea and dinner',
-                summary: 'Move to the backwaters after breakfast and keep the afternoon entirely for canals, paddy fields and village scenery.',
-                schedule: [['8:00 AM', 'Checkout and depart Kochi.'], ['11:30 AM', 'Board the houseboat or check into the selected lake resort.'], ['1:00 PM', 'Lunch and backwater cruise.'], ['4:30 PM', 'Tea and sunset on the water.'], ['8:00 PM', 'Dinner and overnight.']],
-                note: 'Confirm whether the next morning pickup is at the same jetty or hotel before the Munnar transfer is booked.'
+                transfer: 'About 3.5-5 hr by road or rail connection via Kollam',
+                stay: 'Munroe Island homestay',
+                meals: 'Breakfast, road lunch and homestay dinner',
+                summary: 'Trade the large houseboat circuit for a quieter island stay and an intimate canoe journey through narrow village waterways.',
+                schedule: [['8:00 AM', 'Checkout and depart Kochi.'], ['1:00 PM', 'Reach Munroe Island, have lunch and check into the homestay.'], ['3:30 PM', 'Walk or cycle through the village at an easy pace.'], ['4:30 PM', 'Join a pre-booked small-canoe trip through the narrow canals.'], ['8:00 PM', 'Local dinner and overnight on the island.']],
+                note: 'Confirm the canoe departure point and next morning pickup with the homestay. Water levels and weather can alter the canal route.'
             },
             {
-                place: 'Alappuzha to Munnar and the high country',
+                place: 'Munroe Island to Munnar and the high country',
                 time: '2 days',
-                transfer: '4.5-6 hr uphill on Day 4',
+                transfer: 'About 5.5-7 hr uphill on Day 4',
                 stay: '2 nights in Munnar',
                 meals: 'Daily breakfast, road lunch and dinners',
                 summary: 'Day 4 is a long scenic transfer. Keep Day 5 for the main tea-country circuit, viewpoints and a plantation experience.',
-                schedule: [['Day 4, 7:30 AM', 'Leave the backwaters after breakfast.'], ['Day 4, 1 PM', 'Lunch en route and continue into the hills.'], ['Day 4, 4 PM', 'Munnar check-in and a short evening walk.'], ['Day 5, 8 AM', 'Tea gardens, viewpoints and waterfall route.'], ['Day 5, 2 PM', 'Plantation experience, cafe stop and an early return.']],
+                schedule: [['Day 4, 7 AM', 'Leave Munroe Island after an early breakfast.'], ['Day 4, 1 PM', 'Lunch en route and continue into the hills.'], ['Day 4, 4:30 PM', 'Munnar check-in and a short evening walk.'], ['Day 5, 8 AM', 'Tea gardens, viewpoints and waterfall route.'], ['Day 5, 2 PM', 'Plantation experience, cafe stop and an early return.']],
                 note: 'Select sights near the hotel rather than zig-zagging across Munnar. Weather can shorten the usable sightseeing window.'
             },
             {
@@ -368,14 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 note: 'For a gentler trip, add a transit night or use a rail/flight connection via Kochi or Kozhikode. Do not pair the long drive with major sightseeing.'
             },
             {
-                place: 'Wayanad to Kozhikode, Kannur or Bekal',
-                time: '2 days with one chosen finale',
-                transfer: '2.5-7 hr depending on the selected coast',
-                stay: 'Kozhikode, Kannur or Bekal',
+                place: 'Wayanad to Valiyaparamba Islands and Bekal',
+                time: '2 days',
+                transfer: 'About 5-7 hr to north Kasaragod, then local coastal transfers',
+                stay: 'Valiyaparamba or Bekal',
                 meals: 'Daily breakfast and a Malabar food experience',
-                summary: 'Choose one finale based on the departure airport: Kozhikode for food, Kannur for culture and coast, or Bekal for the fort and a slower resort ending.',
-                schedule: [['Day 9, 8 AM', 'Leave Wayanad after breakfast for the chosen coastal base.'], ['Day 9, 1 PM', 'Check in, have lunch and begin the local experience.'], ['Day 9, 5 PM', 'Beach, city food walk or sunset near Bekal Fort.'], ['Day 10, 8 AM', 'One final local stop followed by checkout.'], ['Day 10, Noon', 'Transfer to the airport or railway station with a generous buffer.']],
-                note: 'Kozhikode suits CCJ departures, Kannur suits CNN, and Bekal often pairs best with Mangaluru. Confirm the final connection before hotels are booked.'
+                summary: 'End with north Kerala\'s less-crowded island backwaters: cruise Valiyaparamba, taste Malabar cooking and keep the final evening for Bekal Fort.',
+                schedule: [['Day 9, 7:30 AM', 'Leave Wayanad after breakfast for the north coast.'], ['Day 9, 2 PM', 'Reach the Valiyaparamba area, check in and have lunch.'], ['Day 9, 4 PM', 'Take a short cruise or canoe ride through the islands and village waterways.'], ['Day 10, 8 AM', 'Slow island morning, then continue to Bekal Fort and the coast.'], ['Day 10, 1 PM', 'Lunch followed by the airport or railway transfer with a generous buffer.']],
+                note: 'Organised cruises commonly use Kottappuram as an access point. Bekal pairs best with Kannur or Mangaluru connections, so confirm the departure before booking.'
             }
         ]
     };
@@ -512,6 +512,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 setDayCardOpen(card, willOpen);
             });
         });
+
+        const mediaCredits = {
+            'plan-7-days.html': 'Offbeat photographs: <a href="https://commons.wikimedia.org/wiki/File:Kadamakkudi_island_in_Kerala.jpg" target="_blank" rel="noopener">Kadamakkudy by NOORAPARAPOYIL</a> and <a href="https://commons.wikimedia.org/wiki/File:Munroe_Island_tourism.jpg" target="_blank" rel="noopener">Munroe Island by Sanu N</a>, CC BY-SA 4.0. Varkala image from Kerala Tourism.',
+            'plan-10-days.html': 'Offbeat photographs: <a href="https://commons.wikimedia.org/wiki/File:Kadamakkudi_island_in_Kerala.jpg" target="_blank" rel="noopener">Kadamakkudy by NOORAPARAPOYIL</a> and <a href="https://commons.wikimedia.org/wiki/File:Munroe_Island_tourism.jpg" target="_blank" rel="noopener">Munroe Island by Sanu N</a>, CC BY-SA 4.0. Valiyaparamba image from Kerala Tourism.'
+        };
+
+        if (mediaCredits[currentPlanFile]) {
+            const credit = document.createElement('p');
+            credit.className = 'media-credit';
+            credit.innerHTML = mediaCredits[currentPlanFile];
+            document.querySelector('.plan-day-list')?.insertAdjacentElement('afterend', credit);
+        }
     }
 
     // Indicative room bands make hotel options comparable without presenting them as live quotes.
@@ -524,6 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'KTDC Aranya Nivas': 'INR 5,500-9,000',
         'Spice Village': 'INR 16,000-26,000',
         'Gateway Varkala': 'INR 10,000-18,000',
+        'Munroe Inn Homestay': 'INR 2,000-4,500',
         'Wayanad Wild': 'INR 16,000-25,000',
         'Taj Bekal Resort & Spa': 'INR 22,000-38,000'
     };
@@ -755,8 +768,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const assistantReplies = [
         { terms: ['3 day', 'three day', 'short trip', 'weekend'], text: "For a quick Kerala break, choose the 3-day Kochi and Alappuzha plan. It combines Fort Kochi, Mattancherry, and an overnight houseboat cruise.", link: ['plan-3-days.html', 'Open the 3-day plan'] },
         { terms: ['5 day', 'five day'], text: "The 5-day route is the best first-time balance: Kochi, Munnar tea country, Thekkady spice landscapes, then Alappuzha backwaters.", link: ['plan-5-days.html', 'Open the 5-day plan'] },
-        { terms: ['7 day', 'seven day', 'one week', 'best trip'], text: "The 7-day Classic Kerala plan gives you the fullest first visit: Kochi, Munnar, Thekkady, backwaters, and a beach or wellness finish.", link: ['plan-7-days.html', 'Open the 7-day plan'] },
-        { terms: ['10 day', 'ten day', 'deep dive', 'north kerala'], text: "For a deeper route, take 10 days and add Wayanad plus Kozhikode, Kannur, or Bekal to the southern Kerala classics.", link: ['plan-10-days.html', 'Open the 10-day plan'] },
+        { terms: ['7 day', 'seven day', 'one week', 'best trip'], text: "The 7-day route combines Fort Kochi, Kadamakkudy Islands, Munnar, Thekkady, Munroe Island, and a Varkala finish.", link: ['plan-7-days.html', 'Open the 7-day plan'] },
+        { terms: ['10 day', 'ten day', 'deep dive', 'north kerala'], text: "For a deeper route, take 10 days for Kadamakkudy, Munroe Island, Munnar, Thekkady, Wayanad, Valiyaparamba, and Bekal.", link: ['plan-10-days.html', 'Open the 10-day plan'] },
         { terms: ['munnar', 'tea', 'hill'], text: "Munnar is Kerala's cool highland escape. Go for tea estates, viewpoint drives, waterfalls, and plantation stays; give it at least two nights for an unhurried feel.", link: ['destination-munnar.html', 'Explore Munnar'] },
         { terms: ['alappuzha', 'alleppey', 'backwater', 'houseboat'], text: "Alappuzha is the classic backwater base. A houseboat is best for a sunset-to-breakfast cruise through canals, paddy fields, and village scenery.", link: ['destination-alappuzha.html', 'Explore Alappuzha'] },
         { terms: ['wayanad', 'wildlife', 'forest', 'thekkady', 'periyar'], text: "For forests and nature, choose Thekkady for spice gardens and Periyar-area experiences, or Wayanad for waterfalls, plantations, caves, and slower highland stays.", link: ['destination-wayanad.html', 'Explore Wayanad'] },
