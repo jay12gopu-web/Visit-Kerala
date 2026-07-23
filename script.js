@@ -264,6 +264,110 @@ document.addEventListener('DOMContentLoaded', () => {
                 note: 'Keep at least one extra traffic buffer for Kochi, especially for airport departures or weekend travel.'
             }
         ],
+        'plan-5-days-students.html': [
+            {
+                place: 'Kochi and Fort Kochi',
+                time: '1:00 PM-9:30 PM',
+                transfer: 'Airport 1.5-2 hr; use ferry or group cab locally',
+                stay: 'Kochi or Ernakulam',
+                meals: 'Budget lunch, cafe stop and local dinner',
+                summary: 'Start with a flexible afternoon that gives the group time to arrive, check in and explore without committing to an expensive full-day vehicle.',
+                schedule: [['1:00 PM', 'Meet at the stay, check in and secure luggage.'], ['3:00 PM', 'Use ferry or a shared cab for Fort Kochi.'], ['4:00 PM', 'Walk the waterfront, St. Francis Church and nearby heritage streets.'], ['6:30 PM', 'Choose sunset, a cultural performance or cafe time.'], ['8:00 PM', 'Group dinner and return to the stay.']],
+                note: 'Agree on one meeting point and one group leader before splitting up. Keep hostel curfews and last-ferry timings in mind.'
+            },
+            {
+                place: 'Kochi to Munnar',
+                time: '7:00 AM-7:30 PM',
+                transfer: '4-5.5 hr by shared cab or group vehicle',
+                stay: 'Munnar or Chinnakanal',
+                meals: 'Breakfast, road lunch and dinner',
+                summary: 'Make the hill transfer part of the trip, but limit roadside stops so the group reaches Munnar before evening weather reduces visibility.',
+                schedule: [['7:00 AM', 'Breakfast, checkout and load the group vehicle.'], ['10:00 AM', 'One waterfall or viewpoint stop based on parking and weather.'], ['12:30 PM', 'Affordable lunch on the road.'], ['3:00 PM', 'Check in and rest.'], ['5:00 PM', 'Short tea-country walk or hostel social time.']],
+                note: 'Hill roads are winding. Carry water, keep medication accessible and avoid standing or moving around inside the vehicle.'
+            },
+            {
+                place: 'Munnar tea country',
+                time: '8:00 AM-7:00 PM',
+                transfer: 'Local shared vehicle; keep the circuit compact',
+                stay: 'Munnar or Chinnakanal',
+                meals: 'Breakfast, packed or local lunch and dinner',
+                summary: 'Choose three strong stops rather than rushing between distant viewpoints: one tea experience, one viewpoint circuit and one short guided walk.',
+                schedule: [['8:00 AM', 'Breakfast and depart before the main traffic.'], ['9:00 AM', 'Tea gardens and a museum or plantation visit.'], ['12:30 PM', 'Lunch near the day route.'], ['2:00 PM', 'Viewpoint circuit or short guided nature walk.'], ['5:00 PM', 'Return to town or the hostel before dusk.']],
+                note: 'Use only recognised guides for walks. Weather, park rules and local closures can change the plan, so keep a low-cost indoor backup.'
+            },
+            {
+                place: 'Munnar to Alappuzha',
+                time: '6:30 AM-8:30 PM',
+                transfer: '5.5-7 hr downhill, traffic dependent',
+                stay: 'Alappuzha town or beach',
+                meals: 'Breakfast, road lunch and coastal dinner',
+                summary: 'This is the longest transfer. Start early, take a proper meal break and choose a shorter afternoon boat ride rather than paying for an overnight houseboat.',
+                schedule: [['6:30 AM', 'Early breakfast and checkout.'], ['7:00 AM', 'Start the descent toward Alappuzha.'], ['12:30 PM', 'Lunch and comfort break.'], ['3:00 PM', 'Check in, then join a pre-booked shared shikara or canoe trip.'], ['6:00 PM', 'Beach sunset followed by dinner.']],
+                note: 'Confirm the boat type, capacity, life jackets, meeting point and total price before boarding. Keep valuables dry.'
+            },
+            {
+                place: 'Alappuzha to Kochi',
+                time: '7:30 AM onward',
+                transfer: '1.5-2.5 hr by train, bus or road',
+                stay: 'Departure day',
+                meals: 'Breakfast and a simple lunch',
+                summary: 'Keep the last morning inexpensive and flexible, then make the Kochi connection with enough margin for group delays and luggage.',
+                schedule: [['7:30 AM', 'Breakfast and an optional beach or canal-side walk.'], ['9:30 AM', 'Checkout and leave for the station or bus pickup.'], ['12:00 PM', 'Reach Kochi and have lunch if time allows.'], ['2:00 PM', 'Continue to the airport, railway station or onward stay.']],
+                note: 'Book the group connection together. When flights or long-distance trains are involved, choose the earlier transfer.'
+            }
+        ],
+        'plan-5-days-seniors.html': [
+            {
+                place: 'Kochi arrival',
+                time: 'Arrival time-8:00 PM',
+                transfer: 'Private air-conditioned car to the hotel',
+                stay: 'Kochi',
+                meals: 'Light meal and early dinner',
+                summary: 'Protect the first day from travel fatigue. Check in, confirm room access and leave sightseeing optional.',
+                schedule: [['Arrival', 'Meet the driver and travel directly to the hotel.'], ['+90 min', 'Check in, inspect the room and rest.'], ['5:30 PM', 'Optional short waterfront drive or hotel garden time.'], ['7:00 PM', 'Early dinner and a quiet evening.']],
+                note: 'Keep medicines, prescriptions, water and one change of clothes in hand luggage rather than the main suitcase.'
+            },
+            {
+                place: 'Fort Kochi by private car',
+                time: '9:30 AM-7:30 PM',
+                transfer: 'Short car hops with door-to-door pickup',
+                stay: 'Kochi',
+                meals: 'Breakfast, long lunch and early dinner',
+                summary: 'Use a car between two or three selected sights, with seated breaks and a full afternoon rest before any evening programme.',
+                schedule: [['9:30 AM', 'Leave after breakfast for the Fort Kochi waterfront.'], ['10:15 AM', 'Short walk near the fishing nets and St. Francis Church.'], ['12:00 PM', 'Seated museum visit or shaded cafe stop.'], ['1:00 PM', 'Long lunch, then return to the hotel to rest.'], ['6:00 PM', 'Optional seated Kathakali show with pre-arranged transport.']],
+                note: 'Cobbled streets and uneven pavements are common. Ask the driver to minimise walking and confirm seating at every stop.'
+            },
+            {
+                place: 'Kochi to Kumarakom',
+                time: '9:30 AM-6:30 PM',
+                transfer: '1.5-2.5 hr private road transfer',
+                stay: 'Kumarakom',
+                meals: 'Breakfast, hotel lunch and dinner',
+                summary: 'Leave after rush hour, include one comfort stop if needed and reach the lakeside hotel before lunch or early afternoon.',
+                schedule: [['9:30 AM', 'Breakfast, checkout and depart Kochi.'], ['10:45 AM', 'Optional comfort stop.'], ['12:00 PM', 'Reach Kumarakom and check in.'], ['1:00 PM', 'Lunch followed by a long rest.'], ['5:00 PM', 'Garden, lake view or a short buggy-assisted property round.']],
+                note: 'Request a room near reception or dining, and confirm whether the vehicle can reach the room block without steps.'
+            },
+            {
+                place: 'Vembanad Lake and Kumarakom',
+                time: '9:30 AM-7:00 PM',
+                transfer: 'Hotel pickup and a short covered cruise',
+                stay: 'Kumarakom',
+                meals: 'All meals at or near the resort',
+                summary: 'Choose a two-hour daytime motorboat or shikara cruise with shade, stable seating and boarding assistance confirmed beforehand.',
+                schedule: [['9:30 AM', 'Slow breakfast and free morning.'], ['11:00 AM', 'Board a covered boat with assistance.'], ['1:00 PM', 'Return for lunch and rest.'], ['4:30 PM', 'Optional short lakeside activity or tea.'], ['7:00 PM', 'Early dinner at the resort.']],
+                note: 'Avoid a boat if boarding, weather or balance feels unsafe. A lakeside resort day is a complete alternative, not a missed experience.'
+            },
+            {
+                place: 'Kumarakom to Kochi',
+                time: '8:30 AM onward',
+                transfer: '2-3 hr plus airport or station buffer',
+                stay: 'Departure day',
+                meals: 'Breakfast and a planned road meal if needed',
+                summary: 'Make departure the only commitment. Leave enough time for a comfort stop, traffic and unhurried airport or station procedures.',
+                schedule: [['8:30 AM', 'Breakfast and final packing.'], ['10:00 AM', 'Checkout and depart Kumarakom.'], ['11:15 AM', 'Planned comfort stop when needed.'], ['1:00 PM', 'Reach the airport, railway station or Kochi hotel.']],
+                note: 'For flights, use the airline reporting time plus a generous road buffer. Request wheelchair assistance from the airline or station in advance when required.'
+            }
+        ],
         'plan-7-days.html': [
             {
                 place: 'Fort Kochi, Kadamakkudy Islands and Mattancherry',
@@ -529,6 +633,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Indicative room bands make hotel options comparable without presenting them as live quotes.
     const hotelPriceBands = {
         'Forte Kochi': 'INR 11,000-18,000',
+        'Zostel Kochi (Ernakulam)': 'INR 700-2,800',
+        'The Hosteller Munnar': 'INR 700-3,500',
+        'Zostel Alleppey': 'INR 700-2,800',
+        'KTDC Bolgatty Palace': 'INR 6,500-12,000',
         'Punnamada Resort': 'INR 8,000-14,000',
         'KTDC Waterscapes': 'INR 6,000-10,000',
         'Coconut Lagoon': 'INR 18,000-30,000',

@@ -3730,3 +3730,257 @@ footer {
     .review-card-topline { align-items: flex-start; }
     .review-source-stamp { max-width: 132px; }
 }
+
+/* ==========================================================================
+   Audience-Specific 5-Day Plans
+   ========================================================================== */
+.audience-plans-section .section-intro {
+    color: #69736e;
+}
+
+.audience-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.audience-plan-card {
+    display: grid;
+    min-width: 0;
+    grid-template-rows: 250px minmax(0, 1fr);
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: #fff;
+    color: inherit;
+    overflow: hidden;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.audience-plan-card:hover {
+    border-color: rgba(197, 160, 89, 0.72);
+    box-shadow: 0 24px 55px rgba(10, 50, 34, 0.12);
+    transform: translateY(-6px);
+}
+
+.audience-plan-card:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 4px;
+}
+
+.audience-plan-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.audience-plan-image::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 48%;
+    background: linear-gradient(to top, rgba(4, 28, 19, 0.72), transparent);
+}
+
+.audience-plan-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.audience-plan-card:hover .audience-plan-image img {
+    transform: scale(1.06);
+}
+
+.audience-plan-badge {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    background: rgba(6, 34, 23, 0.8);
+    color: #fff;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+}
+
+.student-plan-card .audience-plan-badge {
+    background: rgba(147, 66, 42, 0.88);
+}
+
+.audience-plan-content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 32px;
+}
+
+.audience-plan-content h3 {
+    margin: 6px 0 12px;
+    color: var(--primary-green);
+    font-size: 2rem;
+}
+
+.audience-plan-content > p {
+    min-height: 78px;
+    font-size: 0.82rem;
+}
+
+.audience-plan-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 24px 0 18px;
+    border-top: 1px solid rgba(10, 50, 34, 0.1);
+    border-bottom: 1px solid rgba(10, 50, 34, 0.1);
+}
+
+.audience-plan-meta span {
+    min-width: 0;
+    padding: 16px 13px;
+    border-right: 1px solid rgba(10, 50, 34, 0.1);
+    color: #727b76;
+    font-size: 0.62rem;
+}
+
+.audience-plan-meta span:last-child {
+    border-right: 0;
+}
+
+.audience-plan-meta i,
+.audience-plan-meta strong {
+    display: block;
+    color: var(--primary-green);
+}
+
+.audience-plan-meta i {
+    margin-bottom: 7px;
+    color: #a64b34;
+}
+
+.senior-plan-card .audience-plan-meta i {
+    color: var(--accent-gold);
+}
+
+.audience-plan-meta strong {
+    margin-bottom: 2px;
+    font-size: 0.72rem;
+}
+
+.audience-plan-route {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 26px;
+    color: #59645e;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.audience-plan-route i {
+    flex: 0 0 auto;
+    color: var(--accent-gold);
+    font-size: 0.56rem;
+}
+
+.audience-plan-content .plan-cta {
+    margin-top: auto;
+}
+
+.plan-audience-note {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+    padding: 20px;
+    border-left: 3px solid #a64b34;
+    background: #fff;
+}
+
+.plan-audience-note > i {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(166, 75, 52, 0.1);
+    color: #a64b34;
+}
+
+.plan-audience-note strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--primary-green);
+    font-size: 0.78rem;
+}
+
+.plan-audience-note p {
+    font-size: 0.74rem;
+}
+
+.senior-care-note {
+    border-left-color: var(--accent-gold);
+}
+
+.senior-care-note > i {
+    background: rgba(197, 160, 89, 0.14);
+    color: #9b7736;
+}
+
+@media(max-width: 900px) {
+    .audience-plan-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .audience-plan-content > p {
+        min-height: 0;
+    }
+}
+
+@media(max-width: 600px) {
+    .audience-plan-card {
+        grid-template-rows: 210px minmax(0, 1fr);
+    }
+
+    .audience-plan-content {
+        padding: 26px 22px;
+    }
+
+    .audience-plan-content h3 {
+        font-size: 1.65rem;
+    }
+
+    .audience-plan-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .audience-plan-meta span {
+        display: grid;
+        grid-template-columns: 22px 90px minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+        padding: 12px 4px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(10, 50, 34, 0.08);
+    }
+
+    .audience-plan-meta span:last-child {
+        border-bottom: 0;
+    }
+
+    .audience-plan-meta i,
+    .audience-plan-meta strong {
+        margin: 0;
+    }
+
+    .audience-plan-route {
+        flex-wrap: wrap;
+    }
+}
