@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const plan = document.createElement('span');
             const initials = review.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
 
-            card.className = `review-card reveal active${review.source === 'google' ? ' google-review' : ''}`;
+            card.className = `review-card reveal active ${review.source === 'google' ? 'google-review' : 'local-review'}`;
             topLine.className = 'review-card-topline';
             stars.className = 'review-stars';
             stars.setAttribute('aria-label', `${review.rating} out of 5${review.source === 'google' ? ' Google place rating' : ' stars'}`);
@@ -691,6 +691,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 sourceStamp.setAttribute('aria-label', `Taken from Google. Open source for ${review.place}`);
                 sourceStamp.innerHTML = '<i class="fa-brands fa-google" aria-hidden="true"></i><span>Taken from Google</span>';
                 topLine.append(sourceStamp);
+            } else {
+                const localStamp = document.createElement('span');
+                localStamp.className = 'review-source-stamp local-source-stamp';
+                localStamp.setAttribute('aria-label', 'Taken from here. Submitted on this website');
+                localStamp.innerHTML = '<i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Taken from Here</span>';
+                topLine.append(localStamp);
             }
 
             quote.textContent = `"${review.message}"`;

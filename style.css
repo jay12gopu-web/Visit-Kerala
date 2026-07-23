@@ -3501,6 +3501,19 @@ footer {
     font-size: 0.76rem;
 }
 
+.local-source-stamp {
+    border-color: #26734d;
+    background: #f3fbf6;
+    color: #26734d;
+    cursor: default;
+}
+
+.local-source-stamp:hover {
+    background: #f3fbf6;
+    color: #26734d;
+    transform: rotate(-1.5deg);
+}
+
 .review-source-note {
     max-width: 720px;
     margin: 16px auto 0;
