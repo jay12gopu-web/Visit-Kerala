@@ -603,9 +603,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (reviewList && reviewForm) {
         const reviewStorageKey = 'visitKeralaReviews';
         const starterReviews = [
-            { name: 'Aisha M.', plan: '5-Day Hills + Houseboat', rating: 5, message: 'The Munnar to Alappuzha contrast was the whole trip for me. Tea hills in the morning, quiet water by the fourth evening.' },
-            { name: 'Rohan S.', plan: '3-Day Kochi + Backwaters', rating: 5, message: 'Short but never rushed. Fort Kochi was perfect for the first evening, and the houseboat schedule made the second day feel much longer.' },
-            { name: 'Nina D.', plan: '7-Day Classic Kerala', rating: 4, message: 'Munnar needed the extra day. The route notes helped us avoid trying to fit too much into a transfer day.' }
+            {
+                name: 'Dr. Gayathri G',
+                place: 'St. Francis CSI Church, Fort Kochi',
+                rating: 4.3,
+                reviewCount: '3,192 reviews',
+                message: 'A must-visit landmark widely celebrated as India\'s oldest European-built church, dating back to 1503.',
+                source: 'google',
+                sourceUrl: 'https://www.google.com/maps/search/St.%2BFrancis%2BChurch%2C%2BKochi%2C%2BIndia'
+            },
+            {
+                name: 'Nilima Pawar',
+                place: 'The Valle Munnar',
+                rating: 4.8,
+                reviewCount: '1,436 reviews',
+                message: 'Beautiful view of sunrise from room and excellent service received by staff.',
+                source: 'google',
+                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChoI9tG0_YuCgvOcARoNL2cvMTFsNzJtenQ0ahAB'
+            },
+            {
+                name: 'Aliasgar Patwa',
+                place: 'The World Backwaters, Alappuzha',
+                rating: 4.4,
+                reviewCount: '1,874 reviews',
+                message: 'A very beautiful resort with a nice location, good staff, nice food, comfy rooms.',
+                source: 'google',
+                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChgIy9CG7N6Top5eGgwvZy8xMXljeWR2ZGwQAQ'
+            },
+            {
+                name: 'Rushikesh Patil',
+                place: 'Cliff County Varkala',
+                rating: 4.1,
+                reviewCount: '133 reviews',
+                message: 'Great location, very close to the cliffside restaurants and shopping hub.',
+                source: 'google',
+                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChkI14z9laHNj5lUGg0vZy8xMXY1dDM2al8zEAE'
+            }
         ];
 
         const getStoredReviews = () => {
@@ -619,34 +652,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const createReviewCard = review => {
             const card = document.createElement('article');
+            const topLine = document.createElement('div');
             const stars = document.createElement('div');
             const quote = document.createElement('blockquote');
-            const footer = document.createElement('footer');
+            const footer = document.createElement('div');
             const avatar = document.createElement('div');
             const identity = document.createElement('div');
             const name = document.createElement('strong');
             const plan = document.createElement('span');
             const initials = review.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
 
-            card.className = 'review-card reveal active';
+            card.className = `review-card reveal active${review.source === 'google' ? ' google-review' : ''}`;
+            topLine.className = 'review-card-topline';
             stars.className = 'review-stars';
-            stars.setAttribute('aria-label', `${review.rating} out of 5 stars`);
+            stars.setAttribute('aria-label', `${review.rating} out of 5${review.source === 'google' ? ' Google place rating' : ' stars'}`);
 
             for (let index = 1; index <= 5; index += 1) {
                 const star = document.createElement('i');
-                star.className = index <= review.rating ? 'fa-solid fa-star' : 'fa-regular fa-star';
+                const difference = review.rating - (index - 1);
+                star.className = difference >= 1
+                    ? 'fa-solid fa-star'
+                    : difference >= 0.25
+                        ? 'fa-solid fa-star-half-stroke'
+                        : 'fa-regular fa-star';
                 star.setAttribute('aria-hidden', 'true');
                 stars.append(star);
             }
 
-            quote.textContent = `“${review.message}”`;
+            topLine.append(stars);
+
+            if (review.source === 'google' && review.sourceUrl) {
+                const sourceStamp = document.createElement('a');
+                sourceStamp.className = 'review-source-stamp';
+                sourceStamp.href = review.sourceUrl;
+                sourceStamp.target = '_blank';
+                sourceStamp.rel = 'noopener noreferrer';
+                sourceStamp.title = 'Open the source on Google';
+                sourceStamp.setAttribute('aria-label', `Taken from Google. Open source for ${review.place}`);
+                sourceStamp.innerHTML = '<i class="fa-brands fa-google" aria-hidden="true"></i><span>Taken from Google</span>';
+                topLine.append(sourceStamp);
+            }
+
+            quote.textContent = `"${review.message}"`;
             avatar.className = 'review-avatar';
             avatar.textContent = initials;
+            footer.className = 'review-card-footer';
             name.textContent = review.name;
-            plan.textContent = review.plan;
+            plan.textContent = review.place || review.plan;
             identity.append(name, plan);
+
+            if (review.source === 'google') {
+                const ratingMeta = document.createElement('small');
+                ratingMeta.className = 'review-rating-meta';
+                ratingMeta.textContent = `${review.rating.toFixed(1)} Google place rating${review.reviewCount ? ` | ${review.reviewCount}` : ''}`;
+                identity.append(ratingMeta);
+            }
+
             footer.append(avatar, identity);
-            card.append(stars, quote, footer);
+            card.append(topLine, quote, footer);
             return card;
         };
 
