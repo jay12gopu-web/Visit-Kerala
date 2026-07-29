@@ -19,28 +19,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
-    mobileMenuBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('mobile-active');
-        // Toggle Icon state between bars and X close marker
-        const icon = mobileMenuBtn.querySelector('i');
-        if(icon.classList.contains('fa-bars')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-xmark');
-        } else {
-            icon.classList.remove('fa-xmark');
-            icon.classList.add('fa-bars');
-        }
-    });
-
-    // Close mobile drawer when clicking structural menu landing points
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
+    if (mobileMenuBtn && navLinks) {
+        const closeMobileMenu = () => {
             navLinks.classList.remove('mobile-active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            mobileMenuBtn.setAttribute('aria-label', 'Open navigation');
+            document.body.classList.remove('nav-open');
             const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.remove('fa-xmark');
-            icon.classList.add('fa-bars');
+            icon?.classList.remove('fa-xmark');
+            icon?.classList.add('fa-bars');
+        };
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('mobile-active');
+            mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+            document.body.classList.toggle('nav-open', isOpen);
+            const icon = mobileMenuBtn.querySelector('i');
+            icon?.classList.toggle('fa-bars', !isOpen);
+            icon?.classList.toggle('fa-xmark', isOpen);
         });
-    });
+
+        navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1180) closeMobileMenu();
+        });
+    }
 
     // ==========================================
     // 3. Apple/Singapore-Style Interactive Itinerary Tabs

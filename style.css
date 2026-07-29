@@ -3984,3 +3984,76 @@ footer {
         flex-wrap: wrap;
     }
 }
+
+/* Shared navigation support for the Map destination. */
+.logo,
+.nav-actions,
+.menu-toggle {
+    flex: 0 0 auto;
+}
+
+.nav-links {
+    min-width: 0;
+    gap: clamp(16px, 2vw, 35px);
+}
+
+.menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+body.nav-open {
+    overflow: hidden;
+}
+
+@media(max-width: 1180px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: var(--navbar-height);
+        left: -100%;
+        z-index: 1100;
+        width: 100%;
+        height: calc(100dvh - var(--navbar-height));
+        max-height: calc(100dvh - var(--navbar-height));
+        margin-left: 0;
+        padding: 38px 24px 56px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 22px;
+        background: var(--primary-green);
+        overscroll-behavior: contain;
+    }
+
+    .navbar.scrolled .nav-links {
+        top: 70px;
+        height: calc(100dvh - 70px);
+        max-height: calc(100dvh - 70px);
+    }
+
+    .nav-links.mobile-active {
+        left: 0;
+    }
+
+    .nav-links a {
+        display: inline-block;
+        min-height: 38px;
+        padding: 8px 0;
+        font-size: 0.95rem;
+    }
+
+    .btn-nav {
+        display: none;
+    }
+}
