@@ -1709,3 +1709,225 @@ document.addEventListener('DOMContentLoaded', () => {
         match: question => getAssistantReply(question).id
     };
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const finder = document.querySelector('[data-trip-finder]');
+    if (!finder) return;
+
+    const form = finder.querySelector('[data-trip-form]');
+    const steps = [...finder.querySelectorAll('[data-trip-step]')];
+    const backButton = finder.querySelector('[data-trip-back]');
+    const nextButton = finder.querySelector('[data-trip-next]');
+    const submitButton = finder.querySelector('[data-trip-submit]');
+    const resetButton = finder.querySelector('[data-trip-reset]');
+    const error = finder.querySelector('[data-trip-error]');
+    const result = finder.querySelector('[data-trip-result]');
+    const progressBar = finder.querySelector('[data-trip-progress-bar]');
+    const stepLabel = finder.querySelector('[data-trip-step-label]');
+    const progressText = finder.querySelector('[data-trip-progress-text]');
+    let currentStep = 0;
+
+    const plans = [
+        {
+            id: 'three-day',
+            name: '3-Day Kochi + Backwaters',
+            url: 'plan-3-days.html',
+            days: 3,
+            route: 'Kochi - Alappuzha',
+            pace: 'relaxed',
+            travellers: ['family', 'couple', 'solo'],
+            experiences: ['backwaters', 'culture', 'food'],
+            prices: { value: 'INR 13,000-18,000', comfortable: 'INR 24,000-34,000', premium: 'INR 48,000-75,000' },
+            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+        },
+        {
+            id: 'five-day',
+            name: '5-Day Hills + Houseboat',
+            url: 'plan-5-days.html',
+            days: 5,
+            route: 'Kochi - Munnar - Thekkady - Alappuzha',
+            pace: 'balanced',
+            travellers: ['family', 'couple', 'solo'],
+            experiences: ['hills', 'backwaters', 'wildlife', 'culture', 'food'],
+            prices: { value: 'INR 24,000-34,000', comfortable: 'INR 45,000-64,000', premium: 'INR 88,000-135,000' },
+            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+        },
+        {
+            id: 'seven-day',
+            name: '7-Day Classic + Offbeat Kerala',
+            url: 'plan-7-days.html',
+            days: 7,
+            route: 'Kochi - Kadamakkudy - Munnar - Thekkady - Munroe Island - Varkala',
+            pace: 'balanced',
+            travellers: ['family', 'couple', 'solo'],
+            experiences: ['hills', 'backwaters', 'beaches', 'wildlife', 'culture', 'food', 'wellness'],
+            prices: { value: 'INR 36,000-52,000', comfortable: 'INR 66,000-95,000', premium: 'INR 130,000-195,000' },
+            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+        },
+        {
+            id: 'ten-day',
+            name: '10-Day Kerala Deep Dive',
+            url: 'plan-10-days.html',
+            days: 10,
+            route: 'Kochi - Kadamakkudy - Munroe Island - Munnar - Thekkady - Wayanad - Valiyaparamba - Bekal',
+            pace: 'active',
+            travellers: ['family', 'couple', 'solo'],
+            experiences: ['hills', 'backwaters', 'beaches', 'wildlife', 'culture', 'food'],
+            prices: { value: 'INR 58,000-82,000', comfortable: 'INR 105,000-150,000', premium: 'INR 200,000-295,000' },
+            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+        },
+        {
+            id: 'student',
+            name: '5-Day Kerala Student Plan',
+            url: 'plan-5-days-students.html',
+            days: 5,
+            route: 'Kochi - Munnar - Alappuzha',
+            pace: 'active',
+            travellers: ['students', 'solo'],
+            experiences: ['hills', 'backwaters', 'culture', 'food'],
+            prices: { value: 'INR 14,000-20,000', comfortable: 'INR 23,000-32,000', premium: 'INR 36,000-52,000' },
+            priceNote: 'Indicative 2026 cost per adult student, assuming four friends share rooms and local transfers. Travel to and from Kerala is excluded.'
+        },
+        {
+            id: 'senior',
+            name: '5-Day Easy-Paced Senior Plan',
+            url: 'plan-5-days-seniors.html',
+            days: 5,
+            route: 'Kochi - Kumarakom - Kochi',
+            pace: 'relaxed',
+            travellers: ['senior', 'couple'],
+            experiences: ['backwaters', 'culture', 'food', 'wellness'],
+            prices: { value: 'INR 34,000-48,000', comfortable: 'INR 52,000-72,000', premium: 'INR 90,000-135,000' },
+            priceNote: 'Indicative 2026 cost per senior traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.'
+        }
+    ];
+
+    const paceDistance = {
+        relaxed: { relaxed: 10, balanced: 5, active: 0 },
+        balanced: { relaxed: 5, balanced: 10, active: 5 },
+        active: { relaxed: 0, balanced: 5, active: 10 }
+    };
+
+    const recommendPlan = answers => {
+        const wantedDays = Number(answers.days);
+        const wantedExperiences = Array.isArray(answers.experiences) ? answers.experiences : [];
+
+        return plans.map((plan, index) => {
+            let score = Math.max(0, 64 - (Math.abs(plan.days - wantedDays) * 18));
+            if (plan.days === wantedDays) score += 36;
+            if (plan.travellers.includes(answers.traveller)) score += 32;
+            score += wantedExperiences.filter(experience => plan.experiences.includes(experience)).length * 13;
+            score += paceDistance[answers.pace]?.[plan.pace] || 0;
+
+            if (answers.traveller === 'students') score += plan.id === 'student' ? 75 : -18;
+            if (answers.traveller === 'senior') score += plan.id === 'senior' ? 82 : -22;
+            if (answers.traveller === 'family' && ['three-day', 'five-day', 'seven-day', 'ten-day'].includes(plan.id)) score += 16;
+            if (answers.budget === 'value' && plan.id === 'student' && answers.traveller === 'students') score += 10;
+            if (answers.budget === 'comfortable' && plan.id === 'senior' && answers.traveller === 'senior') score += 8;
+            return { plan, score, index };
+        }).sort((left, right) => right.score - left.score || left.index - right.index)[0].plan;
+    };
+
+    const describeMatch = (plan, answers) => {
+        const experienceNames = {
+            hills: 'hill country',
+            backwaters: 'backwaters',
+            beaches: 'beaches',
+            wildlife: 'wildlife',
+            culture: 'culture',
+            food: 'local food',
+            wellness: 'wellness time'
+        };
+        const matched = answers.experiences
+            .filter(experience => plan.experiences.includes(experience))
+            .slice(0, 2)
+            .map(experience => experienceNames[experience]);
+        const matchedText = matched.length ? ` and includes ${matched.join(' and ')}` : '';
+        const audienceText = answers.traveller === 'students'
+            ? 'your friends or student group'
+            : answers.traveller === 'senior'
+                ? 'a gentle senior-travel rhythm'
+                : `your ${answers.traveller} travel style`;
+
+        return `This route is the closest fit for ${answers.days} days, ${audienceText} and a ${answers.pace} pace${matchedText}. It is a flexible recommendation, so the full plan can still be adjusted around your arrival point and interests.`;
+    };
+
+    const readAnswers = () => ({
+        days: form.elements.days.value,
+        traveller: form.elements.traveller.value,
+        experiences: [...form.querySelectorAll('input[name="experiences"]:checked')].map(input => input.value),
+        pace: form.elements.pace.value,
+        budget: form.elements.budget.value
+    });
+
+    const validateStep = index => {
+        const step = steps[index];
+        const checkboxes = [...step.querySelectorAll('input[type="checkbox"]')];
+        const radios = [...step.querySelectorAll('input[type="radio"]')];
+        const valid = checkboxes.length ? checkboxes.some(input => input.checked) : radios.some(input => input.checked);
+        error.textContent = valid ? '' : (checkboxes.length ? 'Choose at least one experience to continue.' : 'Choose one option to continue.');
+        if (!valid) (checkboxes[0] || radios[0])?.focus();
+        return valid;
+    };
+
+    const showStep = index => {
+        currentStep = index;
+        steps.forEach((step, stepIndex) => {
+            const active = stepIndex === currentStep;
+            step.hidden = !active;
+            step.classList.toggle('is-active', active);
+        });
+        const percentage = (currentStep + 1) * 20;
+        progressBar.style.width = `${percentage}%`;
+        stepLabel.textContent = `Question ${currentStep + 1} of 5`;
+        progressText.textContent = `${percentage}% complete`;
+        backButton.hidden = currentStep === 0;
+        nextButton.hidden = currentStep === steps.length - 1;
+        submitButton.hidden = currentStep !== steps.length - 1;
+        error.textContent = '';
+        steps[currentStep].querySelector('input')?.focus({ preventScroll: true });
+    };
+
+    nextButton.addEventListener('click', () => {
+        if (validateStep(currentStep)) showStep(Math.min(currentStep + 1, steps.length - 1));
+    });
+
+    backButton.addEventListener('click', () => showStep(Math.max(currentStep - 1, 0)));
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        if (!validateStep(currentStep)) return;
+
+        const answers = readAnswers();
+        const plan = recommendPlan(answers);
+        finder.querySelector('[data-result-name]').textContent = plan.name;
+        finder.querySelector('[data-result-reason]').textContent = describeMatch(plan, answers);
+        finder.querySelector('[data-result-duration]').textContent = `${plan.days} days`;
+        finder.querySelector('[data-result-route]').textContent = plan.route;
+        finder.querySelector('[data-result-pace]').textContent = `${plan.pace.charAt(0).toUpperCase()}${plan.pace.slice(1)}`;
+        finder.querySelector('[data-result-price]').textContent = `${plan.prices[answers.budget]} (${answers.budget})`;
+        finder.querySelector('[data-result-price-note]').textContent = plan.priceNote;
+        finder.querySelector('[data-result-link]').href = plan.url;
+        form.hidden = true;
+        result.hidden = false;
+        progressBar.style.width = '100%';
+        stepLabel.textContent = 'Recommendation ready';
+        progressText.textContent = 'Complete';
+        result.focus();
+    });
+
+    resetButton.addEventListener('click', () => {
+        form.reset();
+        result.hidden = true;
+        form.hidden = false;
+        showStep(0);
+    });
+
+    window.__keralaTripFinder = {
+        plans: plans.map(plan => ({ id: plan.id, name: plan.name, url: plan.url })),
+        recommend: answers => {
+            const plan = recommendPlan(answers);
+            return { id: plan.id, name: plan.name, url: plan.url };
+        }
+    };
+});
