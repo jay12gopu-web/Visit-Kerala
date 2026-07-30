@@ -60,7 +60,7 @@
             icon: 'fa-tree',
             description: 'The gateway to Periyar landscapes, spice gardens and forest-fringed lake experiences.',
             image: 'tourists-thekkady-boating.webp',
-            url: 'experiences.html',
+            url: 'destination-thekkady.html',
             planUrl: 'plan-5-days.html',
             rail: false,
             hill: true
@@ -134,7 +134,7 @@
             categoryKey: 'city',
             icon: 'fa-building-columns',
             description: 'Kerala\'s capital and southern transport hub, close to museums, heritage areas and coastal routes.',
-            url: 'travel-info.html',
+            url: 'destination-thiruvananthapuram.html',
             planUrl: 'plan-7-days.html',
             rail: true,
             coast: true
@@ -158,7 +158,7 @@
             categoryKey: 'city',
             icon: 'fa-city',
             description: 'A Malabar coastal city known for food traditions, historic trade and access to Wayanad.',
-            url: 'travel-info.html',
+            url: 'destination-kozhikode.html',
             planUrl: 'plan-10-days.html',
             rail: true,
             coast: true
@@ -170,7 +170,7 @@
             categoryKey: 'city',
             icon: 'fa-masks-theater',
             description: 'A northern coastal city associated with Theyyam, forts, beaches and Malabar culture.',
-            url: 'experiences.html',
+            url: 'destination-kannur.html',
             planUrl: 'plan-10-days.html',
             rail: true,
             coast: true
@@ -195,7 +195,7 @@
             categoryKey: 'beach',
             icon: 'fa-fort-awesome',
             description: 'A northern coastal finish centred on Bekal Fort, sea views and a quieter beach landscape.',
-            url: 'destination-islands.html',
+            url: 'destination-bekal.html',
             planUrl: 'plan-10-days.html',
             rail: true,
             coast: true
