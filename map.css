@@ -916,20 +916,6 @@
     background: #ffffff;
 }
 
-.map-page .footer-bottom {
-    flex-wrap: wrap;
-    gap: 8px 24px;
-}
-
-.map-attribution,
-.map-attribution a {
-    color: rgba(255, 255, 255, 0.58);
-}
-
-.map-attribution a {
-    text-decoration: underline;
-}
-
 @media (max-width: 1180px) {
     .popular-route-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));

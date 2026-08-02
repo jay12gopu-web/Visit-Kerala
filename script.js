@@ -831,37 +831,57 @@ document.addEventListener('DOMContentLoaded', () => {
         note.prepend('Prices shown are indicative nightly planning bands. ');
     });
 
-    // Shared navigation and contact details keep the expanded site easy to reach from every page.
-    document.querySelectorAll('.nav-links').forEach(navList => {
-        if (navList.querySelector('a[href="reviews.html"]')) return;
+    const fallbackCopyPageLink = pageUrl => {
+        const previousFocus = document.activeElement;
+        const textArea = document.createElement('textarea');
+        textArea.value = pageUrl;
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        document.body.append(textArea);
+        textArea.select();
 
-        const reviewItem = document.createElement('li');
-        const reviewLink = document.createElement('a');
-        reviewLink.href = 'reviews.html';
-        reviewLink.textContent = 'Reviews';
-        reviewItem.append(reviewLink);
-        navList.append(reviewItem);
-    });
+        let copied = false;
+        try {
+            copied = document.execCommand('copy');
+        } catch {
+            copied = false;
+        }
 
-    document.querySelectorAll('.footer-links-wrapper').forEach(wrapper => {
-        const footerColumn = wrapper.querySelector('.footer-column');
+        textArea.remove();
+        if (previousFocus instanceof HTMLElement) previousFocus.focus();
+        return copied;
+    };
 
-        if (!footerColumn || footerColumn.querySelector('a[href="reviews.html"]')) return;
+    document.querySelectorAll('[data-copy-page-link]').forEach(button => {
+        const utilityGroup = button.closest('.footer-utility-actions');
+        const status = utilityGroup?.querySelector('[data-copy-page-status]');
+        let statusTimer;
 
-        const reviewLink = document.createElement('a');
-        reviewLink.href = 'reviews.html';
-        reviewLink.textContent = 'Traveller Reviews';
-        footerColumn.append(reviewLink);
-    });
+        const showCopyStatus = message => {
+            if (!status) return;
+            status.textContent = message;
+            window.clearTimeout(statusTimer);
+            statusTimer = window.setTimeout(() => {
+                status.textContent = '';
+            }, 5000);
+        };
 
-    document.querySelectorAll('.footer-bottom').forEach(footerBottom => {
-        if (footerBottom.querySelector('.footer-contact')) return;
+        button.addEventListener('click', async () => {
+            const pageUrl = window.location.href;
 
-        const contact = document.createElement('a');
-        contact.className = 'footer-contact';
-        contact.href = 'tel:+914712321132';
-        contact.innerHTML = '<i class="fa-solid fa-phone" aria-hidden="true"></i> Kerala Tourism: +91 471 232 1132';
-        footerBottom.append(contact);
+            try {
+                if (navigator.clipboard?.writeText && window.isSecureContext) {
+                    await navigator.clipboard.writeText(pageUrl);
+                } else if (!fallbackCopyPageLink(pageUrl)) {
+                    throw new Error('Clipboard access unavailable');
+                }
+
+                showCopyStatus('Page link copied.');
+            } catch {
+                showCopyStatus('Copy unavailable. Use your browser address bar.');
+            }
+        });
     });
 
     // Public excerpts and private browser notes remain separate by design.
