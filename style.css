@@ -4698,11 +4698,169 @@ p {
 .emergency-source-note a { color: #fff; }
 
 .responsible-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
-.phrase-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.phrase-compact-list div { display: grid; gap: 2px; padding: 12px; border-left: 3px solid var(--accent-gold); background: rgba(10,50,34,.04); }
-.phrase-compact-list strong { color: var(--primary-green); font-size: 1rem; }
-.phrase-compact-list span { font-size: 0.74rem; font-weight: 600; }
-.phrase-compact-list small { color: var(--muted-gray); }
+.responsible-grid-single { grid-template-columns: minmax(0, 1fr); margin-bottom: 22px; }
+
+.travel-phrase-panel {
+    overflow: hidden;
+    border: 1px solid rgba(10, 50, 34, 0.14);
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 16px 36px rgba(10, 50, 34, 0.08);
+}
+
+.travel-phrase-panel summary {
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+}
+
+.travel-phrase-panel summary::-webkit-details-marker { display: none; }
+
+.travel-phrase-panel summary h2 {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 42px;
+    gap: 18px;
+    align-items: center;
+    margin: 0;
+    padding: 24px 28px;
+    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+}
+
+.phrase-summary-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(197, 160, 89, 0.15);
+    color: #9b7736;
+    font-size: 1.15rem;
+}
+
+.phrase-summary-copy {
+    display: grid;
+    gap: 3px;
+}
+
+.phrase-summary-copy small {
+    color: #9b7736;
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.phrase-summary-copy em {
+    color: var(--muted-gray);
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.phrase-panel-chevron {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(10, 50, 34, 0.16);
+    border-radius: 50%;
+    font-size: 0.78rem;
+    transition: transform 220ms ease, background-color 220ms ease;
+}
+
+.travel-phrase-panel[open] .phrase-panel-chevron {
+    background: var(--primary-green);
+    color: #ffffff;
+    transform: rotate(180deg);
+}
+
+.travel-phrase-panel summary:hover .phrase-panel-chevron {
+    border-color: var(--accent-gold);
+}
+
+.travel-phrase-panel summary:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: -3px;
+}
+
+.travel-phrase-content {
+    padding: 28px;
+    border-top: 1px solid rgba(10, 50, 34, 0.11);
+    background: #f7f5ef;
+    animation: phrasePanelOpen 240ms ease both;
+}
+
+.phrase-panel-intro {
+    max-width: 780px;
+    margin: 0 0 24px;
+    color: var(--muted-gray);
+    font-size: 0.8rem;
+    line-height: 1.7;
+}
+
+.travel-phrase-groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.travel-phrase-group {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(10, 50, 34, 0.1);
+    border-radius: 5px;
+    background: #ffffff;
+}
+
+.travel-phrase-group h3 {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 15px 17px;
+    border-bottom: 2px solid var(--accent-gold);
+    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.35;
+}
+
+.travel-phrase-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(10, 50, 34, 0.08);
+}
+
+.travel-phrase-row:last-child { border-bottom: 0; }
+
+.travel-phrase-row strong {
+    display: grid;
+    gap: 2px;
+    color: var(--primary-green);
+    font-size: 0.78rem;
+}
+
+.travel-phrase-row strong span[lang="ml"] {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.travel-phrase-row > span {
+    color: var(--muted-gray);
+    font-size: 0.72rem;
+    line-height: 1.55;
+}
+
+@keyframes phrasePanelOpen {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 .official-link-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .official-link-grid a { min-height: 96px; display: flex; align-items: center; gap: 14px; padding: 18px; border: 1px solid rgba(10,50,34,.12); border-radius: 5px; color: var(--primary-green); text-decoration: none; }
 .official-link-grid i { color: var(--accent-gold); font-size: 1.25rem; }
@@ -4764,6 +4922,8 @@ p {
     .experience-story-card { grid-template-columns: 1fr; }
     .experience-story-card > img { min-height: 220px; aspect-ratio: 16 / 9; }
     .travel-style-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .travel-phrase-groups { grid-template-columns: 1fr; }
+    .travel-phrase-group h3 { min-height: 0; }
     .profile-shell { grid-template-columns: 1fr; }
     .profile-form { padding: 26px 20px; }
     .profile-form-grid { grid-template-columns: 1fr; }
@@ -4791,8 +4951,18 @@ p {
     .destination-filters button { flex: 1 1 calc(50% - 9px); }
     .travel-style-grid,
     .emergency-help-grid,
-    .official-link-grid,
-    .phrase-compact-list { grid-template-columns: 1fr; }
+    .official-link-grid { grid-template-columns: 1fr; }
+    .travel-phrase-panel summary h2 {
+        grid-template-columns: 44px minmax(0, 1fr) 36px;
+        gap: 12px;
+        padding: 19px 17px;
+        font-size: 1.25rem;
+    }
+    .phrase-summary-icon { width: 44px; height: 44px; }
+    .phrase-summary-copy em { font-size: 0.68rem; line-height: 1.5; }
+    .phrase-panel-chevron { width: 36px; height: 36px; }
+    .travel-phrase-content { padding: 20px 16px; }
+    .travel-phrase-row { grid-template-columns: 1fr; gap: 5px; }
     .destination-card-actions a,
     .recent-recommendation-actions a { width: 100%; justify-content: center; }
 }
@@ -4801,6 +4971,8 @@ p {
     .destination-directory-card,
     .experience-story-card,
     .travel-style-grid a { transition: none; }
+    .travel-phrase-content { animation: none; }
+    .phrase-panel-chevron { transition: none; }
 }
 
 /* ==========================================================================
