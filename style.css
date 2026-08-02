@@ -232,6 +232,108 @@ p {
     color: var(--primary-green) !important;
 }
 
+.brochure-nav-cta {
+    width: 164px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    padding: 0 17px;
+    overflow: hidden;
+}
+
+.brochure-nav-cta > i {
+    flex: 0 0 auto;
+    font-size: 0.9rem;
+}
+
+.brochure-cta-copy {
+    position: relative;
+    width: 94px;
+    height: 34px;
+    display: block;
+    overflow: hidden;
+    text-align: left;
+}
+
+.brochure-cta-main,
+.brochure-cta-sub {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    line-height: 1;
+    white-space: nowrap;
+    will-change: transform, opacity;
+}
+
+.brochure-cta-main {
+    top: 50%;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transform: translateY(-50%);
+    transform-origin: left top;
+    animation: brochureTitleLift 5.2s ease-in-out infinite;
+}
+
+.brochure-cta-sub {
+    top: 18px;
+    font-size: 0.69rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(135%);
+    animation: brochureSubtitleRise 5.2s ease-in-out infinite;
+}
+
+.brochure-nav-cta:hover .brochure-cta-main,
+.brochure-nav-cta:hover .brochure-cta-sub,
+.brochure-nav-cta:focus-visible .brochure-cta-main,
+.brochure-nav-cta:focus-visible .brochure-cta-sub {
+    animation-duration: 2.8s;
+}
+
+@keyframes brochureTitleLift {
+    0%, 28%, 100% {
+        top: 50%;
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+    44%, 80% {
+        top: 3px;
+        opacity: 0.76;
+        transform: translateY(0) scale(0.76);
+    }
+}
+
+@keyframes brochureSubtitleRise {
+    0%, 34%, 100% {
+        opacity: 0;
+        transform: translateY(135%);
+    }
+    49%, 80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .brochure-cta-main,
+    .brochure-cta-sub {
+        animation: none;
+    }
+
+    .brochure-cta-main {
+        top: 3px;
+        opacity: 0.76;
+        transform: scale(0.76);
+    }
+
+    .brochure-cta-sub {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .menu-toggle {
     display: none;
     color: white;
