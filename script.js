@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 meals: 'Breakfast, lunch and dinner',
                 summary: 'Travel through plantation country and reserve the afternoon for one confirmed spice, lake or guided nature activity.',
                 schedule: [['8:00 AM', 'Breakfast, checkout and depart Munnar.'], ['12:30 PM', 'Arrive in Thekkady for lunch and check-in.'], ['3:00 PM', 'Join the chosen pre-booked activity.'], ['6:30 PM', 'Spice market, cooking experience or cultural show.'], ['8:00 PM', 'Dinner and prepare for the northbound journey.']],
-                note: 'Confirm the next transfer before arrival. Thekkady to Wayanad is a major cross-state road day and needs an early start.'
+                note: 'Confirm the next transfer before arrival. Thekkady to Wayanad is a long northbound transfer across Kerala and needs an early start.'
             },
             {
                 place: 'Thekkady to Wayanad',
@@ -864,52 +864,21 @@ document.addEventListener('DOMContentLoaded', () => {
         footerBottom.append(contact);
     });
 
-    // Reviews are intentionally stored in the current browser because this static site has no server-side review system.
-    const reviewList = document.getElementById('review-list');
+    // Public excerpts and private browser notes remain separate by design.
+    const publicReviewList = document.getElementById('public-review-list');
+    const localReviewList = document.getElementById('local-review-list');
     const reviewForm = document.getElementById('review-form');
 
-    if (reviewList && reviewForm) {
-        const reviewStorageKey = 'visitKeralaReviews';
-        const starterReviews = [
-            {
-                name: 'Dr. Gayathri G',
-                place: 'St. Francis CSI Church, Fort Kochi',
-                rating: 4.3,
-                reviewCount: '3,192 reviews',
-                message: 'A must-visit landmark widely celebrated as India\'s oldest European-built church, dating back to 1503.',
-                source: 'google',
-                sourceUrl: 'https://www.google.com/maps/search/St.%2BFrancis%2BChurch%2C%2BKochi%2C%2BIndia'
-            },
-            {
-                name: 'Nilima Pawar',
-                place: 'The Valle Munnar',
-                rating: 4.8,
-                reviewCount: '1,436 reviews',
-                message: 'Beautiful view of sunrise from room and excellent service received by staff.',
-                source: 'google',
-                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChoI9tG0_YuCgvOcARoNL2cvMTFsNzJtenQ0ahAB'
-            },
-            {
-                name: 'Aliasgar Patwa',
-                place: 'The World Backwaters, Alappuzha',
-                rating: 4.4,
-                reviewCount: '1,874 reviews',
-                message: 'A very beautiful resort with a nice location, good staff, nice food, comfy rooms.',
-                source: 'google',
-                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChgIy9CG7N6Top5eGgwvZy8xMXljeWR2ZGwQAQ'
-            },
-            {
-                name: 'Rushikesh Patil',
-                place: 'Cliff County Varkala',
-                rating: 4.1,
-                reviewCount: '133 reviews',
-                message: 'Great location, very close to the cliffside restaurants and shopping hub.',
-                source: 'google',
-                sourceUrl: 'https://www.google.com/travel/hotels/entity/ChkI14z9laHNj5lUGg0vZy8xMXY1dDM2al8zEAE'
-            }
+    if (publicReviewList && localReviewList && reviewForm) {
+        const reviewStorageKey = 'visitKeralaLocalReviews';
+        const publicReviews = [
+            { name: 'Dr. Gayathri G', place: 'St. Francis CSI Church, Fort Kochi', rating: 4.3, message: 'A must-visit landmark widely celebrated for its long history in Fort Kochi.', sourceUrl: 'https://www.google.com/maps/search/St.%2BFrancis%2BChurch%2C%2BKochi%2C%2BIndia', checked: 'August 2026' },
+            { name: 'Nilima Pawar', place: 'The Valle Munnar', rating: 4.8, message: 'Beautiful sunrise views and attentive service made the hill stay memorable.', sourceUrl: 'https://www.google.com/travel/hotels/entity/ChoI9tG0_YuCgvOcARoNL2cvMTFsNzJtenQ0ahAB', checked: 'August 2026' },
+            { name: 'Aliasgar Patwa', place: 'The World Backwaters, Alappuzha', rating: 4.4, message: 'A scenic waterside location with welcoming staff, comfortable rooms and enjoyable food.', sourceUrl: 'https://www.google.com/travel/hotels/entity/ChgIy9CG7N6Top5eGgwvZy8xMXljeWR2ZGwQAQ', checked: 'August 2026' },
+            { name: 'Rushikesh Patil', place: 'Cliff County Varkala', rating: 4.1, message: 'A convenient location close to the cliffside restaurants and shopping area.', sourceUrl: 'https://www.google.com/travel/hotels/entity/ChkI14z9laHNj5lUGg0vZy8xMXY1dDM2al8zEAE', checked: 'August 2026' }
         ];
 
-        const getStoredReviews = () => {
+        const loadLocalReviews = () => {
             try {
                 const saved = JSON.parse(localStorage.getItem(reviewStorageKey));
                 return Array.isArray(saved) ? saved : [];
@@ -917,8 +886,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return [];
             }
         };
+        const saveLocalReviews = reviews => localStorage.setItem(reviewStorageKey, JSON.stringify(reviews));
+        const calculatePublicAverage = reviews => reviews.length
+            ? Math.round((reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length) * 10) / 10
+            : null;
+        const starMarkup = rating => Array.from({ length: 5 }, (_, index) => {
+            const difference = rating - index;
+            return `<i class="${difference >= 1 ? 'fa-solid fa-star' : difference >= 0.25 ? 'fa-solid fa-star-half-stroke' : 'fa-regular fa-star'}" aria-hidden="true"></i>`;
+        }).join('');
 
-        const createReviewCard = review => {
+        const createReviewCard = (review, isPublic) => {
             const card = document.createElement('article');
             const topLine = document.createElement('div');
             const stars = document.createElement('div');
@@ -927,157 +904,221 @@ document.addEventListener('DOMContentLoaded', () => {
             const avatar = document.createElement('div');
             const identity = document.createElement('div');
             const name = document.createElement('strong');
-            const plan = document.createElement('span');
-            const initials = review.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
+            const context = document.createElement('span');
+            const source = isPublic ? document.createElement('a') : document.createElement('span');
+            const initials = String(review.name).split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
 
-            card.className = `review-card reveal active ${review.source === 'google' ? 'google-review' : 'local-review'}`;
+            card.className = `review-card reveal active ${isPublic ? 'google-review' : 'local-review'}`;
+            if (!isPublic) card.dataset.reviewId = review.id;
             topLine.className = 'review-card-topline';
             stars.className = 'review-stars';
-            stars.setAttribute('aria-label', `${review.rating} out of 5${review.source === 'google' ? ' Google place rating' : ' stars'}`);
-
-            for (let index = 1; index <= 5; index += 1) {
-                const star = document.createElement('i');
-                const difference = review.rating - (index - 1);
-                star.className = difference >= 1
-                    ? 'fa-solid fa-star'
-                    : difference >= 0.25
-                        ? 'fa-solid fa-star-half-stroke'
-                        : 'fa-regular fa-star';
-                star.setAttribute('aria-hidden', 'true');
-                stars.append(star);
+            stars.setAttribute('aria-label', `${review.rating} out of 5`);
+            stars.innerHTML = starMarkup(review.rating);
+            source.className = `review-source-stamp${isPublic ? '' : ' local-source-stamp'}`;
+            source.textContent = isPublic ? 'Public Google excerpt' : 'Saved on this device';
+            if (isPublic) {
+                source.href = review.sourceUrl;
+                source.target = '_blank';
+                source.rel = 'noopener';
+                source.setAttribute('aria-label', `Open public Google source for ${review.place}`);
             }
-
-            topLine.append(stars);
-
-            if (review.source === 'google' && review.sourceUrl) {
-                const sourceStamp = document.createElement('a');
-                sourceStamp.className = 'review-source-stamp';
-                sourceStamp.href = review.sourceUrl;
-                sourceStamp.target = '_blank';
-                sourceStamp.rel = 'noopener noreferrer';
-                sourceStamp.title = 'Open the source on Google';
-                sourceStamp.setAttribute('aria-label', `Taken from Google. Open source for ${review.place}`);
-                sourceStamp.innerHTML = '<i class="fa-brands fa-google" aria-hidden="true"></i><span>Taken from Google</span>';
-                topLine.append(sourceStamp);
-            } else {
-                const localStamp = document.createElement('span');
-                localStamp.className = 'review-source-stamp local-source-stamp';
-                localStamp.setAttribute('aria-label', 'Taken from here. Submitted on this website');
-                localStamp.innerHTML = '<i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Taken from Here</span>';
-                topLine.append(localStamp);
-            }
-
-            quote.textContent = `"${review.message}"`;
+            topLine.append(stars, source);
+            quote.textContent = `“${review.message}”`;
             avatar.className = 'review-avatar';
-            avatar.textContent = initials;
+            avatar.textContent = initials || 'VK';
             footer.className = 'review-card-footer';
             name.textContent = review.name;
-            plan.textContent = review.place || review.plan;
-            identity.append(name, plan);
-
-            if (review.source === 'google') {
-                const ratingMeta = document.createElement('small');
-                ratingMeta.className = 'review-rating-meta';
-                ratingMeta.textContent = `${review.rating.toFixed(1)} Google place rating${review.reviewCount ? ` | ${review.reviewCount}` : ''}`;
-                identity.append(ratingMeta);
-            }
-
+            context.textContent = isPublic ? review.place : review.plan;
+            identity.append(name, context);
+            const meta = document.createElement('small');
+            meta.className = 'review-rating-meta';
+            meta.textContent = isPublic
+                ? `${review.rating.toFixed(1)} public place rating · Checked ${review.checked}`
+                : `${review.traveller || 'Traveller'}${review.month ? ` · ${review.month}` : ''} · Not independently verified.`;
+            identity.append(meta);
             footer.append(avatar, identity);
+            if (!isPublic) {
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.className = 'delete-local-review';
+                removeButton.dataset.deleteReview = review.id;
+                removeButton.setAttribute('aria-label', `Delete review by ${review.name}`);
+                removeButton.innerHTML = '<i class="fa-regular fa-trash-can" aria-hidden="true"></i>';
+                footer.append(removeButton);
+            }
             card.append(topLine, quote, footer);
             return card;
         };
 
-        const renderReviews = () => {
-            reviewList.replaceChildren();
-            [...getStoredReviews(), ...starterReviews].forEach(review => reviewList.append(createReviewCard(review)));
+        const renderPublicReviews = () => {
+            publicReviewList.replaceChildren(...publicReviews.map(review => createReviewCard(review, true)));
+            const average = calculatePublicAverage(publicReviews);
+            const averageElement = document.getElementById('public-review-average');
+            const starsElement = document.getElementById('public-review-stars');
+            const summaryElement = document.getElementById('public-review-summary');
+            averageElement.textContent = average === null ? '—' : `${average.toFixed(1)}/5`;
+            starsElement.innerHTML = average === null ? '' : starMarkup(average);
+            summaryElement.textContent = average === null
+                ? 'No supported public rating is available.'
+                : `Average across ${publicReviews.length} featured public places · Reviewed August 2026`;
+        };
+        const renderLocalReviews = () => {
+            const reviews = loadLocalReviews();
+            if (!reviews.length) {
+                const empty = document.createElement('p');
+                empty.className = 'empty-local-reviews';
+                empty.textContent = 'No local reviews saved yet.';
+                localReviewList.replaceChildren(empty);
+            } else {
+                localReviewList.replaceChildren(...reviews.map(review => createReviewCard(review, false)));
+            }
+            document.getElementById('clear-local-reviews').disabled = !reviews.length;
+        };
+        const validateLocalReview = review => {
+            if (!review.name || review.name.length > 50) return 'Enter a name of 50 characters or fewer.';
+            if (!review.message || review.message.length < 10 || review.message.length > 500) return 'Write a review between 10 and 500 characters.';
+            if (!Number.isInteger(review.rating) || review.rating < 1 || review.rating > 5) return 'Choose a rating from 1 to 5.';
+            return '';
         };
 
-        renderReviews();
-
+        renderPublicReviews();
+        renderLocalReviews();
+        const reviewMessage = document.getElementById('review-message');
+        reviewMessage.addEventListener('input', () => {
+            document.getElementById('review-character-count').textContent = reviewMessage.value.length;
+        });
         reviewForm.addEventListener('submit', event => {
             event.preventDefault();
-            const name = document.getElementById('review-name').value.trim();
-            const plan = document.getElementById('review-plan').value;
-            const rating = Number(document.querySelector('input[name="rating"]:checked')?.value || 5);
-            const message = document.getElementById('review-message').value.trim();
+            const review = {
+                id: `review-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+                name: document.getElementById('review-name').value.trim(),
+                plan: document.getElementById('review-plan').value,
+                rating: Number(reviewForm.querySelector('input[name="rating"]:checked')?.value),
+                message: reviewMessage.value.trim(),
+                month: document.getElementById('review-month').value,
+                traveller: document.getElementById('review-traveller').value
+            };
             const status = document.getElementById('review-status');
-
-            if (!name || !message) return;
-
-            const reviews = getStoredReviews();
-            reviews.unshift({ name, plan, rating, message });
-            localStorage.setItem(reviewStorageKey, JSON.stringify(reviews));
+            const validationMessage = validateLocalReview(review);
+            if (validationMessage) {
+                status.textContent = validationMessage;
+                return;
+            }
+            saveLocalReviews([review, ...loadLocalReviews()]);
             reviewForm.reset();
-            renderReviews();
-            status.textContent = 'Your review is saved on this device.';
+            document.getElementById('review-character-count').textContent = '0';
+            renderLocalReviews();
+            status.textContent = 'Review saved only on this device.';
         });
+        localReviewList.addEventListener('click', event => {
+            const button = event.target.closest('[data-delete-review]');
+            if (!button) return;
+            saveLocalReviews(loadLocalReviews().filter(review => review.id !== button.dataset.deleteReview));
+            renderLocalReviews();
+            document.getElementById('review-status').textContent = 'Local review deleted.';
+        });
+        document.getElementById('clear-local-reviews').addEventListener('click', () => {
+            if (!loadLocalReviews().length || !window.confirm('Clear all reviews saved in this browser?')) return;
+            localStorage.removeItem(reviewStorageKey);
+            renderLocalReviews();
+            document.getElementById('review-status').textContent = 'All local reviews cleared.';
+        });
+        window.__keralaReviews = {
+            publicReviews: publicReviews.map(review => ({ ...review })),
+            calculatePublicAverage,
+            getLocalReviews: loadLocalReviews,
+            validateLocalReview,
+            addLocalReview: review => { const message = validateLocalReview(review); if (message) throw new Error(message); saveLocalReviews([{ ...review, id: review.id || `review-${Date.now()}` }, ...loadLocalReviews()]); },
+            deleteLocalReview: id => saveLocalReviews(loadLocalReviews().filter(review => review.id !== id)),
+            clearLocalReviews: () => localStorage.removeItem(reviewStorageKey)
+        };
     }
 
-    // Profile preferences stay on the visitor's device.
+    // Trip preferences stay on the visitor's device and can prefill the Plan Finder.
     const profileForm = document.getElementById('profile-form');
-
     if (profileForm) {
-        const profileStorageKey = 'visitKeralaProfile';
-        const profileNameInput = document.getElementById('profile-name');
-        const profileEmailInput = document.getElementById('profile-email');
-        const profileCityInput = document.getElementById('profile-city');
-        const profilePaceInput = document.getElementById('profile-pace');
+        const preferenceStorageKey = 'visitKeralaTripPreferences';
+        const recommendationStorageKey = 'visitKeralaLatestRecommendation';
         const profileStatus = document.getElementById('profile-status');
-        const profileReset = document.getElementById('profile-reset');
-        const interestInputs = [...document.querySelectorAll('input[name="interests"]')];
-
-        const updateProfileIdentity = (name) => {
-            const displayName = name.trim() || 'Guest Traveller';
-            const initials = displayName.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase();
-
-            document.querySelectorAll('[data-profile-name]').forEach(element => {
-                element.textContent = displayName;
-            });
-
-            document.querySelectorAll('[data-profile-initials]').forEach(element => {
-                element.textContent = initials;
-            });
+        const interestStatus = document.getElementById('profile-interest-status');
+        const interestInputs = [...profileForm.querySelectorAll('input[name="interests"]')];
+        const safeRead = key => {
+            try { return JSON.parse(localStorage.getItem(key)) || null; } catch { return null; }
         };
-
-        const getProfile = () => {
-            try {
-                return JSON.parse(localStorage.getItem(profileStorageKey)) || {};
-            } catch {
-                return {};
+        const readPreferenceForm = () => ({
+            name: document.getElementById('profile-name').value.trim(),
+            city: document.getElementById('profile-city').value.trim(),
+            traveller: document.getElementById('profile-traveller').value,
+            pace: document.getElementById('profile-pace').value,
+            comfort: document.getElementById('profile-comfort').value,
+            experiences: interestInputs.filter(input => input.checked).map(input => input.value).slice(0, 3)
+        });
+        const updateInterestState = message => {
+            const count = interestInputs.filter(input => input.checked).length;
+            interestStatus.textContent = message || `${count} of 3 selected`;
+        };
+        const savePreferences = () => {
+            const preferences = readPreferenceForm();
+            localStorage.setItem(preferenceStorageKey, JSON.stringify(preferences));
+            profileStatus.textContent = 'Trip preferences saved only on this device.';
+            return preferences;
+        };
+        const renderRecentRecommendation = () => {
+            const container = document.getElementById('recent-recommendation');
+            const recommendation = safeRead(recommendationStorageKey);
+            if (!recommendation?.name || !recommendation?.url) {
+                container.innerHTML = '<p>No plan recommendation has been saved yet.</p><a class="profile-finder-link" href="itineraries.html#trip-finder-title">Open Plan Finder <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></a>';
+                return;
             }
+            const title = document.createElement('h3');
+            const match = document.createElement('strong');
+            const route = document.createElement('p');
+            const actions = document.createElement('div');
+            title.textContent = recommendation.name;
+            match.textContent = `${recommendation.matchPercentage}% match`;
+            route.textContent = recommendation.route;
+            actions.className = 'recent-recommendation-actions';
+            [['View Full Plan', recommendation.url], ['Estimate Budget', recommendation.budgetUrl], ['View on Map', recommendation.mapUrl]].forEach(([label, url]) => {
+                const link = document.createElement('a');
+                link.href = url;
+                link.textContent = label;
+                actions.append(link);
+            });
+            container.replaceChildren(title, match, route, actions);
         };
 
-        const storedProfile = getProfile();
-        profileNameInput.value = storedProfile.name || profileNameInput.value;
-        profileEmailInput.value = storedProfile.email || '';
-        profileCityInput.value = storedProfile.city || '';
-        profilePaceInput.value = storedProfile.pace || profilePaceInput.value;
-        interestInputs.forEach(input => {
-            input.checked = storedProfile.interests ? storedProfile.interests.includes(input.value) : input.checked;
+        const stored = safeRead(preferenceStorageKey) || {};
+        document.getElementById('profile-name').value = stored.name || '';
+        document.getElementById('profile-city').value = stored.city || '';
+        document.getElementById('profile-traveller').value = stored.traveller || 'family';
+        document.getElementById('profile-pace').value = stored.pace || 'balanced';
+        document.getElementById('profile-comfort').value = stored.comfort || 'comfortable';
+        interestInputs.forEach(input => { input.checked = Array.isArray(stored.experiences) && stored.experiences.includes(input.value); });
+        updateInterestState();
+        renderRecentRecommendation();
+        interestInputs.forEach(input => input.addEventListener('change', () => {
+            const selected = interestInputs.filter(option => option.checked);
+            if (selected.length > 3) {
+                input.checked = false;
+                updateInterestState('Choose up to three experiences. Remove one before adding another.');
+            } else updateInterestState();
+        }));
+        profileForm.addEventListener('submit', event => { event.preventDefault(); savePreferences(); });
+        document.getElementById('profile-use-finder').addEventListener('click', () => {
+            savePreferences();
+            window.location.href = 'itineraries.html?preferences=1#trip-finder-title';
         });
-        updateProfileIdentity(profileNameInput.value);
-
-        profileForm.addEventListener('submit', event => {
-            event.preventDefault();
-            const profile = {
-                name: profileNameInput.value.trim() || 'Guest Traveller',
-                email: profileEmailInput.value.trim(),
-                city: profileCityInput.value.trim(),
-                pace: profilePaceInput.value,
-                interests: interestInputs.filter(input => input.checked).map(input => input.value)
-            };
-
-            localStorage.setItem(profileStorageKey, JSON.stringify(profile));
-            updateProfileIdentity(profile.name);
-            profileStatus.textContent = 'Profile saved on this device.';
-        });
-
-        profileReset.addEventListener('click', () => {
-            localStorage.removeItem(profileStorageKey);
+        document.getElementById('profile-reset').addEventListener('click', () => {
+            localStorage.removeItem(preferenceStorageKey);
             profileForm.reset();
-            updateProfileIdentity(profileNameInput.value);
-            profileStatus.textContent = 'Profile reset.';
+            interestInputs.forEach(input => { input.checked = false; });
+            document.getElementById('profile-traveller').value = 'family';
+            document.getElementById('profile-pace').value = 'balanced';
+            document.getElementById('profile-comfort').value = 'comfortable';
+            updateInterestState();
+            profileStatus.textContent = 'Trip preferences cleared from this device.';
         });
+        window.__keralaTripPreferences = { read: () => safeRead(preferenceStorageKey), save: savePreferences, recent: () => safeRead(recommendationStorageKey) };
     }
 
     // ==========================================
@@ -1200,7 +1241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: 'Couples trip',
             questions: ['Which Kerala plan is best for couples?', 'Is Kerala good for a honeymoon?', 'Where should couples stay in Kerala?', 'What is a romantic Kerala itinerary?', 'Should couples choose Munnar or Varkala?', 'Can we book a private houseboat?'],
             terms: ['for couples', 'couples trip', 'honeymoon', 'romantic trip', 'romantic kerala'],
-            text: "For couples, combine two nights in Munnar with a private backwater stay and a Varkala or Kumarakom finish. The 5-day plan is compact; the 7-day plan gives more quiet time and fewer rushed evenings.",
+            text: "For couples, the 5-day hills and houseboat route is compact. The 7-day route continues through Munroe Island and finishes in Varkala, while the relaxed 5-day Kochi and Kumarakom route suits travellers who prefer fewer hotel changes.",
             link: ['plan-7-days.html', 'See the 7-day route'],
             related: ['munnar', 'houseboat', 'varkala']
         },
@@ -2111,8 +2152,8 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (adjustableRegularFit) missingPreferences.push(answers.traveller === 'senior' ? 'Dedicated senior pacing' : 'Student-group focus');
         if (plan.pace === answers.pace) matchedPreferences.push(`${paceNames[answers.pace]} pace`);
         else missingPreferences.push(`${paceNames[answers.pace]} pace`);
-        if (plan.budgetFit[answers.budget] >= 2) matchedPreferences.push(`${budgetNames[answers.budget]} budget`);
-        else missingPreferences.push(`${budgetNames[answers.budget]} budget fit`);
+        if (plan.budgetFit[answers.budget] >= 2) matchedPreferences.push(`${budgetNames[answers.budget]} comfort level`);
+        else missingPreferences.push(`${budgetNames[answers.budget]} comfort fit`);
         matchedPreferences.push(...matchedExperiences.map(experience => experienceNames[experience]));
 
         return {
@@ -2181,7 +2222,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (evaluation.missingExperiences.length) {
             const missingText = formatList(evaluation.missingExperiences.map(experience => experienceNames[experience].toLowerCase()));
-            return `Your ${answers.days}-day limit does not allow this route to cover ${missingText} properly. This is the closest available exact-duration plan.`;
+            if (answers.days === 3 && evaluation.missingExperiences.length > 1) {
+                return `A three-day trip is too short to include all of these experiences comfortably. The closest available route does not fully include ${missingText}.`;
+            }
+            if (evaluation.plan.days === answers.days) {
+                return `The available ${evaluation.plan.days}-day itinerary does not fully include ${missingText}.`;
+            }
+            return `This ${evaluation.plan.days}-day alternative does not fully include ${missingText}, and its duration differs from your selection.`;
         }
         if (evaluation.matchPercentage < 60) {
             return 'No existing itinerary fully matches these answers. Review the missing preferences or consider the alternative route.';
@@ -2304,6 +2351,30 @@ document.addEventListener('DOMContentLoaded', () => {
         experienceLimit.textContent = message || (experiencePriority.length === 3 ? 'Maximum selected. Remove one to choose another.' : '');
     };
 
+    const applySavedPreferences = preferences => {
+        if (!preferences || typeof preferences !== 'object') return false;
+        const selections = [
+            ['traveller', preferences.traveller, validTravellers],
+            ['pace', preferences.pace, validPaces],
+            ['budget', preferences.comfort || preferences.budget, validBudgets]
+        ];
+        selections.forEach(([name, value, allowed]) => {
+            if (!allowed.includes(value)) return;
+            const input = form.querySelector(`input[name="${name}"][value="${value}"]`);
+            if (input) input.checked = true;
+        });
+        experienceInputs.forEach(input => { input.checked = false; });
+        experiencePriority = (Array.isArray(preferences.experiences) ? preferences.experiences : [])
+            .filter(experience => validExperiences.includes(experience))
+            .slice(0, 3);
+        experiencePriority.forEach(experience => {
+            const input = form.querySelector(`input[name="experiences"][value="${experience}"]`);
+            if (input) input.checked = true;
+        });
+        updateExperiencePriority('Preferences loaded from this device. Choose your number of travel days.');
+        return true;
+    };
+
     experienceInputs.forEach(input => {
         input.addEventListener('change', () => {
             if (input.checked && !experiencePriority.includes(input.value)) {
@@ -2370,7 +2441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         finder.querySelector('[data-result-route]').textContent = primary.plan.route;
         finder.querySelector('[data-result-pace]').textContent = paceNames[primary.plan.pace];
         finder.querySelector('[data-result-price]').textContent = `${budgetNames[answers.budget]} tier selected`;
-        finder.querySelector('[data-result-price-note]').textContent = 'Budget depends on your traveller group. Enter your group, travel month and room preference for an indicative 2026 total.';
+        finder.querySelector('[data-result-price-note]').textContent = 'Your personalised trip budget depends on traveller count, ages, dates and room preferences.';
         finder.querySelector('[data-result-link]').href = primary.url;
         finder.querySelector('[data-result-budget-link]').href = primary.budgetUrl;
         finder.querySelector('[data-result-map-link]').href = primary.mapUrl;
@@ -2381,7 +2452,7 @@ document.addEventListener('DOMContentLoaded', () => {
         finder.querySelector('[data-alternative-name]').textContent = alternative.name;
         finder.querySelector('[data-alternative-reason]').textContent = alternative.reason;
         finder.querySelector('[data-alternative-difference]').textContent = alternative.difference;
-        finder.querySelector('[data-alternative-price]').textContent = `${budgetNames[answers.budget]} tier; calculate for your group`;
+        finder.querySelector('[data-alternative-price]').textContent = `${budgetNames[answers.budget]} comfort; calculate for your group`;
         finder.querySelector('[data-alternative-price-note]').textContent = 'The alternative plan has the same personalised group estimator.';
         finder.querySelector('[data-alternative-link]').href = alternative.url;
     };
@@ -2398,6 +2469,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const recommendation = recommendTrips(readAnswers());
         renderResult(recommendation);
+        try {
+            localStorage.setItem('visitKeralaLatestRecommendation', JSON.stringify({
+                id: recommendation.primary.id,
+                name: recommendation.primary.name,
+                matchPercentage: recommendation.primary.matchPercentage,
+                route: recommendation.primary.plan.route,
+                url: recommendation.primary.url,
+                budgetUrl: recommendation.primary.budgetUrl,
+                mapUrl: recommendation.primary.mapUrl,
+                savedAt: new Date().toISOString()
+            }));
+        } catch {
+            // The recommendation still works when browser storage is unavailable.
+        }
         form.hidden = true;
         result.hidden = false;
         progressBar.style.width = '100%';
@@ -2454,7 +2539,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (traveller === 'solo' && primary.id === 'student') failures.push({ answers, issue: 'Student plan recommended to solo traveller' });
                 else if (plans.some(plan => plan.days === days && isPrimaryEligible(plan, recommendation.answers)) && primary.plan.days !== days) failures.push({ answers, issue: 'Exact duration was not respected' });
                 else if (primary.matchPercentage < 0 || primary.matchPercentage > 100 || alternative.matchPercentage < 0 || alternative.matchPercentage > 100) failures.push({ answers, issue: 'Match percentage outside 0-100' });
-                else if (primary.selectedBudget !== budget || alternative.selectedBudget !== budget) failures.push({ answers, issue: 'Incorrect budget preference' });
+                else if (primary.selectedBudget !== budget || alternative.selectedBudget !== budget) failures.push({ answers, issue: 'Incorrect comfort preference' });
                 else if (![primary.budgetUrl, alternative.budgetUrl].every(url => url.includes(`?budget=${budget}#budget`))) failures.push({ answers, issue: 'Incorrect budget-estimator link' });
                 else if (JSON.stringify(primary.missingExperiences) !== JSON.stringify(expectedMissing)) failures.push({ answers, issue: 'Missing experiences are inaccurate' });
                 else if (![primary.url, alternative.url].every(url => plans.some(plan => plan.url === url))) failures.push({ answers, issue: 'Unknown plan link' });
@@ -2507,7 +2592,15 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    updateExperiencePriority('');
+    let preferencesLoaded = false;
+    if (new URLSearchParams(window.location.search).get('preferences') === '1') {
+        try {
+            preferencesLoaded = applySavedPreferences(JSON.parse(localStorage.getItem('visitKeralaTripPreferences')));
+        } catch {
+            preferencesLoaded = false;
+        }
+    }
+    if (!preferencesLoaded) updateExperiencePriority('');
     const testingApi = {
         plans: plans.map(plan => ({ ...plan })),
         recommend: recommendTrips,
@@ -2516,6 +2609,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!plan) throw new Error('Unknown plan.');
             return evaluatePlan(plan, normaliseAnswers(answers));
         },
+        applySavedPreferences,
         runAllTests,
         runRequiredTests
     };
@@ -2533,4 +2627,35 @@ document.addEventListener('DOMContentLoaded', () => {
             required
         });
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = [...document.querySelectorAll('[data-destination-filter]')];
+    const cards = [...document.querySelectorAll('[data-destination-category]')];
+    const status = document.querySelector('[data-destination-filter-status]');
+    if (!filterButtons.length || !cards.length) return;
+
+    const applyFilter = filter => {
+        const supported = filter === 'all' || filterButtons.some(button => button.dataset.destinationFilter === filter);
+        const selected = supported ? filter : 'all';
+        let visible = 0;
+        cards.forEach(card => {
+            const categories = card.dataset.destinationCategory.split(/\s+/);
+            const show = selected === 'all' || categories.includes(selected);
+            card.hidden = !show;
+            card.setAttribute('aria-hidden', String(!show));
+            if (show) visible += 1;
+        });
+        filterButtons.forEach(button => {
+            const active = button.dataset.destinationFilter === selected;
+            button.classList.toggle('is-active', active);
+            button.setAttribute('aria-pressed', String(active));
+        });
+        status.textContent = selected === 'all'
+            ? `Showing all ${visible} destinations.`
+            : `Showing ${visible} ${selected.replace('-', ' ')} ${visible === 1 ? 'destination' : 'destinations'}.`;
+        return visible;
+    };
+    filterButtons.forEach(button => button.addEventListener('click', () => applyFilter(button.dataset.destinationFilter)));
+    window.__keralaDestinationFilters = { apply: applyFilter, categories: filterButtons.map(button => button.dataset.destinationFilter), count: cards.length };
 });

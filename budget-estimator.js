@@ -117,6 +117,7 @@
             icon: 'fa-wallet',
             description: 'Simple stays, practical transport and standard experiences.',
             roomRate: 2800,
+            extraBedRate: 800,
             mealRate: 600,
             activityRate: 340,
             transportMultiplier: 0.72,
@@ -133,6 +134,7 @@
             icon: 'fa-bed',
             description: 'Well-rated hotels, easier transfers and a more relaxed trip.',
             roomRate: 5600,
+            extraBedRate: 1400,
             mealRate: 1100,
             activityRate: 650,
             transportMultiplier: 1,
@@ -149,6 +151,7 @@
             icon: 'fa-gem',
             description: 'Upscale stays, private transport and upgraded experiences.',
             roomRate: 12200,
+            extraBedRate: 2400,
             mealRate: 1900,
             activityRate: 1250,
             transportMultiplier: 1.28,
@@ -185,7 +188,8 @@
         practical: 'Choose the most practical arrangement',
         fewer: 'Fewer rooms where possible',
         privacy: 'More privacy',
-        senior: 'Separate room for senior travellers'
+        seniorShared: 'One shared separate room for senior travellers',
+        seniorIndividual: 'Individual room for each senior traveller'
     };
 
     const TIER_IDS = Object.keys(TIERS);
@@ -241,28 +245,36 @@
         const plan = PLAN_DATA[planId] || PLAN_DATA['three-day'];
         const coreGuests = group.adults + group.seniors;
         const childUnits = group.childAges.reduce((total, age) => total + childRoomWeight(age), 0);
+        const seniorSpecific = ['seniorShared', 'seniorIndividual'].includes(roomPreference) && group.seniors;
         let rooms;
+        let childDrivenRooms = 0;
 
-        if (plan.studentShared && roomPreference !== 'privacy' && roomPreference !== 'senior') {
+        if (seniorSpecific) {
+            const seniorRooms = roomPreference === 'seniorIndividual' ? group.seniors : 1;
+            const otherUnits = group.adults + childUnits;
+            const otherRooms = otherUnits ? Math.max(1, Math.ceil(otherUnits / 2.55), Math.ceil(group.adults / 2)) : 0;
+            rooms = seniorRooms + otherRooms;
+            childDrivenRooms = Math.max(0, otherRooms - Math.ceil(group.adults / 2));
+        } else if (plan.studentShared && roomPreference !== 'privacy') {
             rooms = Math.max(1, Math.ceil((coreGuests + childUnits) / (roomPreference === 'fewer' ? 4.5 : 4)));
         } else {
             const capacity = roomPreference === 'fewer' ? 3.25 : roomPreference === 'privacy' ? 1.85 : 2.55;
             rooms = Math.max(1, Math.ceil((coreGuests + childUnits) / capacity), Math.ceil(coreGuests / 2));
+            childDrivenRooms = Math.max(0, rooms - Math.ceil(coreGuests / 2));
         }
 
-        if (roomPreference === 'senior' && group.seniors) {
-            const seniorRooms = group.seniors;
-            const otherUnits = group.adults + childUnits;
-            rooms = Math.max(rooms, seniorRooms + (otherUnits ? Math.ceil(otherUnits / 2.55) : 0));
-        }
-
-        const extraBeds = group.childAges.filter(age => age >= 7).length;
+        const olderChildren = group.childAges.filter(age => age >= 7).length;
+        const extraBeds = roomPreference === 'privacy' ? 0 : Math.max(0, olderChildren - (childDrivenRooms * 2));
         const cabinCapacity = roomPreference === 'fewer' ? 3.5 : roomPreference === 'privacy' ? 2 : 3.1;
         const cabinUnits = coreGuests + group.childAges.reduce((total, age) => total + (age <= 5 ? 0.25 : age <= 8 ? 0.45 : 0.65), 0);
         let cabins = plan.cruise === 'overnight' ? Math.max(1, Math.ceil(cabinUnits / cabinCapacity)) : 0;
-        if (plan.cruise === 'overnight' && roomPreference === 'senior' && group.seniors && group.adults) cabins = Math.max(cabins, Math.ceil(group.seniors / 2) + Math.ceil(group.adults / 2));
+        if (plan.cruise === 'overnight' && seniorSpecific) {
+            const seniorCabins = roomPreference === 'seniorIndividual' ? group.seniors : 1;
+            const otherCabins = group.adults || group.children ? Math.max(1, Math.ceil((group.adults + (childUnits * 0.7)) / 2)) : 0;
+            cabins = Math.max(cabins, seniorCabins + otherCabins);
+        }
 
-        return { rooms, cabins, extraBeds, childUnits: Number(childUnits.toFixed(2)) };
+        return { rooms, cabins, extraBeds, childDrivenRooms, childUnits: Number(childUnits.toFixed(2)) };
     };
 
     const selectVehicle = (rawGroup, assistance = 'none') => {
@@ -274,7 +286,6 @@
         let index = VEHICLES.findIndex(vehicle => passengerLoad <= vehicle.capacity);
         if (index < 0) index = VEHICLES.length - 1;
         if (assistance === 'wheelchair') index = Math.min(VEHICLES.length - 1, index + ASSISTANCE.wheelchair.vehicleUpgrade);
-        if (assistance === 'private') index = Math.max(1, index);
         return { ...VEHICLES[index], passengerLoad: Number(passengerLoad.toFixed(2)) };
     };
 
@@ -296,6 +307,7 @@
         const studentRoomDiscount = plan.studentShared ? (tierId === 'value' ? 0.68 : tierId === 'comfortable' ? 0.76 : 0.88) : 1;
         const wheelchairRoomFactor = assistance === 'wheelchair' ? 1.06 : 1;
         const accommodationBase = rooms.rooms * plan.hotelNights * tier.roomRate * seasonEffect * studentRoomDiscount * wheelchairRoomFactor;
+        const childExtraBedsBase = rooms.extraBeds * plan.hotelNights * tier.extraBedRate * seasonEffect;
 
         const mealUnits = group.adults
             + (group.seniors * 0.9)
@@ -331,6 +343,7 @@
         const accessibilityBase = assistanceData.allowance[tierIndex];
         const central = {
             accommodation: accommodationBase,
+            childExtraBeds: childExtraBedsBase,
             transport: transportBase,
             meals: mealsBase,
             experiences: experiencesBase,
@@ -388,8 +401,8 @@
         const assumptions = [
             groupSummary(group, input.month, input.holidayPeak),
             `${rooms.rooms} ${rooms.rooms === 1 ? 'hotel room' : 'hotel rooms'} for ${plan.hotelNights} ${plan.hotelNights === 1 ? 'night' : 'nights'}`,
-            rooms.extraBeds ? `${plural(rooms.extraBeds, 'child extra-bed allowance')}` : 'Children share rooms under the planning assumptions',
-            plan.cruise === 'overnight' ? `${plural(rooms.cabins, 'houseboat cabin')}` : plan.cruise === 'day' ? 'One daytime backwater cruise allowance' : 'One local canoe or backwater experience allowance',
+            rooms.extraBeds ? `${plural(rooms.extraBeds, 'child extra bed')} across ${plan.hotelNights} hotel ${plan.hotelNights === 1 ? 'night' : 'nights'}` : 'No separate child extra-bed charge under this room arrangement',
+            plan.cruise === 'overnight' ? `${plural(rooms.cabins, 'houseboat cabin')}` : plan.cruise === 'day' ? 'One day-cruise allowance' : plan.cruise === 'canoe' ? 'One local canoe-experience allowance' : 'No cruise included',
             `${vehicle.name} with luggage and infant-space allowance where relevant`,
             `Age-sensitive allowance for ${plan.paidActivities.join(', ')}`,
             `${season.label}: ${season.multiplier.toFixed(2)}x seasonal multiplier`,
@@ -411,19 +424,27 @@
             totalTravellers,
             groupSummary: groupSummary(group, input.month, input.holidayPeak),
             assumptions,
-            disclaimer: 'This tool provides a planning estimate, not a booking quotation. Actual prices depend on dates, availability, hotel policies, transport operators, child-age rules and selected services.'
+            disclaimer: 'This tool provides a planning estimate, not a booking quotation. Actual prices depend on travel dates, availability, hotel policies, child-age policies, room arrangements, transport operators and selected services.'
         };
     };
 
     const categoryLabels = {
         accommodation: 'Accommodation',
+        childExtraBeds: 'Child extra beds',
         transport: 'Local transport',
         meals: 'Meals',
         experiences: 'Experiences and entry fees',
-        cruise: 'Houseboat or cruise',
         accessibility: 'Accessibility allowance',
         contingency: 'Taxes and contingency'
     };
+
+    const cruiseLabel = plan => plan.cruise === 'overnight'
+        ? 'Overnight houseboat'
+        : plan.cruise === 'day'
+            ? 'Day cruise'
+            : plan.cruise === 'canoe'
+                ? 'Canoe experience'
+                : 'No cruise included';
 
     const renderAgeSelectors = (container, type, ages) => {
         const isChild = type === 'child';
@@ -441,10 +462,11 @@
         container.hidden = !ages.length;
     };
 
-    const tierCardMarkup = (tier, preferredTier) => {
+    const tierCardMarkup = (tier, preferredTier, plan) => {
         const breakdown = Object.entries(tier.ranges)
             .filter(([category, range]) => category !== 'accessibility' || range.upper > 0)
-            .map(([category, range]) => `<li><span>${categoryLabels[category]}</span><strong>${formatRange(range)}</strong></li>`)
+            .filter(([category, range]) => category !== 'childExtraBeds' || range.upper > 0)
+            .map(([category, range]) => `<li><span>${category === 'cruise' ? cruiseLabel(plan) : categoryLabels[category]}</span><strong>${formatRange(range)}</strong></li>`)
             .join('');
         return `
             <article class="group-budget-card ${tier.id}${preferredTier === tier.id ? ' is-preferred' : ''}">
@@ -480,21 +502,21 @@
             </div>
             <div class="budget-result-meta" aria-label="Budget assumptions summary">
                 <div><i class="fa-solid fa-users" aria-hidden="true"></i><span>Travellers</span><strong>${estimate.totalTravellers}</strong></div>
-                <div><i class="fa-solid fa-bed" aria-hidden="true"></i><span>Rooms / cabins</span><strong>${estimate.rooms.rooms} / ${estimate.rooms.cabins || 'Day cruise'}</strong></div>
+                <div><i class="fa-solid fa-bed" aria-hidden="true"></i><span>Rooms / water experience</span><strong>${estimate.rooms.rooms} / ${estimate.plan.cruise === 'overnight' ? `${estimate.rooms.cabins} cabin${estimate.rooms.cabins === 1 ? '' : 's'}` : cruiseLabel(estimate.plan)}</strong></div>
                 <div><i class="fa-solid fa-car-side" aria-hidden="true"></i><span>Vehicle</span><strong>${estimate.vehicle.name}</strong></div>
                 <div><i class="fa-regular fa-moon" aria-hidden="true"></i><span>Nights</span><strong>${estimate.plan.nights}</strong></div>
                 <div><i class="fa-solid fa-route" aria-hidden="true"></i><span>Selected plan</span><strong>${estimate.plan.name}</strong></div>
                 <div><i class="fa-regular fa-calendar" aria-hidden="true"></i><span>Season</span><strong>${estimate.season.label}</strong></div>
             </div>
             ${studentNote}${seniorNote}
-            <div class="group-budget-grid">${TIER_IDS.map(tierId => tierCardMarkup(estimate.tiers[tierId], preferredTier)).join('')}</div>
+            <div class="group-budget-grid">${TIER_IDS.map(tierId => tierCardMarkup(estimate.tiers[tierId], preferredTier, estimate.plan)).join('')}</div>
             <div class="budget-inclusions-grid">
-                <section><h3><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Included in this estimate</h3><ul><li>Accommodation</li><li>Local transport within Kerala</li><li>Estimated meals</li><li>Main itinerary experiences</li><li>Houseboat or cruise where listed</li><li>Approximate taxes and contingency</li></ul></section>
+                <section><h3><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Included in this estimate</h3><ul><li>Accommodation and calculated child extra beds</li><li>Local transport within Kerala</li><li>Estimated meals</li><li>Main itinerary experiences</li><li>${cruiseLabel(estimate.plan)}</li><li>Approximate taxes and contingency</li></ul></section>
                 <section><h3><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> Not included</h3><ul><li>Flights or trains to and from Kerala</li><li>Shopping and personal expenses</li><li>Optional activities not listed</li><li>Travel insurance</li><li>Medical treatment and medicines</li><li>Live booking fees or major unexpected route changes</li></ul></section>
             </div>
             <details class="budget-method" data-budget-method>
                 <summary aria-expanded="false">How was this calculated? <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></summary>
-                <div><p>The estimate uses separate accommodation, transport, meals, age-sensitive activities, cruise and contingency calculations. It is not a multiplied per-person package price.</p><ul>${estimate.assumptions.map(assumption => `<li>${assumption}</li>`).join('')}</ul></div>
+                <div><p>The estimate uses separate accommodation, child extra-bed, transport, meal, age-sensitive activity, water-experience and contingency calculations. It is not a multiplied per-person package price.</p><ul>${estimate.assumptions.map(assumption => `<li>${assumption}</li>`).join('')}</ul><p><strong>Pricing assumptions last reviewed: August 2026.</strong></p></div>
             </details>
             <p class="budget-estimator-disclaimer"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> ${estimate.disclaimer}</p>
             <p class="budget-copy-status" data-budget-copy-status role="status" aria-live="polite"></p>
@@ -509,10 +531,10 @@
         return [
             `${estimate.plan.name} - Indicative 2026 Budget`,
             estimate.groupSummary,
-            `${estimate.rooms.rooms} room(s); ${estimate.rooms.cabins ? `${estimate.rooms.cabins} houseboat cabin(s)` : 'day cruise/canoe allowance'}; ${estimate.vehicle.name}`,
+            `${estimate.rooms.rooms} room(s); ${estimate.rooms.extraBeds} child extra bed(s); ${estimate.rooms.cabins ? `${estimate.rooms.cabins} houseboat cabin(s)` : cruiseLabel(estimate.plan)}; ${estimate.vehicle.name}`,
             `${estimate.season.label} (${estimate.season.multiplier.toFixed(2)}x)`,
             ...tierLines,
-            'Included: accommodation, local Kerala transport, estimated meals, listed experiences, cruise where listed, taxes and contingency.',
+            `Included: accommodation, calculated child extra beds, local Kerala transport, estimated meals, listed experiences, ${cruiseLabel(estimate.plan).toLowerCase()}, taxes and contingency.`,
             'Excluded: travel to/from Kerala, shopping, personal expenses, insurance, medical costs, optional activities and live booking fees.',
             estimate.disclaimer
         ].join('\n');
@@ -566,7 +588,7 @@
             ${plan.seniorFocused ? '<p class="budget-plan-note"><i class="fa-solid fa-notes-medical" aria-hidden="true"></i> This estimate excludes medicines, medical equipment, nursing assistance and medical treatment.</p>' : ''}
             <p class="budget-form-error" data-budget-error role="alert" aria-live="assertive" tabindex="-1"></p>
             <div class="budget-form-actions"><button class="budget-estimate-button" type="submit"><i class="fa-solid fa-calculator" aria-hidden="true"></i> Estimate My Budget</button></div>
-            <p class="budget-estimator-disclaimer"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> This tool provides a planning estimate, not a booking quotation. Actual prices depend on dates, availability, hotel policies, transport operators, child-age rules and selected services.</p>
+            <p class="budget-estimator-disclaimer"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> This tool provides a planning estimate, not a booking quotation. Actual prices depend on travel dates, availability, hotel policies, child-age policies, room arrangements, transport operators and selected services. <strong>Pricing assumptions last reviewed: August 2026.</strong></p>
         </form>
         <div class="budget-loading" data-budget-loading role="status" aria-live="polite" hidden><span class="budget-loading-icon"><i class="fa-solid fa-leaf" aria-hidden="true"></i></span><strong>Calculating accommodation, local transport, meals and experiences...</strong></div>
         <section class="budget-estimator-result" data-budget-result tabindex="-1" aria-live="polite" hidden></section>
@@ -741,7 +763,7 @@
         { id: 5, planId: 'ten-day', input: { adults: 4, children: 0, seniors: 0, infants: 0, month: 7, roomPreference: 'fewer' } },
         { id: 6, planId: 'seven-day', input: { adults: 6, children: 2, childAges: [6, 10], seniors: 0, infants: 0, month: 11, roomPreference: 'privacy' } },
         { id: 7, planId: 'student', input: { adults: 8, children: 0, seniors: 0, infants: 0, month: 7, roomPreference: 'fewer' } },
-        { id: 8, planId: 'senior', input: { adults: 0, children: 0, seniors: 2, infants: 0, month: 10, roomPreference: 'senior', assistance: 'private' } },
+        { id: 8, planId: 'senior', input: { adults: 0, children: 0, seniors: 2, infants: 0, month: 10, roomPreference: 'seniorShared', assistance: 'private' } },
         { id: 9, planId: 'five-day', input: { adults: 2, children: 2, childAges: [6, 10], seniors: 0, infants: 0, month: 12, holidayPeak: true, roomPreference: 'practical' } }
     ];
 
@@ -791,6 +813,10 @@
         const smallVehicle = selectVehicle({ adults: 2, seniors: 0, children: 0, infants: 0 });
         const largeVehicle = selectVehicle({ adults: 8, seniors: 0, children: 2, childAges: [7, 10], infants: 0 });
         if (smallVehicle.id === largeVehicle.id || largeVehicle.capacity < 10) failures.push({ issue: 'Vehicle scaling failure' });
+        const privateSmallVehicle = selectVehicle({ adults: 2, seniors: 0, children: 0, infants: 0 }, 'private');
+        const wheelchairVehicle = selectVehicle({ adults: 2, seniors: 0, children: 0, infants: 0 }, 'wheelchair');
+        if (privateSmallVehicle.id !== 'sedan') failures.push({ issue: 'Private small group was unnecessarily upgraded from a sedan' });
+        if (wheelchairVehicle.capacity <= smallVehicle.capacity) failures.push({ issue: 'Wheelchair space did not upgrade vehicle capacity' });
         const smallGroup = calculateEstimate('five-day', { adults: 1, seniors: 0, children: 0, infants: 0, month: 3, roomPreference: 'practical' });
         const largerGroup = calculateEstimate('five-day', { adults: 4, seniors: 0, children: 2, childAges: [6, 10], infants: 0, month: 3, roomPreference: 'practical' });
         if (largerGroup.tiers.comfortable.total.lower <= smallGroup.tiers.comfortable.total.lower) failures.push({ issue: 'Group totals do not scale' });
@@ -812,13 +838,20 @@
         const holiday = calculateEstimate('five-day', { adults: 2, seniors: 0, children: 0, infants: 0, month: 12, holidayPeak: true, roomPreference: 'practical' });
         if (!(monsoon.tiers.comfortable.total.lower < peak.tiers.comfortable.total.lower
             && peak.tiers.comfortable.total.lower < holiday.tiers.comfortable.total.lower)) failures.push({ issue: 'Seasonal totals are not ordered' });
-        const separateSeniorRooms = calculateRooms({ adults: 0, seniors: 2, children: 0, infants: 0 }, 'senior', 'senior');
-        if (separateSeniorRooms.rooms !== 2) failures.push({ issue: 'Separate senior room preference was not respected' });
+        const sharedSeniorRooms = calculateRooms({ adults: 0, seniors: 2, children: 0, infants: 0 }, 'seniorShared', 'senior');
+        const individualSeniorRooms = calculateRooms({ adults: 0, seniors: 2, children: 0, infants: 0 }, 'seniorIndividual', 'senior');
+        if (sharedSeniorRooms.rooms !== 1) failures.push({ issue: 'Shared senior room preference did not use one room' });
+        if (individualSeniorRooms.rooms !== 2) failures.push({ issue: 'Individual senior room preference did not use two rooms' });
+        const extraBedEstimate = calculateEstimate('five-day', { adults: 2, seniors: 0, children: 1, childAges: [7], infants: 0, month: 3, roomPreference: 'practical' });
+        const fullRoomChildEstimate = calculateEstimate('five-day', { adults: 2, seniors: 0, children: 1, childAges: [11], infants: 0, month: 3, roomPreference: 'practical' });
+        if (!extraBedEstimate.rooms.extraBeds || extraBedEstimate.tiers.value.ranges.childExtraBeds.lower <= 0) failures.push({ issue: 'Child extra-bed charge was not included' });
+        if (fullRoomChildEstimate.rooms.childDrivenRooms && fullRoomChildEstimate.tiers.value.ranges.childExtraBeds.lower > 0) failures.push({ issue: 'Child room and extra bed were double-counted' });
+        if (cruiseLabel(PLAN_DATA['seven-day']) !== 'Canoe experience' || cruiseLabel(PLAN_DATA['three-day']) !== 'Overnight houseboat' || cruiseLabel(PLAN_DATA['ten-day']) !== 'Day cruise') failures.push({ issue: 'Plan-specific water-experience labels are incorrect' });
         if (Object.values(PLAN_DATA).some(plan => !plan.days || !plan.nights || !plan.routeIntensity || !plan.transportUnits || !plan.activityUnits || !plan.paidActivities?.length || !plan.accessibilityRelevant)) failures.push({ issue: 'Incomplete plan pricing data' });
 
         const validation = runValidationTests();
         validation.results.filter(result => !result.passed).forEach(result => failures.push({ caseId: result.id, issue: 'Validation case was not blocked' }));
-        return { calculations, validationCases: validation.cases, invariantChecks: 12, passed: calculations + validation.cases + 12 - failures.length, failures };
+        return { calculations, validationCases: validation.cases, invariantChecks: 19, passed: calculations + validation.cases + 19 - failures.length, failures };
     };
 
     const testingApi = {
@@ -827,6 +860,7 @@
         calculate: calculateEstimate,
         calculateRooms,
         selectVehicle,
+        cruiseLabel,
         seasonForMonth: getSeason,
         formatCurrency,
         validate: validateInput,
@@ -835,6 +869,14 @@
         runAllTests
     };
     window.__keralaBudgetEstimator = testingApi;
+
+    if (new URLSearchParams(window.location.search).get('qa') === 'budget') {
+        const qaResult = runAllTests();
+        document.documentElement.dataset.budgetEstimatorQa = JSON.stringify({
+            ...qaResult,
+            failures: qaResult.failures.slice(0, 20)
+        });
+    }
 
     const initialise = () => document.querySelectorAll('[data-budget-estimator]').forEach(mountEstimator);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialise);

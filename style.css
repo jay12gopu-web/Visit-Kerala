@@ -1181,7 +1181,7 @@ footer {
     color: var(--accent-gold);
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Vacation Plan Detail Pages
    ========================================================================== */
 .plan-cta {
@@ -1460,7 +1460,7 @@ footer {
 }
 
 /* ========================================================================== 
-   Traveller Profile
+   Trip Preferences
    ========================================================================== */
 .profile-hero {
     min-height: 48vh;
@@ -1491,6 +1491,7 @@ footer {
 
 .profile-form,
 .profile-sidebar-block {
+    min-width: 0;
     background: #fff;
     border: 1px solid rgba(10, 50, 34, 0.1);
     box-shadow: 0 16px 40px rgba(10, 50, 34, 0.04);
@@ -4226,6 +4227,350 @@ footer {
 @media(max-width: 1180px) {
     .nav-links { gap: 20px; }
     .nav-links a { font-size: 0.82rem; }
+}
+
+/* ==========================================================================
+   2026 release polish: discovery, planning, reviews and local preferences
+   ========================================================================== */
+.student-project-note {
+    max-width: 720px;
+    margin: 22px auto 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+.supporting-plan-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.supporting-plan-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    border: 1px solid rgba(10, 50, 34, 0.12);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.supporting-plan-icon,
+.travel-guide-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(197, 160, 89, 0.15);
+    color: var(--primary-green);
+}
+
+.supporting-plan-card span {
+    color: var(--accent-gold);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.supporting-plan-card h3 {
+    margin: 3px 0;
+    color: var(--primary-green);
+    font-size: 1.15rem;
+}
+
+.supporting-plan-card p { font-size: 0.78rem; }
+
+.destination-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin: 30px 0 12px;
+}
+
+.destination-filters button {
+    min-height: 42px;
+    padding: 9px 15px;
+    border: 1px solid rgba(10, 50, 34, 0.18);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--primary-green);
+    cursor: pointer;
+    font: 600 0.78rem var(--font-sans);
+}
+
+.destination-filters button:hover,
+.destination-filters button.is-active {
+    border-color: var(--primary-green);
+    background: var(--primary-green);
+    color: #fff;
+}
+
+.destination-filter-status {
+    margin-bottom: 24px;
+    color: var(--muted-gray);
+    text-align: center;
+    font-size: 0.82rem;
+}
+
+.destination-directory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.destination-directory-card {
+    overflow: hidden;
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(10, 50, 34, 0.05);
+    transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.destination-directory-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px rgba(10, 50, 34, 0.1);
+}
+
+.destination-directory-card > img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.destination-directory-card > div { padding: 21px; }
+.destination-directory-card span { color: var(--accent-gold); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+.destination-directory-card h3 { margin: 5px 0 8px; color: var(--primary-green); font-size: 1.45rem; }
+.destination-directory-card p { min-height: 66px; font-size: 0.84rem; }
+.destination-directory-card small { display: block; margin-top: 14px; color: var(--muted-gray); line-height: 1.6; }
+
+.destination-card-actions,
+.recent-recommendation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.destination-card-actions a,
+.recent-recommendation-actions a,
+.profile-finder-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 11px;
+    border: 1px solid var(--primary-green);
+    border-radius: 3px;
+    color: var(--primary-green);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.destination-card-actions a:first-child,
+.recent-recommendation-actions a:first-child {
+    background: var(--primary-green);
+    color: #fff;
+}
+
+.experience-story-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.experience-story-card {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.82fr) minmax(0, 1.18fr);
+    overflow: hidden;
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(10, 50, 34, 0.05);
+    transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.experience-story-card:hover { transform: translateY(-4px); box-shadow: 0 20px 38px rgba(10, 50, 34, 0.11); }
+.experience-story-card > img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; }
+.experience-story-card > div { padding: 28px; }
+.experience-story-card > div > span { color: var(--accent-gold); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
+.experience-story-card h2 { margin: 8px 0 10px; color: var(--primary-green); font-size: 1.65rem; }
+.experience-story-card p { font-size: 0.84rem; }
+.experience-story-card dl { margin: 20px 0; }
+.experience-story-card dl div { padding: 9px 0; border-bottom: 1px solid rgba(10, 50, 34, 0.08); }
+.experience-story-card dt { color: var(--primary-green); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
+.experience-story-card dd { margin-top: 3px; color: var(--muted-gray); font-size: 0.78rem; }
+.experience-story-card a { color: var(--primary-green); font-size: 0.76rem; font-weight: 700; text-decoration: none; }
+
+.travel-style-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.travel-style-grid a {
+    min-height: 148px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 18px;
+    border: 1px solid rgba(10, 50, 34, 0.1);
+    border-radius: 5px;
+    background: #fff;
+    color: var(--primary-green);
+    text-decoration: none;
+    transition: transform 220ms ease, border-color 220ms ease;
+}
+
+.travel-style-grid a:hover { transform: translateY(-3px); border-color: var(--accent-gold); }
+.travel-style-grid i { color: var(--accent-gold); font-size: 1.35rem; }
+.travel-style-grid strong { font-size: 0.86rem; }
+.travel-style-grid span { color: var(--muted-gray); font-size: 0.72rem; }
+
+.travel-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.travel-guide-card,
+.responsible-card {
+    padding: 28px;
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: #fff;
+}
+
+.travel-guide-card h2,
+.responsible-card h2 { margin: 14px 0 10px; color: var(--primary-green); font-size: 1.5rem; }
+.travel-guide-card p,
+.travel-guide-card li,
+.responsible-card li { font-size: 0.82rem; line-height: 1.75; }
+.travel-guide-card ul,
+.responsible-card ul { padding-left: 18px; }
+
+.emergency-help-section { background: var(--primary-green); color: #fff; }
+.emergency-help-section .title,
+.emergency-help-section .section-intro { color: #fff; }
+.emergency-help-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.emergency-help-grid a { min-height: 128px; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 20px; border: 1px solid rgba(255,255,255,.22); border-radius: 5px; background: rgba(255,255,255,.07); color: #fff; text-decoration: none; }
+.emergency-help-grid a:hover { border-color: var(--accent-gold); background: rgba(197,160,89,.14); }
+.emergency-help-grid i { color: var(--accent-gold); }
+.emergency-help-grid span { font-size: 0.72rem; text-transform: uppercase; }
+.emergency-help-grid strong { font-size: 1.2rem; }
+.emergency-source-note { margin-top: 18px; color: rgba(255,255,255,.72); font-size: 0.75rem; }
+.emergency-source-note a { color: #fff; }
+
+.responsible-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.phrase-compact-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.phrase-compact-list div { display: grid; gap: 2px; padding: 12px; border-left: 3px solid var(--accent-gold); background: rgba(10,50,34,.04); }
+.phrase-compact-list strong { color: var(--primary-green); font-size: 1rem; }
+.phrase-compact-list span { font-size: 0.74rem; font-weight: 600; }
+.phrase-compact-list small { color: var(--muted-gray); }
+.official-link-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.official-link-grid a { min-height: 96px; display: flex; align-items: center; gap: 14px; padding: 18px; border: 1px solid rgba(10,50,34,.12); border-radius: 5px; color: var(--primary-green); text-decoration: none; }
+.official-link-grid i { color: var(--accent-gold); font-size: 1.25rem; }
+.official-link-grid span { display: grid; gap: 3px; }
+.official-link-grid small { color: var(--muted-gray); }
+
+.preferences-intro { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding: 16px 20px; border-left: 4px solid var(--accent-gold); background: rgba(255,255,255,.74); }
+.preferences-intro > i { color: var(--primary-green); }
+.preferences-intro p { margin-top: 2px; font-size: 0.78rem; }
+.profile-field label span,
+.profile-form legend span { color: var(--muted-gray); font-size: 0.7rem; font-weight: 400; text-transform: none; }
+.profile-use-finder { min-height: 50px; padding: 13px 18px; border: 1px solid var(--primary-green); background: #fff; color: var(--primary-green); cursor: pointer; font: 700 0.76rem var(--font-sans); text-transform: uppercase; }
+.profile-use-finder:hover { background: var(--primary-green); color: #fff; }
+.recent-recommendation h3 { margin: 12px 0 6px; color: var(--primary-green); font-size: 1.4rem; }
+.recent-recommendation > strong { color: var(--accent-gold); }
+.recent-recommendation > p { margin-top: 10px; font-size: 0.8rem; }
+
+.local-review-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+.clear-local-reviews { min-height: 42px; padding: 9px 14px; border: 1px solid rgba(150,30,30,.4); border-radius: 3px; background: #fff; color: #8f2424; cursor: pointer; font: 600 0.75rem var(--font-sans); }
+.clear-local-reviews:disabled { opacity: .45; cursor: not-allowed; }
+.empty-local-reviews { grid-column: 1 / -1; padding: 26px; border: 1px dashed rgba(10,50,34,.2); color: var(--muted-gray); text-align: center; }
+.delete-local-review { width: 40px; height: 40px; display: grid; place-items: center; margin-left: auto; border: 1px solid rgba(150,30,30,.22); background: #fff; color: #8f2424; cursor: pointer; }
+.review-message-field small { justify-self: end; color: var(--muted-gray); }
+.review-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.review-message-field,
+.rating-field,
+.review-form-actions { grid-column: 1 / -1; }
+
+.destination-filters button:focus-visible,
+.destination-card-actions a:focus-visible,
+.experience-story-card a:focus-visible,
+.travel-style-grid a:focus-visible,
+.emergency-help-grid a:focus-visible,
+.official-link-grid a:focus-visible,
+.profile-use-finder:focus-visible,
+.clear-local-reviews:focus-visible,
+.delete-local-review:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 3px;
+}
+
+@media(max-width: 1100px) {
+    .destination-directory-grid,
+    .travel-info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .experience-story-grid { grid-template-columns: 1fr; }
+    .travel-style-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .emergency-help-grid,
+    .official-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media(max-width: 760px) {
+    .supporting-plan-row,
+    .responsible-grid { grid-template-columns: 1fr; }
+    .supporting-plan-card { grid-template-columns: 44px minmax(0, 1fr); }
+    .supporting-plan-card > a { grid-column: 1 / -1; }
+    .destination-directory-grid,
+    .travel-info-grid { grid-template-columns: 1fr; }
+    .destination-directory-card p { min-height: 0; }
+    .experience-story-card { grid-template-columns: 1fr; }
+    .experience-story-card > img { min-height: 220px; aspect-ratio: 16 / 9; }
+    .travel-style-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .profile-shell { grid-template-columns: 1fr; }
+    .profile-form { padding: 26px 20px; }
+    .profile-form-grid { grid-template-columns: 1fr; }
+    .profile-form-actions { align-items: stretch; flex-direction: column; }
+    .profile-reset { width: 100%; }
+    .review-form { grid-template-columns: 1fr; }
+    .local-review-heading { align-items: stretch; flex-direction: column; }
+}
+
+@media(max-width: 420px) {
+    .destination-detail-hero .page-hero-content {
+        width: 100%;
+        min-width: 0;
+    }
+    .destination-detail-hero .hero-title {
+        font-size: 2.45rem;
+        overflow-wrap: anywhere;
+    }
+    .profile-shell > *,
+    .profile-sidebar {
+        min-width: 0;
+        max-width: 100%;
+    }
+    .destination-filters { justify-content: flex-start; }
+    .destination-filters button { flex: 1 1 calc(50% - 9px); }
+    .travel-style-grid,
+    .emergency-help-grid,
+    .official-link-grid,
+    .phrase-compact-list { grid-template-columns: 1fr; }
+    .destination-card-actions a,
+    .recent-recommendation-actions a { width: 100%; justify-content: center; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    .destination-directory-card,
+    .experience-story-card,
+    .travel-style-grid a { transition: none; }
 }
 
 /* ==========================================================================
