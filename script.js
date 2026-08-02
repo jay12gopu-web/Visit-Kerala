@@ -1875,144 +1875,470 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = finder.querySelector('[data-trip-next]');
     const submitButton = finder.querySelector('[data-trip-submit]');
     const resetButton = finder.querySelector('[data-trip-reset]');
+    const editButton = finder.querySelector('[data-trip-edit]');
     const error = finder.querySelector('[data-trip-error]');
     const result = finder.querySelector('[data-trip-result]');
     const progressBar = finder.querySelector('[data-trip-progress-bar]');
     const stepLabel = finder.querySelector('[data-trip-step-label]');
     const progressText = finder.querySelector('[data-trip-progress-text]');
+    const experienceCounter = finder.querySelector('[data-experience-count]');
+    const experienceLimit = finder.querySelector('[data-experience-limit]');
+    const experienceInputs = [...form.querySelectorAll('input[name="experiences"]')];
+    const validDays = [3, 5, 7, 10];
+    const validTravellers = ['family', 'couple', 'students', 'solo', 'senior'];
+    const validPaces = ['relaxed', 'balanced', 'active'];
+    const validBudgets = ['value', 'comfortable', 'premium'];
+    const validExperiences = ['hills', 'backwaters', 'beaches', 'wildlife', 'culture', 'food', 'wellness'];
+    const durationLevels = [3, 5, 7, 10];
+    const experiencePriorityWeights = [30, 20, 10];
     let currentStep = 0;
+    let experiencePriority = [];
+
+    const experienceNames = {
+        hills: 'Hills',
+        backwaters: 'Backwaters',
+        beaches: 'Beaches',
+        wildlife: 'Wildlife',
+        culture: 'Culture',
+        food: 'Food',
+        wellness: 'Wellness'
+    };
+
+    const travellerNames = {
+        family: 'Family travel',
+        couple: 'Couple travel',
+        students: 'Friends / students',
+        solo: 'Solo travel',
+        senior: 'Senior travel'
+    };
+
+    const budgetNames = {
+        value: 'Value',
+        comfortable: 'Comfortable',
+        premium: 'Premium'
+    };
+
+    const paceNames = {
+        relaxed: 'Relaxed',
+        balanced: 'Balanced',
+        active: 'Active'
+    };
+
+    const familyPriceNote = 'Estimated 2026 total for a family of four. Budget estimate for two adults and two children. Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.';
 
     const plans = [
         {
             id: 'three-day',
-            name: '3-Day Kochi + Backwaters',
-            url: 'plan-3-days.html',
+            publicName: '3-Day Kochi + Backwaters',
             days: 3,
-            route: 'Kochi - Alappuzha',
+            url: 'plan-3-days.html',
+            route: 'Kochi - Fort Kochi - Alappuzha',
             pace: 'relaxed',
             travellers: ['family', 'couple', 'solo'],
             experiences: ['backwaters', 'culture', 'food'],
+            budgetFit: { value: 3, comfortable: 3, premium: 2 },
+            strengths: ['Short, focused route', 'Kochi heritage', 'One backwater stay'],
+            limitations: ['No hill-country stay', 'No dedicated beach or wellness stay'],
+            adjustments: {
+                students: 'Use social stays, shared transfers and one group meeting point.',
+                senior: 'Use shorter walks, private transfers and additional rest time.'
+            },
             prices: { value: 'INR 13,000-18,000', comfortable: 'INR 24,000-34,000', premium: 'INR 48,000-75,000' },
-            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+            priceNote: familyPriceNote,
+            mapFrom: 'Kochi',
+            mapTo: 'Alappuzha'
         },
         {
             id: 'five-day',
-            name: '5-Day Hills + Houseboat',
-            url: 'plan-5-days.html',
+            publicName: '5-Day Hills + Houseboat',
             days: 5,
+            url: 'plan-5-days.html',
             route: 'Kochi - Munnar - Thekkady - Alappuzha',
             pace: 'balanced',
             travellers: ['family', 'couple', 'solo'],
             experiences: ['hills', 'backwaters', 'wildlife', 'culture', 'food'],
+            budgetFit: { value: 3, comfortable: 3, premium: 2.5 },
+            strengths: ['Classic hill-and-water route', 'Wildlife region', 'Houseboat night'],
+            limitations: ['No proper beach stay', 'No dedicated wellness stay'],
+            adjustments: {
+                students: 'Use shared transfers and group-friendly stays while keeping one flexible evening.',
+                senior: 'Replace optional walks with viewpoints, use private transfers and add rest after hill roads.'
+            },
             prices: { value: 'INR 24,000-34,000', comfortable: 'INR 45,000-64,000', premium: 'INR 88,000-135,000' },
-            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+            priceNote: familyPriceNote,
+            mapFrom: 'Kochi',
+            mapTo: 'Alappuzha'
         },
         {
             id: 'seven-day',
-            name: '7-Day Classic + Offbeat Kerala',
-            url: 'plan-7-days.html',
+            publicName: '7-Day Classic + Offbeat Kerala',
             days: 7,
+            url: 'plan-7-days.html',
             route: 'Kochi - Kadamakkudy - Munnar - Thekkady - Munroe Island - Varkala',
             pace: 'balanced',
             travellers: ['family', 'couple', 'solo'],
             experiences: ['hills', 'backwaters', 'beaches', 'wildlife', 'culture', 'food', 'wellness'],
+            budgetFit: { value: 2, comfortable: 3, premium: 3 },
+            strengths: ['Famous and offbeat balance', 'Varkala coast', 'Hills and backwaters'],
+            limitations: ['Several road transfers', 'More hotel changes than shorter plans'],
+            adjustments: {
+                students: 'Use group rooms and shared transfers, then prioritise the three most important activities.',
+                senior: 'Use a private vehicle, shorten walking days and keep a rest block after each major transfer.'
+            },
             prices: { value: 'INR 36,000-52,000', comfortable: 'INR 66,000-95,000', premium: 'INR 130,000-195,000' },
-            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+            priceNote: familyPriceNote,
+            mapFrom: 'Kochi',
+            mapTo: 'Varkala'
         },
         {
             id: 'ten-day',
-            name: '10-Day Kerala Deep Dive',
-            url: 'plan-10-days.html',
+            publicName: '10-Day Kerala Deep Dive',
             days: 10,
+            url: 'plan-10-days.html',
             route: 'Kochi - Kadamakkudy - Munroe Island - Munnar - Thekkady - Wayanad - Valiyaparamba - Bekal',
             pace: 'active',
             travellers: ['family', 'couple', 'solo'],
             experiences: ['hills', 'backwaters', 'beaches', 'wildlife', 'culture', 'food'],
+            budgetFit: { value: 1, comfortable: 2.5, premium: 3 },
+            strengths: ['North-and-south coverage', 'Multiple offbeat regions', 'Hills, wildlife and coast'],
+            limitations: ['Major cross-Kerala transfers', 'No dedicated wellness programme'],
+            adjustments: {
+                students: 'Use overnight transport selectively and protect one lighter day after the northbound transfer.',
+                senior: 'Use a private vehicle, add rest blocks and consider removing one northern stop to reduce major transfers.'
+            },
             prices: { value: 'INR 58,000-82,000', comfortable: 'INR 105,000-150,000', premium: 'INR 200,000-295,000' },
-            priceNote: 'Estimated 2026 total for a family of four (two adults and two children). Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.'
+            priceNote: familyPriceNote,
+            mapFrom: 'Kochi',
+            mapTo: 'Bekal'
         },
         {
             id: 'student',
-            name: '5-Day Kerala Student Plan',
-            url: 'plan-5-days-students.html',
+            publicName: '5-Day Kerala Student Plan',
             days: 5,
+            url: 'plan-5-days-students.html',
             route: 'Kochi - Munnar - Alappuzha',
             pace: 'active',
-            travellers: ['students', 'solo'],
+            travellers: ['students'],
             experiences: ['hills', 'backwaters', 'culture', 'food'],
+            budgetFit: { value: 3, comfortable: 2, premium: 1 },
+            strengths: ['Group-friendly stays', 'Shared travel savings', 'Social active pace'],
+            limitations: ['Pricing assumes four friends sharing', 'No wildlife or beach stay'],
+            adjustments: {},
             prices: { value: 'INR 14,000-20,000', comfortable: 'INR 23,000-32,000', premium: 'INR 36,000-52,000' },
-            priceNote: 'Indicative 2026 cost per adult student, assuming four friends share rooms and local transfers. Travel to and from Kerala is excluded.'
+            priceNote: 'Indicative 2026 cost per adult student, assuming four friends share rooms and local transfers. Travel to and from Kerala is excluded.',
+            mapFrom: 'Kochi',
+            mapTo: 'Alappuzha',
+            specialist: 'students'
         },
         {
             id: 'senior',
-            name: '5-Day Easy-Paced Senior Plan',
-            url: 'plan-5-days-seniors.html',
+            publicName: '5-Day Easy-Paced Senior Plan',
+            alternativeName: '5-Day Relaxed Kochi + Kumarakom',
             days: 5,
+            url: 'plan-5-days-seniors.html',
             route: 'Kochi - Kumarakom - Kochi',
             pace: 'relaxed',
             travellers: ['senior', 'couple'],
             experiences: ['backwaters', 'culture', 'food', 'wellness'],
+            budgetFit: { value: 2, comfortable: 3, premium: 3 },
+            strengths: ['Only two overnight bases', 'Private road transfers', 'Lighter sightseeing'],
+            limitations: ['No hill-country or wildlife stay', 'Estimate assumes two people sharing'],
+            adjustments: {},
             prices: { value: 'INR 34,000-48,000', comfortable: 'INR 52,000-72,000', premium: 'INR 90,000-135,000' },
-            priceNote: 'Indicative 2026 cost per senior traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.'
+            priceNote: 'Indicative 2026 cost per senior traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.',
+            neutralPriceNote: 'Indicative 2026 cost per traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.',
+            mapFrom: 'Kochi',
+            mapTo: 'Kumarakom',
+            specialist: 'senior'
         }
     ];
 
-    const paceDistance = {
-        relaxed: { relaxed: 10, balanced: 5, active: 0 },
-        balanced: { relaxed: 5, balanced: 10, active: 5 },
-        active: { relaxed: 0, balanced: 5, active: 10 }
+    const paceScores = {
+        relaxed: { relaxed: 6, balanced: 3, active: 0 },
+        balanced: { relaxed: 3, balanced: 6, active: 3 },
+        active: { relaxed: 0, balanced: 3, active: 6 }
     };
 
-    const recommendPlan = answers => {
-        const wantedDays = Number(answers.days);
-        const wantedExperiences = Array.isArray(answers.experiences) ? answers.experiences : [];
-
-        return plans.map((plan, index) => {
-            let score = Math.max(0, 64 - (Math.abs(plan.days - wantedDays) * 18));
-            if (plan.days === wantedDays) score += 36;
-            if (plan.travellers.includes(answers.traveller)) score += 32;
-            score += wantedExperiences.filter(experience => plan.experiences.includes(experience)).length * 13;
-            score += paceDistance[answers.pace]?.[plan.pace] || 0;
-
-            if (answers.traveller === 'students') score += plan.id === 'student' ? 75 : -18;
-            if (answers.traveller === 'senior') score += plan.id === 'senior' ? 82 : -22;
-            if (answers.traveller === 'family' && ['three-day', 'five-day', 'seven-day', 'ten-day'].includes(plan.id)) score += 16;
-            if (answers.budget === 'value' && plan.id === 'student' && answers.traveller === 'students') score += 10;
-            if (answers.budget === 'comfortable' && plan.id === 'senior' && answers.traveller === 'senior') score += 8;
-            return { plan, score, index };
-        }).sort((left, right) => right.score - left.score || left.index - right.index)[0].plan;
-    };
-
-    const describeMatch = (plan, answers) => {
-        const experienceNames = {
-            hills: 'hill country',
-            backwaters: 'backwaters',
-            beaches: 'beaches',
-            wildlife: 'wildlife',
-            culture: 'culture',
-            food: 'local food',
-            wellness: 'wellness time'
+    const normaliseAnswers = rawAnswers => {
+        const answers = {
+            days: Number(rawAnswers.days),
+            traveller: String(rawAnswers.traveller || ''),
+            experiences: [...new Set(Array.isArray(rawAnswers.experiences) ? rawAnswers.experiences : [])]
+                .filter(experience => validExperiences.includes(experience))
+                .slice(0, 3),
+            pace: String(rawAnswers.pace || ''),
+            budget: String(rawAnswers.budget || '')
         };
-        const matched = answers.experiences
-            .filter(experience => plan.experiences.includes(experience))
-            .slice(0, 2)
-            .map(experience => experienceNames[experience]);
-        const matchedText = matched.length ? ` and includes ${matched.join(' and ')}` : '';
-        const audienceText = answers.traveller === 'students'
-            ? 'your friends or student group'
-            : answers.traveller === 'senior'
-                ? 'a gentle senior-travel rhythm'
-                : `your ${answers.traveller} travel style`;
 
-        return `This route is the closest fit for ${answers.days} days, ${audienceText} and a ${answers.pace} pace${matchedText}. It is a flexible recommendation, so the full plan can still be adjusted around your arrival point and interests.`;
+        if (!validDays.includes(answers.days)) throw new Error('Choose a supported trip duration.');
+        if (!validTravellers.includes(answers.traveller)) throw new Error('Choose a supported traveller type.');
+        if (!answers.experiences.length) throw new Error('Choose at least one experience.');
+        if (!validPaces.includes(answers.pace)) throw new Error('Choose a supported travel pace.');
+        if (!validBudgets.includes(answers.budget)) throw new Error('Choose a supported budget.');
+        return answers;
+    };
+
+    const isCoupleRelaxedRoute = answers => answers.traveller === 'couple'
+        && answers.days === 5
+        && answers.pace === 'relaxed'
+        && answers.experiences.some(experience => ['backwaters', 'wellness'].includes(experience));
+
+    const isPrimaryEligible = (plan, answers) => {
+        if (plan.id === 'student') return answers.days === 5 && answers.traveller === 'students';
+        if (plan.id === 'senior') return answers.days === 5 && (answers.traveller === 'senior' || isCoupleRelaxedRoute(answers));
+        return plan.days === answers.days;
+    };
+
+    const isAlternativeEligible = (plan, answers) => {
+        if (plan.id === 'student') return answers.traveller === 'students';
+        if (plan.id === 'senior') return answers.traveller === 'senior' || isCoupleRelaxedRoute(answers);
+        return true;
+    };
+
+    const publicPlanName = (plan, answers) => plan.id === 'senior' && answers.traveller !== 'senior'
+        ? plan.alternativeName
+        : plan.publicName;
+
+    const planPriceNote = (plan, answers) => plan.id === 'senior' && answers.traveller !== 'senior'
+        ? plan.neutralPriceNote
+        : plan.priceNote;
+
+    const evaluatePlan = (plan, answers) => {
+        const selectedDurationIndex = durationLevels.indexOf(answers.days);
+        const planDurationIndex = durationLevels.indexOf(plan.days);
+        const durationGap = Math.abs(selectedDurationIndex - planDurationIndex);
+        const durationScore = [40, 22, 10, 0][durationGap] ?? 0;
+        const directTravellerFit = plan.travellers.includes(answers.traveller);
+        const adjustableRegularFit = !plan.specialist && ['students', 'senior'].includes(answers.traveller);
+        const travellerScore = directTravellerFit ? 20 : adjustableRegularFit ? 12 : 0;
+        const totalExperienceWeight = answers.experiences.reduce((total, experience, index) => total + experiencePriorityWeights[index], 0);
+        const matchedExperienceWeight = answers.experiences.reduce((total, experience, index) => (
+            total + (plan.experiences.includes(experience) ? experiencePriorityWeights[index] : 0)
+        ), 0);
+        const experienceScore = totalExperienceWeight ? 30 * (matchedExperienceWeight / totalExperienceWeight) : 0;
+        const paceScore = paceScores[answers.pace]?.[plan.pace] ?? 0;
+        const budgetScore = (plan.budgetFit[answers.budget] / 3) * 4;
+        const matchPercentage = Math.max(0, Math.min(100, Math.round(durationScore + travellerScore + experienceScore + paceScore + budgetScore)));
+        const matchedExperiences = answers.experiences.filter(experience => plan.experiences.includes(experience));
+        const missingExperiences = answers.experiences.filter(experience => !plan.experiences.includes(experience));
+        const matchedPreferences = [];
+        const missingPreferences = missingExperiences.map(experience => experienceNames[experience]);
+
+        if (plan.days === answers.days) matchedPreferences.push(`${answers.days}-day duration`);
+        else missingPreferences.push(`${answers.days}-day duration`);
+        if (directTravellerFit) matchedPreferences.push(travellerNames[answers.traveller]);
+        else if (adjustableRegularFit) missingPreferences.push(answers.traveller === 'senior' ? 'Dedicated senior pacing' : 'Student-group focus');
+        if (plan.pace === answers.pace) matchedPreferences.push(`${paceNames[answers.pace]} pace`);
+        else missingPreferences.push(`${paceNames[answers.pace]} pace`);
+        if (plan.budgetFit[answers.budget] >= 2) matchedPreferences.push(`${budgetNames[answers.budget]} budget`);
+        else missingPreferences.push(`${budgetNames[answers.budget]} budget fit`);
+        matchedPreferences.push(...matchedExperiences.map(experience => experienceNames[experience]));
+
+        return {
+            plan,
+            durationGap,
+            matchPercentage,
+            components: {
+                duration: Math.round(durationScore),
+                traveller: Math.round(travellerScore),
+                experiences: Math.round(experienceScore),
+                pace: Math.round(paceScore),
+                budget: Math.round(budgetScore)
+            },
+            matchedExperiences,
+            missingExperiences,
+            matchedPreferences: [...new Set(matchedPreferences)],
+            missingPreferences: [...new Set(missingPreferences)]
+        };
+    };
+
+    const formatList = values => {
+        if (!values.length) return '';
+        if (values.length === 1) return values[0];
+        return `${values.slice(0, -1).join(', ')} and ${values.at(-1)}`;
+    };
+
+    const matchStrength = percentage => {
+        if (percentage >= 90) return 'Excellent match';
+        if (percentage >= 80) return 'Strong match';
+        if (percentage >= 70) return 'Good match';
+        if (percentage >= 60) return 'Closest available match';
+        return 'Limited match';
+    };
+
+    const buildPrimaryReason = (evaluation, answers) => {
+        const { plan, matchedExperiences, missingExperiences } = evaluation;
+        const matchedText = formatList(matchedExperiences.map(experience => experienceNames[experience].toLowerCase()));
+        const missingText = formatList(missingExperiences.map(experience => experienceNames[experience].toLowerCase()));
+
+        if (plan.id === 'student') {
+            return `This five-day student route suits a group of friends seeking an active, value-conscious trip${matchedText ? ` with ${matchedText}` : ''}. Its estimate assumes four friends share rooms and local transfers.`;
+        }
+        if (plan.id === 'senior' && answers.traveller === 'senior') {
+            return `This five-day route uses only two overnight bases, private transfers and lighter sightseeing, making it the strongest match for a relaxed senior journey${matchedText ? ` focused on ${matchedText}` : ''}.`;
+        }
+        if (plan.id === 'senior') {
+            return `This relaxed five-day Kochi and Kumarakom route matches your couple travel style${matchedText ? ` and interest in ${matchedText}` : ''}. The route uses two overnight bases and private transfers; the displayed estimate is per traveller based on two people sharing.`;
+        }
+
+        const durationOpening = plan.days === answers.days
+            ? `This is the closest ${answers.days}-day route.`
+            : `This is the closest available route, but it requires ${plan.days > answers.days ? 'extending' : 'shortening'} the trip to ${plan.days} days.`;
+        const coverage = matchedText ? ` It includes ${matchedText}.` : '';
+        const gap = missingText ? ` It does not fully include ${missingText}.` : '';
+        const travellerAdjustment = plan.adjustments[answers.traveller] ? ` ${plan.adjustments[answers.traveller]}` : '';
+
+        if (!missingExperiences.length && plan.pace === answers.pace && plan.travellers.includes(answers.traveller)) {
+            return `This ${plan.days}-day route matches your ${travellerNames[answers.traveller].toLowerCase()}, ${paceNames[answers.pace].toLowerCase()} pace and interest in ${matchedText}. ${plan.strengths[0]} gives the trip a clear, practical structure.`;
+        }
+        return `${durationOpening}${coverage}${gap}${travellerAdjustment}`;
+    };
+
+    const buildPrimaryWarning = (evaluation, answers) => {
+        if (evaluation.plan.id === 'ten-day' && answers.traveller === 'senior') {
+            return 'The ten-day selection is respected, but this route contains major transfers. Confirm mobility needs, use private transport and consider removing one northern stop.';
+        }
+        if (evaluation.missingExperiences.length) {
+            const missingText = formatList(evaluation.missingExperiences.map(experience => experienceNames[experience].toLowerCase()));
+            return `Your ${answers.days}-day limit does not allow this route to cover ${missingText} properly. This is the closest available exact-duration plan.`;
+        }
+        if (evaluation.matchPercentage < 60) {
+            return 'No existing itinerary fully matches these answers. Review the missing preferences or consider the alternative route.';
+        }
+        return '';
+    };
+
+    const alternativeUtility = (evaluation, primaryEvaluation, answers) => {
+        const primaryMissing = new Set(primaryEvaluation.missingExperiences);
+        const missingWeightTotal = answers.experiences.reduce((total, experience, index) => (
+            total + (primaryMissing.has(experience) ? experiencePriorityWeights[index] : 0)
+        ), 0);
+        const recoveredWeight = answers.experiences.reduce((total, experience, index) => (
+            total + (primaryMissing.has(experience) && evaluation.plan.experiences.includes(experience) ? experiencePriorityWeights[index] : 0)
+        ), 0);
+        const recoveryBonus = missingWeightTotal ? (recoveredWeight / missingWeightTotal) * 30 : 0;
+        const specialistBonus = (answers.traveller === 'students' && evaluation.plan.id === 'student')
+            || (answers.traveller === 'senior' && evaluation.plan.id === 'senior') ? 50 : 0;
+        const neutralRelaxedBonus = isCoupleRelaxedRoute(answers) && evaluation.plan.id === 'senior' ? 24 : 0;
+        const sameDurationBonus = evaluation.plan.days === answers.days ? 10 : 0;
+        const valueShorteningBonus = answers.budget === 'value' && evaluation.plan.days < primaryEvaluation.plan.days ? 5 : 0;
+        return evaluation.matchPercentage + recoveryBonus + specialistBonus + neutralRelaxedBonus + sameDurationBonus + valueShorteningBonus;
+    };
+
+    const buildAlternativeReason = (alternative, primary, answers) => {
+        const { plan } = alternative;
+        const direction = plan.days > answers.days ? 'Extend' : plan.days < answers.days ? 'Shorten' : 'Keep';
+        if (plan.id === 'student') {
+            return `${direction} to five days for a social route designed for friends or students, with shared-cost assumptions and an active pace.`;
+        }
+        if (plan.id === 'senior' && answers.traveller === 'senior') {
+            return `${direction} to five days for a route specifically designed for senior travellers, with two bases, private transfers and lighter sightseeing.`;
+        }
+        if (plan.id === 'senior') {
+            return 'Use the same five-day window for a more relaxed Kochi and Kumarakom route with two overnight bases and private transfers.';
+        }
+        const recovered = primary.missingExperiences.filter(experience => plan.experiences.includes(experience));
+        if (plan.id === 'seven-day' && recovered.includes('beaches') && recovered.includes('wellness')) {
+            return 'Extend to seven days to include Varkala, coastal time and wellness experiences.';
+        }
+        if (recovered.length) {
+            return `${direction} to ${plan.days} days to include ${formatList(recovered.map(experience => experienceNames[experience].toLowerCase()))} while keeping the closest available route structure.`;
+        }
+        return `${direction} to ${plan.days} days for ${plan.strengths[0].toLowerCase()} and a ${paceNames[plan.pace].toLowerCase()} route.`;
+    };
+
+    const buildAlternativeDifference = (alternative, primary, answers) => {
+        const dayDifference = alternative.plan.days - primary.plan.days;
+        const dayText = dayDifference === 0
+            ? 'Uses the same trip duration'
+            : `${Math.abs(dayDifference)} ${Math.abs(dayDifference) === 1 ? 'day' : 'days'} ${dayDifference > 0 ? 'longer' : 'shorter'}`;
+        const recovered = primary.missingExperiences.filter(experience => alternative.plan.experiences.includes(experience));
+        const recoveredText = recovered.length
+            ? ` and adds ${formatList(recovered.map(experience => experienceNames[experience].toLowerCase()))}`
+            : ` with a ${paceNames[alternative.plan.pace].toLowerCase()} pace`;
+        return `${dayText}${recoveredText}.`;
+    };
+
+    const recommendTrips = rawAnswers => {
+        const answers = normaliseAnswers(rawAnswers);
+        const exactCandidates = plans.filter(plan => plan.days === answers.days && isPrimaryEligible(plan, answers));
+        const primaryCandidates = exactCandidates.length
+            ? exactCandidates
+            : plans.filter(plan => isPrimaryEligible(plan, answers));
+        const rankedPrimary = primaryCandidates
+            .map((plan, index) => ({ ...evaluatePlan(plan, answers), index }))
+            .sort((left, right) => right.matchPercentage - left.matchPercentage || left.index - right.index);
+        const primary = rankedPrimary[0];
+        const rankedAlternatives = plans
+            .filter(plan => plan.id !== primary.plan.id && isAlternativeEligible(plan, answers))
+            .map((plan, index) => {
+                const evaluation = evaluatePlan(plan, answers);
+                return { ...evaluation, utility: alternativeUtility(evaluation, primary, answers), index };
+            })
+            .sort((left, right) => right.utility - left.utility || right.matchPercentage - left.matchPercentage || left.index - right.index);
+        const alternative = rankedAlternatives[0];
+
+        const primaryResult = {
+            ...primary,
+            id: primary.plan.id,
+            name: publicPlanName(primary.plan, answers),
+            url: primary.plan.url,
+            price: primary.plan.prices[answers.budget],
+            priceNote: planPriceNote(primary.plan, answers),
+            selectedBudget: answers.budget,
+            explanation: buildPrimaryReason(primary, answers),
+            warning: buildPrimaryWarning(primary, answers),
+            mapUrl: `map.html?from=${encodeURIComponent(primary.plan.mapFrom)}&to=${encodeURIComponent(primary.plan.mapTo)}&plan=${encodeURIComponent(primary.plan.id)}`,
+            strength: matchStrength(primary.matchPercentage),
+            badge: primary.plan.days === answers.days ? 'Best Match' : 'Closest Alternative'
+        };
+        const alternativeResult = {
+            ...alternative,
+            id: alternative.plan.id,
+            name: publicPlanName(alternative.plan, answers),
+            url: alternative.plan.url,
+            price: alternative.plan.prices[answers.budget],
+            priceNote: planPriceNote(alternative.plan, answers),
+            selectedBudget: answers.budget,
+            reason: buildAlternativeReason(alternative, primary, answers),
+            difference: buildAlternativeDifference(alternative, primary, answers)
+        };
+
+        return { answers, primary: primaryResult, alternative: alternativeResult };
     };
 
     const readAnswers = () => ({
         days: form.elements.days.value,
         traveller: form.elements.traveller.value,
-        experiences: [...form.querySelectorAll('input[name="experiences"]:checked')].map(input => input.value),
+        experiences: experiencePriority.filter(experience => form.querySelector(`input[name="experiences"][value="${experience}"]`)?.checked),
         pace: form.elements.pace.value,
         budget: form.elements.budget.value
+    });
+
+    const updateExperiencePriority = message => {
+        experienceInputs.forEach(input => {
+            const priority = experiencePriority.indexOf(input.value);
+            if (priority >= 0) input.closest('.trip-choice').dataset.priority = String(priority + 1);
+            else delete input.closest('.trip-choice').dataset.priority;
+        });
+        experienceCounter.textContent = `${experiencePriority.length} of 3 selected`;
+        experienceLimit.textContent = message || (experiencePriority.length === 3 ? 'Maximum selected. Remove one to choose another.' : '');
+    };
+
+    experienceInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            if (input.checked && !experiencePriority.includes(input.value)) {
+                if (experiencePriority.length >= 3) {
+                    input.checked = false;
+                    updateExperiencePriority('Choose up to three experiences. Remove one before adding another.');
+                    return;
+                }
+                experiencePriority.push(input.value);
+            } else if (!input.checked) {
+                experiencePriority = experiencePriority.filter(experience => experience !== input.value);
+            }
+            updateExperiencePriority('');
+        });
     });
 
     const validateStep = index => {
@@ -2040,7 +2366,44 @@ document.addEventListener('DOMContentLoaded', () => {
         nextButton.hidden = currentStep === steps.length - 1;
         submitButton.hidden = currentStep !== steps.length - 1;
         error.textContent = '';
-        steps[currentStep].querySelector('input')?.focus({ preventScroll: true });
+        steps[currentStep].querySelector('input:checked, input')?.focus({ preventScroll: true });
+    };
+
+    const renderChips = (target, values, emptyText) => {
+        target.innerHTML = values.length
+            ? values.map(value => `<span>${value}</span>`).join('')
+            : `<span class="is-empty">${emptyText}</span>`;
+    };
+
+    const renderResult = recommendation => {
+        const { answers, primary, alternative } = recommendation;
+        const warning = finder.querySelector('[data-result-warning]');
+        finder.querySelector('[data-result-badge]').textContent = primary.badge;
+        finder.querySelector('[data-result-strength]').textContent = primary.strength;
+        finder.querySelector('[data-result-percentage]').textContent = `${primary.matchPercentage}%`;
+        finder.querySelector('[data-result-match-ring]').style.setProperty('--match', `${primary.matchPercentage * 3.6}deg`);
+        finder.querySelector('[data-result-match-ring]').setAttribute('aria-label', `${primary.matchPercentage}% match, ${primary.strength}`);
+        finder.querySelector('[data-result-name]').textContent = primary.name;
+        finder.querySelector('[data-result-reason]').textContent = primary.explanation;
+        warning.textContent = primary.warning;
+        warning.hidden = !primary.warning;
+        finder.querySelector('[data-result-duration]').textContent = `${primary.plan.days} days`;
+        finder.querySelector('[data-result-route]').textContent = primary.plan.route;
+        finder.querySelector('[data-result-pace]').textContent = paceNames[primary.plan.pace];
+        finder.querySelector('[data-result-price]').textContent = `${budgetNames[answers.budget]}: ${primary.price}`;
+        finder.querySelector('[data-result-price-note]').textContent = primary.priceNote;
+        finder.querySelector('[data-result-link]').href = primary.url;
+        finder.querySelector('[data-result-map-link]').href = primary.mapUrl;
+        renderChips(finder.querySelector('[data-result-matched]'), primary.matchedPreferences, 'No strong matches');
+        renderChips(finder.querySelector('[data-result-missing]'), primary.missingPreferences, 'No major gaps');
+
+        finder.querySelector('[data-alternative-percentage]').textContent = `${alternative.matchPercentage}% match`;
+        finder.querySelector('[data-alternative-name]').textContent = alternative.name;
+        finder.querySelector('[data-alternative-reason]').textContent = alternative.reason;
+        finder.querySelector('[data-alternative-difference]').textContent = alternative.difference;
+        finder.querySelector('[data-alternative-price]').textContent = `${budgetNames[answers.budget]}: ${alternative.price}`;
+        finder.querySelector('[data-alternative-price-note]').textContent = alternative.priceNote;
+        finder.querySelector('[data-alternative-link]').href = alternative.url;
     };
 
     nextButton.addEventListener('click', () => {
@@ -2053,16 +2416,8 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         if (!validateStep(currentStep)) return;
 
-        const answers = readAnswers();
-        const plan = recommendPlan(answers);
-        finder.querySelector('[data-result-name]').textContent = plan.name;
-        finder.querySelector('[data-result-reason]').textContent = describeMatch(plan, answers);
-        finder.querySelector('[data-result-duration]').textContent = `${plan.days} days`;
-        finder.querySelector('[data-result-route]').textContent = plan.route;
-        finder.querySelector('[data-result-pace]').textContent = `${plan.pace.charAt(0).toUpperCase()}${plan.pace.slice(1)}`;
-        finder.querySelector('[data-result-price]').textContent = `${plan.prices[answers.budget]} (${answers.budget})`;
-        finder.querySelector('[data-result-price-note]').textContent = plan.priceNote;
-        finder.querySelector('[data-result-link]').href = plan.url;
+        const recommendation = recommendTrips(readAnswers());
+        renderResult(recommendation);
         form.hidden = true;
         result.hidden = false;
         progressBar.style.width = '100%';
@@ -2071,18 +2426,130 @@ document.addEventListener('DOMContentLoaded', () => {
         result.focus();
     });
 
+    editButton.addEventListener('click', () => {
+        result.hidden = true;
+        form.hidden = false;
+        showStep(0);
+        finder.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    });
+
     resetButton.addEventListener('click', () => {
         form.reset();
+        experiencePriority = [];
+        updateExperiencePriority('');
         result.hidden = true;
         form.hidden = false;
         showStep(0);
     });
 
-    window.__keralaTripFinder = {
-        plans: plans.map(plan => ({ id: plan.id, name: plan.name, url: plan.url })),
-        recommend: answers => {
-            const plan = recommendPlan(answers);
-            return { id: plan.id, name: plan.name, url: plan.url };
-        }
+    const experienceCombinations = () => {
+        const combinations = [];
+        const choose = selected => {
+            if (selected.length) combinations.push([...selected]);
+            if (selected.length === 3) return;
+            validExperiences.forEach(experience => {
+                if (selected.includes(experience)) return;
+                selected.push(experience);
+                choose(selected);
+                selected.pop();
+            });
+        };
+        choose([]);
+        return combinations;
     };
+
+    const runAllTests = () => {
+        const failures = [];
+        let combinations = 0;
+        const experienceSets = experienceCombinations();
+        validDays.forEach(days => validTravellers.forEach(traveller => experienceSets.forEach(experiences => validPaces.forEach(pace => validBudgets.forEach(budget => {
+            combinations += 1;
+            const answers = { days, traveller, experiences, pace, budget };
+            try {
+                const recommendation = recommendTrips(answers);
+                const { primary, alternative } = recommendation;
+                const expectedMissing = experiences.filter(experience => !primary.plan.experiences.includes(experience));
+                if (!primary || !alternative) failures.push({ answers, issue: 'Undefined recommendation' });
+                else if (primary.id === alternative.id) failures.push({ answers, issue: 'Primary and alternative are identical' });
+                else if (traveller === 'solo' && primary.id === 'student') failures.push({ answers, issue: 'Student plan recommended to solo traveller' });
+                else if (plans.some(plan => plan.days === days && isPrimaryEligible(plan, recommendation.answers)) && primary.plan.days !== days) failures.push({ answers, issue: 'Exact duration was not respected' });
+                else if (primary.matchPercentage < 0 || primary.matchPercentage > 100 || alternative.matchPercentage < 0 || alternative.matchPercentage > 100) failures.push({ answers, issue: 'Match percentage outside 0-100' });
+                else if (primary.price !== primary.plan.prices[budget] || alternative.price !== alternative.plan.prices[budget]) failures.push({ answers, issue: 'Incorrect budget price' });
+                else if (JSON.stringify(primary.missingExperiences) !== JSON.stringify(expectedMissing)) failures.push({ answers, issue: 'Missing experiences are inaccurate' });
+                else if (![primary.url, alternative.url].every(url => plans.some(plan => plan.url === url))) failures.push({ answers, issue: 'Unknown plan link' });
+            } catch (testError) {
+                failures.push({ answers, issue: testError.message });
+            }
+        })))));
+        return { combinations, passed: combinations - failures.length, failures };
+    };
+
+    const runRequiredTests = () => {
+        const cases = [
+            { id: 1, answers: { days: 3, traveller: 'family', experiences: ['backwaters', 'culture'], pace: 'relaxed', budget: 'value' }, primary: 'three-day' },
+            { id: 2, answers: { days: 3, traveller: 'senior', experiences: ['backwaters', 'wellness'], pace: 'relaxed', budget: 'comfortable' }, primary: 'three-day', alternative: 'senior' },
+            { id: 3, answers: { days: 3, traveller: 'students', experiences: ['hills', 'wildlife'], pace: 'active', budget: 'value' }, primary: 'three-day', alternative: 'student' },
+            { id: 4, answers: { days: 5, traveller: 'students', experiences: ['hills', 'backwaters', 'food'], pace: 'active', budget: 'value' }, primary: 'student' },
+            { id: 5, answers: { days: 5, traveller: 'family', experiences: ['hills', 'wildlife', 'backwaters'], pace: 'balanced', budget: 'comfortable' }, primary: 'five-day' },
+            { id: 6, answers: { days: 5, traveller: 'senior', experiences: ['backwaters', 'culture', 'wellness'], pace: 'relaxed', budget: 'comfortable' }, primary: 'senior' },
+            { id: 7, answers: { days: 5, traveller: 'couple', experiences: ['backwaters', 'wellness'], pace: 'relaxed', budget: 'premium' }, primary: 'senior', publicName: '5-Day Relaxed Kochi + Kumarakom' },
+            { id: 8, answers: { days: 7, traveller: 'family', experiences: ['beaches', 'wellness', 'backwaters'], pace: 'relaxed', budget: 'premium' }, primary: 'seven-day' },
+            { id: 9, answers: { days: 7, traveller: 'students', experiences: ['hills', 'beaches', 'culture'], pace: 'active', budget: 'value' }, primary: 'seven-day', alternative: 'student' },
+            { id: 10, answers: { days: 7, traveller: 'senior', experiences: ['backwaters', 'culture'], pace: 'relaxed', budget: 'comfortable' }, primary: 'seven-day', alternative: 'senior' },
+            { id: 11, answers: { days: 10, traveller: 'family', experiences: ['hills', 'wildlife', 'beaches'], pace: 'active', budget: 'premium' }, primary: 'ten-day' },
+            { id: 12, answers: { days: 10, traveller: 'senior', experiences: ['backwaters', 'wellness'], pace: 'relaxed', budget: 'premium' }, primary: 'ten-day', alternative: 'senior' },
+            { id: 13, answers: { days: 3, traveller: 'family', experiences: ['beaches', 'wellness'], pace: 'relaxed', budget: 'premium' }, primary: 'three-day', alternative: 'seven-day' },
+            { id: 14, answers: { days: 5, traveller: 'solo', experiences: ['hills', 'wildlife'], pace: 'active', budget: 'value' }, primary: 'five-day' }
+        ];
+
+        const results = cases.map(testCase => {
+            const recommendation = recommendTrips(testCase.answers);
+            const issues = [];
+            if (recommendation.primary.id !== testCase.primary) issues.push(`Expected primary ${testCase.primary}, received ${recommendation.primary.id}`);
+            if (testCase.alternative && recommendation.alternative.id !== testCase.alternative) issues.push(`Expected alternative ${testCase.alternative}, received ${recommendation.alternative.id}`);
+            if (testCase.publicName && recommendation.primary.name !== testCase.publicName) issues.push(`Expected public name ${testCase.publicName}`);
+            return {
+                id: testCase.id,
+                passed: !issues.length,
+                primary: recommendation.primary.id,
+                alternative: recommendation.alternative.id,
+                percentage: recommendation.primary.matchPercentage,
+                issues
+            };
+        });
+
+        return {
+            cases: results.length,
+            passed: results.filter(testCase => testCase.passed).length,
+            failures: results.filter(testCase => !testCase.passed),
+            results
+        };
+    };
+
+    updateExperiencePriority('');
+    const testingApi = {
+        plans: plans.map(plan => ({ ...plan })),
+        recommend: recommendTrips,
+        evaluate: (planId, answers) => {
+            const plan = plans.find(candidate => candidate.id === planId);
+            if (!plan) throw new Error('Unknown plan.');
+            return evaluatePlan(plan, normaliseAnswers(answers));
+        },
+        runAllTests,
+        runRequiredTests
+    };
+    window.__keralaTripFinder = testingApi;
+
+    if (new URLSearchParams(window.location.search).get('qa') === 'planfinder2') {
+        const exhaustive = runAllTests();
+        const required = runRequiredTests();
+        finder.dataset.tripFinderQa = JSON.stringify({
+            exhaustive: {
+                combinations: exhaustive.combinations,
+                passed: exhaustive.passed,
+                failures: exhaustive.failures.slice(0, 20)
+            },
+            required
+        });
+    }
 });

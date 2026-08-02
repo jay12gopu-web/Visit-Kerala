@@ -270,12 +270,12 @@
     ];
 
     const plans = [
-        { name: '3-Day Kochi + Backwaters', duration: '3 days', pace: 'Compact', url: 'plan-3-days.html', destinations: ['kochi', 'fort-kochi', 'alappuzha'], categories: ['city', 'water'] },
-        { name: '5-Day Hills + Houseboat', duration: '5 days', pace: 'Balanced', url: 'plan-5-days.html', destinations: ['kochi', 'munnar', 'thekkady', 'alappuzha'], categories: ['city', 'hills', 'nature', 'water'] },
-        { name: '7-Day Classic + Offbeat Kerala', duration: '7 days', pace: 'Balanced', url: 'plan-7-days.html', destinations: ['kochi', 'fort-kochi', 'kadamakkudy', 'munnar', 'thekkady', 'munroe-island', 'varkala'], categories: ['city', 'hills', 'nature', 'water', 'beach'] },
-        { name: '10-Day Kerala Deep Dive', duration: '10 days', pace: 'Active', url: 'plan-10-days.html', destinations: ['kochi', 'kadamakkudy', 'munroe-island', 'munnar', 'thekkady', 'wayanad', 'valiyaparamba', 'bekal'], categories: ['city', 'hills', 'nature', 'water', 'beach'] },
-        { name: '5-Day Kerala Student Plan', duration: '5 days', pace: 'Active', url: 'plan-5-days-students.html', destinations: ['kochi', 'munnar', 'alappuzha'], categories: ['city', 'hills', 'water'], specialised: true },
-        { name: '5-Day Easy-Paced Senior Plan', duration: '5 days', pace: 'Gentle', url: 'plan-5-days-seniors.html', destinations: ['kochi', 'kumarakom'], categories: ['city', 'water'], specialised: true }
+        { id: 'three-day', name: '3-Day Kochi + Backwaters', duration: '3 days', pace: 'Compact', url: 'plan-3-days.html', destinations: ['kochi', 'fort-kochi', 'alappuzha'], categories: ['city', 'water'] },
+        { id: 'five-day', name: '5-Day Hills + Houseboat', duration: '5 days', pace: 'Balanced', url: 'plan-5-days.html', destinations: ['kochi', 'munnar', 'thekkady', 'alappuzha'], categories: ['city', 'hills', 'nature', 'water'] },
+        { id: 'seven-day', name: '7-Day Classic + Offbeat Kerala', duration: '7 days', pace: 'Balanced', url: 'plan-7-days.html', destinations: ['kochi', 'fort-kochi', 'kadamakkudy', 'munnar', 'thekkady', 'munroe-island', 'varkala'], categories: ['city', 'hills', 'nature', 'water', 'beach'] },
+        { id: 'ten-day', name: '10-Day Kerala Deep Dive', duration: '10 days', pace: 'Active', url: 'plan-10-days.html', destinations: ['kochi', 'kadamakkudy', 'munroe-island', 'munnar', 'thekkady', 'wayanad', 'valiyaparamba', 'bekal'], categories: ['city', 'hills', 'nature', 'water', 'beach'] },
+        { id: 'student', name: '5-Day Kerala Student Plan', duration: '5 days', pace: 'Active', url: 'plan-5-days-students.html', destinations: ['kochi', 'munnar', 'alappuzha'], categories: ['city', 'hills', 'water'], specialised: true },
+        { id: 'senior', name: '5-Day Easy-Paced Senior Plan', duration: '5 days', pace: 'Gentle', url: 'plan-5-days-seniors.html', destinations: ['kochi', 'kumarakom'], categories: ['city', 'water'], specialised: true }
     ];
 
     const categoryMeta = {
@@ -836,6 +836,28 @@
         });
     }
 
+    async function initialiseFromQuery() {
+        const parameters = new URLSearchParams(window.location.search);
+        const fromId = findDestinationId(parameters.get('from'));
+        const toId = findDestinationId(parameters.get('to'));
+        const requestedPlan = plans.find(plan => plan.id === parameters.get('plan'));
+
+        if (!parameters.has('from') && !parameters.has('to')) return;
+        if (!fromId || !toId || fromId === toId) {
+            elements.message.textContent = 'The recommended route could not be opened automatically. Choose two supported Kerala destinations below.';
+            return;
+        }
+
+        elements.from.value = destinations[fromId].name;
+        elements.to.value = destinations[toId].name;
+        try {
+            await showRoute(fromId, toId, { scroll: false });
+            if (requestedPlan) elements.message.textContent = `${elements.message.textContent} Opened from the ${requestedPlan.name} recommendation.`;
+        } catch (error) {
+            elements.message.textContent = error.message;
+        }
+    }
+
     function initialise() {
         cacheElements();
         bindPlanner();
@@ -850,6 +872,7 @@
             shortestFallbackRoute,
             setFallbackMode(enabled) { forceFallbackRouting = Boolean(enabled); }
         };
+        void initialiseFromQuery();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialise);
