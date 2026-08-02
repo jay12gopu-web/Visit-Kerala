@@ -233,12 +233,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 action: 'Check KSRTC-SWIFT'
             }
         ];
+        const additionalTransportOptions = [
+            {
+                mode: 'Flight choices',
+                icon: 'fa-plane',
+                intro: 'Choose by arrival timing, connection count and the real door-to-door journey.',
+                options: [
+                    { title: 'Early nonstop to COK', score: '9.0', price: 'INR 3.5k-10k', fit: 'Same-day start', note: 'Useful when the flight lands early enough for a relaxed airport transfer and hotel check-in.' },
+                    { title: 'Evening nonstop to COK', score: '8.8', price: 'INR 3k-9k', fit: 'Rest before Day 1', note: 'A calm choice when you prefer to sleep in Kochi and begin the itinerary the next morning.' },
+                    { title: 'One-stop fare saver', score: '7.5', price: 'INR 2.8k-8k', fit: 'Flexible dates', note: 'Consider only when the saving is meaningful and the connection leaves a comfortable delay buffer.' }
+                ]
+            },
+            {
+                mode: 'Train choices',
+                icon: 'fa-train-subway',
+                intro: 'Compare class, overnight comfort and whether the train reaches ERS or ERN.',
+                options: [
+                    { title: 'AC 2-tier overnight', score: '9.3', price: 'INR 1.2k-3.5k', fit: 'Comfort pick', note: 'More personal space and fewer berths per bay make this the strongest long-rail comfort option.' },
+                    { title: 'AC 3-tier overnight', score: '8.9', price: 'INR 700-2.2k', fit: 'Value pick', note: 'A practical balance for families and groups when berths on a direct overnight train are available.' },
+                    { title: 'Day train or chair car', score: '8.0', price: 'INR 400-1.5k', fit: 'Shorter rail routes', note: 'Works best from nearer cities when a daytime arrival is more useful than saving a hotel night.' }
+                ]
+            },
+            {
+                mode: 'Bus choices',
+                icon: 'fa-bus',
+                intro: 'Reserve a direct service and confirm the Kochi drop point before arranging pickup.',
+                options: [
+                    { title: 'AC sleeper coach', score: '8.5', price: 'INR 1.1k-2.5k', fit: 'Overnight nearby', note: 'The most comfortable road option from nearby South Indian cities when a direct berth is available.' },
+                    { title: 'Multi-axle AC seater', score: '8.2', price: 'INR 800-2k', fit: 'Day or evening', note: 'A stable choice for travellers who prefer a reclining seat and do not need an overnight berth.' },
+                    { title: 'Government reserved service', score: '8.0', price: 'INR 700-1.8k', fit: 'Official value option', note: 'Compare KSRTC-SWIFT boarding points, coach type and arrival time on the official portal.' }
+                ]
+            }
+        ];
         const audienceGuidance = {
             family: 'For families, a direct flight or overnight AC train usually gives the cleanest start. Reserve adjacent seats and leave arrival day flexible.',
             student: 'For student groups, compare direct train availability first; an AC coach can be the value pick from nearby South Indian cities.',
             senior: 'For senior travellers, prioritise a nonstop flight or AC 2-tier train, request assistance where needed, and avoid a tight same-day connection.'
         };
         const transportGrid = transportSection.querySelector('[data-transport-options]');
+        const transportMorePanel = transportSection.querySelector('[data-transport-more-options]');
+        const transportToggle = transportSection.querySelector('[data-transport-toggle]');
         const guidance = transportSection.querySelector('[data-transport-guidance]');
         const audience = transportSection.dataset.transportAudience || 'family';
 
@@ -267,6 +301,35 @@ document.addEventListener('DOMContentLoaded', () => {
             `).join('');
 
             if (window.FontAwesome?.dom?.i2svg) window.FontAwesome.dom.i2svg();
+        }
+
+        if (transportMorePanel && transportToggle) {
+            transportMorePanel.innerHTML = additionalTransportOptions.map(group => `
+                <section class="transport-more-group">
+                    <div class="transport-more-heading">
+                        <span aria-hidden="true"><i class="fa-solid ${group.icon}"></i></span>
+                        <div><h3>${group.mode}</h3><p>${group.intro}</p></div>
+                    </div>
+                    <div class="transport-variant-grid">
+                        ${group.options.map(option => `
+                            <article class="transport-variant-card">
+                                <div class="transport-variant-title"><h4>${option.title}</h4><span aria-label="${option.score} out of 10 planning score">${option.score}</span></div>
+                                <p>${option.note}</p>
+                                <dl><div><dt>Typical fare*</dt><dd>${option.price}</dd></div><div><dt>Best fit</dt><dd>${option.fit}</dd></div></dl>
+                            </article>
+                        `).join('')}
+                    </div>
+                </section>
+            `).join('');
+
+            transportToggle.hidden = false;
+            transportToggle.addEventListener('click', () => {
+                const shouldExpand = transportToggle.getAttribute('aria-expanded') !== 'true';
+                transportToggle.setAttribute('aria-expanded', String(shouldExpand));
+                transportMorePanel.hidden = !shouldExpand;
+                transportToggle.querySelector('span').textContent = shouldExpand ? 'Hide additional options' : 'Explore more transport options';
+                transportToggle.classList.toggle('expanded', shouldExpand);
+            });
         }
     }
 

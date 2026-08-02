@@ -2501,6 +2501,159 @@ footer {
     text-transform: uppercase;
 }
 
+.transport-expand-wrap {
+    margin-top: 28px;
+}
+
+.transport-expand-button {
+    width: 100%;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 22px;
+    border: 1px solid rgba(10, 50, 34, 0.2);
+    background: transparent;
+    color: var(--primary-green);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.transport-expand-button:hover,
+.transport-expand-button:focus-visible,
+.transport-expand-button.expanded {
+    border-color: var(--accent-gold);
+    background: #fff;
+}
+
+.transport-expand-button i {
+    transition: transform 0.25s ease;
+}
+
+.transport-expand-button.expanded i {
+    transform: rotate(180deg);
+}
+
+.transport-more-panel {
+    padding-top: 34px;
+    animation: transportOptionsOpen 0.34s ease both;
+}
+
+.transport-more-panel[hidden] {
+    display: none;
+}
+
+.transport-more-group + .transport-more-group {
+    margin-top: 38px;
+    padding-top: 34px;
+    border-top: 1px solid rgba(10, 50, 34, 0.13);
+}
+
+.transport-more-heading {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.transport-more-heading > span {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-green);
+    color: var(--accent-gold);
+}
+
+.transport-more-heading h3 {
+    margin-bottom: 3px;
+    color: var(--primary-green);
+    font-size: 1.35rem;
+}
+
+.transport-more-heading p {
+    color: #66706a;
+    font-size: 0.74rem;
+}
+
+.transport-variant-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.transport-variant-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid rgba(10, 50, 34, 0.11);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.transport-variant-title {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.transport-variant-title h4 {
+    color: var(--primary-green);
+    font-size: 0.96rem;
+    line-height: 1.35;
+}
+
+.transport-variant-title > span {
+    flex: 0 0 auto;
+    padding-bottom: 3px;
+    border-bottom: 2px solid var(--accent-gold);
+    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.transport-variant-card > p {
+    min-height: 62px;
+    margin: 12px 0 16px;
+    color: #606963;
+    font-size: 0.7rem;
+}
+
+.transport-variant-card dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding-top: 13px;
+    border-top: 1px solid rgba(10, 50, 34, 0.1);
+}
+
+.transport-variant-card dt {
+    color: #7a817d;
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.transport-variant-card dd {
+    margin-top: 3px;
+    color: var(--dark-charcoal);
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+@keyframes transportOptionsOpen {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .transport-booking-note {
     display: flex;
     justify-content: space-between;
@@ -2666,6 +2819,8 @@ footer {
     .transport-option-grid { grid-template-columns: 1fr; }
     .transport-option-card { min-height: 0; }
     .transport-option-card > p { min-height: 0; }
+    .transport-variant-grid { grid-template-columns: 1fr; }
+    .transport-variant-card > p { min-height: 0; }
 }
 
 @media(max-width: 768px) {
