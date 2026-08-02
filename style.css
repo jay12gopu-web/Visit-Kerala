@@ -2460,6 +2460,41 @@ footer {
     font-size: 0.78rem;
 }
 
+.transport-time-row,
+.transport-variant-time {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-left: 2px solid var(--accent-gold);
+    background: rgba(197, 160, 89, 0.08);
+    color: var(--primary-green);
+}
+
+.transport-time-row {
+    margin: -4px 0 16px;
+}
+
+.transport-time-row i,
+.transport-variant-time i {
+    color: #a56728;
+}
+
+.transport-time-row span,
+.transport-variant-time span {
+    font-size: 0.61rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.transport-time-row strong,
+.transport-variant-time strong {
+    margin-left: auto;
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+}
+
 .transport-metrics {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2625,6 +2660,15 @@ footer {
     margin: 12px 0 16px;
     color: #606963;
     font-size: 0.7rem;
+}
+
+.transport-variant-time {
+    margin-bottom: 14px;
+    padding: 8px 10px;
+}
+
+.transport-variant-time strong {
+    font-size: 0.68rem;
 }
 
 .transport-variant-card dl {

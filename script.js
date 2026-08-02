@@ -195,12 +195,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 label: 'Best for long distance',
                 icon: 'fa-plane-departure',
                 score: '8.8',
-                title: 'Direct economy flight to Kochi (COK)',
-                summary: 'Choose the shortest practical nonstop service. A slightly higher direct fare often beats a cheaper connection once waiting time and fatigue are included.',
+                title: 'Direct economy flight from your city to Kochi',
+                summary: 'Choose the shortest practical nonstop service to Kochi. A slightly higher direct fare often beats a cheaper connection once waiting time and fatigue are included.',
+                time: '05:00-13:00',
                 price: 'INR 3k-9k',
                 comfort: 'High',
                 distance: 'Best beyond 700 km',
-                arrival: 'Airport transfer needed',
+                arrival: 'Kochi',
                 href: 'https://www.cial.aero/',
                 action: 'Check CIAL flights'
             },
@@ -209,12 +210,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 label: 'Best overall value',
                 icon: 'fa-train',
                 score: '9.1',
-                title: 'Direct AC train to Ernakulam (ERS or ERN)',
-                summary: 'An overnight AC 2-tier or 3-tier service balances fare, comfort and a central arrival. Confirm the exact Ernakulam station before arranging pickup.',
+                title: 'Direct AC train from your city to Kochi',
+                summary: 'An overnight AC 2-tier or 3-tier service to Kochi balances fare and comfort. Confirm the station printed on your ticket before arranging pickup to the itinerary start.',
+                time: '18:00-08:00 +1 day',
                 price: 'INR 400-3k',
                 comfort: 'Medium-high',
                 distance: 'Best for 300-2,000 km',
-                arrival: 'Closest to central Kochi',
+                arrival: 'Kochi',
                 href: 'https://www.irctc.co.in/nget/train-search',
                 action: 'Search official trains'
             },
@@ -223,12 +225,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 label: 'Best nearby option',
                 icon: 'fa-bus-simple',
                 score: '8.3',
-                title: 'Reserved AC coach to Vyttila or Ernakulam',
-                summary: 'Choose an AC sleeper or multi-axle coach from a reputable operator. It works best from nearby South Indian cities, not for multi-day road journeys.',
+                title: 'Reserved AC coach from your city to Kochi',
+                summary: 'Choose a direct AC sleeper or multi-axle coach to Kochi from a reputable operator. It works best from nearby South Indian cities, not for multi-day road journeys.',
+                time: '20:00-08:00 +1 day',
                 price: 'INR 700-2.5k',
                 comfort: 'Medium',
                 distance: 'Best under 700 km',
-                arrival: 'Useful city connection',
+                arrival: 'Kochi',
                 href: 'https://onlineksrtcswift.com/',
                 action: 'Check KSRTC-SWIFT'
             }
@@ -239,29 +242,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 icon: 'fa-plane',
                 intro: 'Choose by arrival timing, connection count and the real door-to-door journey.',
                 options: [
-                    { title: 'Early nonstop to COK', score: '9.0', price: 'INR 3.5k-10k', fit: 'Same-day start', note: 'Useful when the flight lands early enough for a relaxed airport transfer and hotel check-in.' },
-                    { title: 'Evening nonstop to COK', score: '8.8', price: 'INR 3k-9k', fit: 'Rest before Day 1', note: 'A calm choice when you prefer to sleep in Kochi and begin the itinerary the next morning.' },
-                    { title: 'One-stop fare saver', score: '7.5', price: 'INR 2.8k-8k', fit: 'Flexible dates', note: 'Consider only when the saving is meaningful and the connection leaves a comfortable delay buffer.' }
+                    { title: 'Early nonstop to Kochi', score: '9.0', time: '05:00-10:00', price: 'INR 3.5k-10k', fit: 'Same-day start', note: 'Useful when the flight lands early enough for a relaxed airport transfer and hotel check-in.' },
+                    { title: 'Evening nonstop to Kochi', score: '8.8', time: '17:00-22:00', price: 'INR 3k-9k', fit: 'Rest before Day 1', note: 'A calm choice when you prefer to sleep in Kochi and begin the itinerary the next morning.' },
+                    { title: 'One-stop fare saver', score: '7.5', time: '06:00-15:00', price: 'INR 2.8k-8k', fit: 'Flexible dates', note: 'Consider only when the saving is meaningful and the connection leaves a comfortable delay buffer.' }
                 ]
             },
             {
                 mode: 'Train choices',
                 icon: 'fa-train-subway',
-                intro: 'Compare class, overnight comfort and whether the train reaches ERS or ERN.',
+                intro: 'Compare class, overnight comfort and how conveniently the service reaches Kochi.',
                 options: [
-                    { title: 'AC 2-tier overnight', score: '9.3', price: 'INR 1.2k-3.5k', fit: 'Comfort pick', note: 'More personal space and fewer berths per bay make this the strongest long-rail comfort option.' },
-                    { title: 'AC 3-tier overnight', score: '8.9', price: 'INR 700-2.2k', fit: 'Value pick', note: 'A practical balance for families and groups when berths on a direct overnight train are available.' },
-                    { title: 'Day train or chair car', score: '8.0', price: 'INR 400-1.5k', fit: 'Shorter rail routes', note: 'Works best from nearer cities when a daytime arrival is more useful than saving a hotel night.' }
+                    { title: 'AC 2-tier overnight', score: '9.3', time: '18:00-08:00 +1 day', price: 'INR 1.2k-3.5k', fit: 'Comfort pick', note: 'More personal space and fewer berths per bay make this the strongest long-rail comfort option.' },
+                    { title: 'AC 3-tier overnight', score: '8.9', time: '19:00-10:00 +1 day', price: 'INR 700-2.2k', fit: 'Value pick', note: 'A practical balance for families and groups when berths on a direct overnight train are available.' },
+                    { title: 'Day train or chair car', score: '8.0', time: '06:00-15:00', price: 'INR 400-1.5k', fit: 'Shorter rail routes', note: 'Works best from nearer cities when a daytime arrival is more useful than saving a hotel night.' }
                 ]
             },
             {
                 mode: 'Bus choices',
                 icon: 'fa-bus',
-                intro: 'Reserve a direct service and confirm the Kochi drop point before arranging pickup.',
+                intro: 'Reserve a direct service to Kochi and confirm the drop point before arranging pickup.',
                 options: [
-                    { title: 'AC sleeper coach', score: '8.5', price: 'INR 1.1k-2.5k', fit: 'Overnight nearby', note: 'The most comfortable road option from nearby South Indian cities when a direct berth is available.' },
-                    { title: 'Multi-axle AC seater', score: '8.2', price: 'INR 800-2k', fit: 'Day or evening', note: 'A stable choice for travellers who prefer a reclining seat and do not need an overnight berth.' },
-                    { title: 'Government reserved service', score: '8.0', price: 'INR 700-1.8k', fit: 'Official value option', note: 'Compare KSRTC-SWIFT boarding points, coach type and arrival time on the official portal.' }
+                    { title: 'AC sleeper coach', score: '8.5', time: '19:00-07:00 +1 day', price: 'INR 1.1k-2.5k', fit: 'Overnight nearby', note: 'The most comfortable road option from nearby South Indian cities when a direct berth is available.' },
+                    { title: 'Multi-axle AC seater', score: '8.2', time: '06:00-16:00', price: 'INR 800-2k', fit: 'Day or evening', note: 'A stable choice for travellers who prefer a reclining seat and do not need an overnight berth.' },
+                    { title: 'Government reserved service', score: '8.0', time: '07:00-18:00', price: 'INR 700-1.8k', fit: 'Official value option', note: 'Compare KSRTC-SWIFT boarding points, coach type and arrival time on the official portal.' }
                 ]
             }
         ];
@@ -290,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="transport-score" aria-label="${option.score} out of 10 planning score"><strong>${option.score}</strong><span>/10</span></div>
                     </div>
                     <p>${option.summary}</p>
+                    <div class="transport-time-row"><i class="fa-regular fa-clock" aria-hidden="true"></i><span>Sample window</span><strong>${option.time}</strong></div>
                     <dl class="transport-metrics">
                         <div><dt>Typical fare*</dt><dd>${option.price}</dd></div>
                         <div><dt>Comfort</dt><dd>${option.comfort}</dd></div>
@@ -315,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <article class="transport-variant-card">
                                 <div class="transport-variant-title"><h4>${option.title}</h4><span aria-label="${option.score} out of 10 planning score">${option.score}</span></div>
                                 <p>${option.note}</p>
+                                <div class="transport-variant-time"><i class="fa-regular fa-clock" aria-hidden="true"></i><span>Sample window</span><strong>${option.time}</strong></div>
                                 <dl><div><dt>Typical fare*</dt><dd>${option.price}</dd></div><div><dt>Best fit</dt><dd>${option.fit}</dd></div></dl>
                             </article>
                         `).join('')}
