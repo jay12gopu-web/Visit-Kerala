@@ -2318,6 +2318,219 @@ footer {
     font-size: 0.78rem;
 }
 
+.plan-transport-section {
+    background: #f8f4ea;
+}
+
+.transport-arrival-summary {
+    display: grid;
+    grid-template-columns: auto minmax(220px, 0.72fr) minmax(280px, 1.28fr);
+    align-items: center;
+    gap: 22px;
+    max-width: 980px;
+    margin: -28px auto 38px;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(10, 50, 34, 0.14);
+    border-bottom: 1px solid rgba(10, 50, 34, 0.14);
+}
+
+.transport-start-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--primary-green);
+    color: var(--accent-gold);
+    font-size: 1.05rem;
+}
+
+.transport-start-copy > span,
+.transport-mode {
+    color: #a56728;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.transport-start-copy h3 {
+    margin: 3px 0 2px;
+    color: var(--primary-green);
+    font-size: 1.5rem;
+}
+
+.transport-start-copy p,
+.transport-guidance {
+    color: #58615d;
+    font-size: 0.78rem;
+}
+
+.transport-guidance {
+    padding-left: 22px;
+    border-left: 1px solid rgba(10, 50, 34, 0.14);
+}
+
+.transport-option-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.transport-option-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 440px;
+    padding: 26px;
+    border: 1px solid rgba(10, 50, 34, 0.12);
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 15px 34px rgba(22, 37, 30, 0.06);
+    transition: var(--transition-smooth);
+}
+
+.transport-option-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(197, 160, 89, 0.58);
+    box-shadow: 0 20px 42px rgba(22, 37, 30, 0.1);
+}
+
+.transport-card-topline,
+.transport-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.transport-mode-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(10, 50, 34, 0.16);
+    color: var(--primary-green);
+    font-size: 0.95rem;
+}
+
+.transport-pick-label {
+    color: #a56728;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.transport-title-row {
+    align-items: flex-start;
+    margin: 20px 0 14px;
+}
+
+.transport-option-card h3 {
+    margin-top: 5px;
+    color: var(--primary-green);
+    font-size: 1.24rem;
+    line-height: 1.25;
+}
+
+.transport-score {
+    flex: 0 0 auto;
+    min-width: 62px;
+    padding: 8px 7px;
+    border-bottom: 2px solid var(--accent-gold);
+    text-align: center;
+}
+
+.transport-score strong {
+    color: var(--primary-green);
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+}
+
+.transport-score span {
+    color: #6c746f;
+    font-size: 0.64rem;
+}
+
+.transport-option-card > p {
+    min-height: 78px;
+    margin-bottom: 18px;
+    color: #59615d;
+    font-size: 0.78rem;
+}
+
+.transport-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 22px;
+    border-top: 1px solid rgba(10, 50, 34, 0.1);
+    border-left: 1px solid rgba(10, 50, 34, 0.1);
+}
+
+.transport-metrics div {
+    min-width: 0;
+    padding: 11px;
+    border-right: 1px solid rgba(10, 50, 34, 0.1);
+    border-bottom: 1px solid rgba(10, 50, 34, 0.1);
+}
+
+.transport-metrics dt {
+    margin-bottom: 4px;
+    color: #7a817d;
+    font-size: 0.61rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.transport-metrics dd {
+    color: var(--dark-charcoal);
+    font-size: 0.69rem;
+    font-weight: 600;
+}
+
+.transport-option-card > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    color: var(--primary-green);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.transport-booking-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(10, 50, 34, 0.13);
+}
+
+.transport-booking-note p {
+    max-width: 900px;
+    color: #59615d;
+    font-size: 0.75rem;
+}
+
+.transport-source-links {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px 16px;
+}
+
+.transport-source-links a {
+    color: var(--primary-green);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
 .stay-options-section {
     background: var(--light-cream);
 }
@@ -2448,11 +2661,20 @@ footer {
 @media(max-width: 900px) {
     .budget-tier-grid { grid-template-columns: 1fr; }
     .budget-tier-card > p { min-height: 0; }
+    .transport-arrival-summary { grid-template-columns: auto minmax(0, 1fr); }
+    .transport-guidance { grid-column: 1 / -1; padding: 16px 0 0; border-top: 1px solid rgba(10, 50, 34, 0.12); border-left: 0; }
+    .transport-option-grid { grid-template-columns: 1fr; }
+    .transport-option-card { min-height: 0; }
+    .transport-option-card > p { min-height: 0; }
 }
 
 @media(max-width: 768px) {
     .budget-assumption { margin-top: -24px; }
-    .budget-tier-card, .stay-option-card { padding: 24px; }
+    .budget-tier-card, .transport-option-card, .stay-option-card { padding: 24px; }
+    .transport-arrival-summary { grid-template-columns: 1fr; margin-top: -24px; padding: 20px 0; }
+    .transport-guidance { grid-column: auto; }
+    .transport-booking-note { align-items: flex-start; flex-direction: column; }
+    .transport-source-links { justify-content: flex-start; }
     .stay-option-grid { grid-template-columns: 1fr; }
     .stay-booking-note { align-items: flex-start; flex-direction: column; }
 }
@@ -3040,6 +3262,7 @@ footer {
 }
 
 .trip-budget-section,
+.plan-transport-section,
 .stay-options-section {
     scroll-margin-top: 140px;
 }
@@ -3136,6 +3359,7 @@ footer {
 
     .plan-section-nav + main > section,
     .trip-budget-section,
+    .plan-transport-section,
     .stay-options-section {
         scroll-margin-top: 124px;
     }

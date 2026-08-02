@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ['overview', document.querySelector('.route-overview')?.closest('section')],
             ['day-by-day', document.querySelector('.plan-day-list')?.closest('section')],
             ['budget', document.querySelector('.trip-budget-section')],
+            ['transport', document.querySelector('.plan-transport-section')],
             ['stays', document.querySelector('.stay-options-section')],
             ['brochure', document.querySelector('.brochure-band')]
         ].filter(([, section]) => section);
@@ -181,6 +182,92 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         updatePlanSection();
+    }
+
+    // Every current itinerary starts in Kochi; these mode-level picks avoid pretending
+    // that one operator or fare is best for every departure city and travel date.
+    const transportSection = document.querySelector('.plan-transport-section');
+
+    if (transportSection) {
+        const transportRecommendations = [
+            {
+                mode: 'Flight',
+                label: 'Best for long distance',
+                icon: 'fa-plane-departure',
+                score: '8.8',
+                title: 'Direct economy flight to Kochi (COK)',
+                summary: 'Choose the shortest practical nonstop service. A slightly higher direct fare often beats a cheaper connection once waiting time and fatigue are included.',
+                price: 'INR 3k-9k',
+                comfort: 'High',
+                distance: 'Best beyond 700 km',
+                arrival: 'Airport transfer needed',
+                href: 'https://www.cial.aero/',
+                action: 'Check CIAL flights'
+            },
+            {
+                mode: 'Train',
+                label: 'Best overall value',
+                icon: 'fa-train',
+                score: '9.1',
+                title: 'Direct AC train to Ernakulam (ERS or ERN)',
+                summary: 'An overnight AC 2-tier or 3-tier service balances fare, comfort and a central arrival. Confirm the exact Ernakulam station before arranging pickup.',
+                price: 'INR 400-3k',
+                comfort: 'Medium-high',
+                distance: 'Best for 300-2,000 km',
+                arrival: 'Closest to central Kochi',
+                href: 'https://www.irctc.co.in/nget/train-search',
+                action: 'Search official trains'
+            },
+            {
+                mode: 'Bus',
+                label: 'Best nearby option',
+                icon: 'fa-bus-simple',
+                score: '8.3',
+                title: 'Reserved AC coach to Vyttila or Ernakulam',
+                summary: 'Choose an AC sleeper or multi-axle coach from a reputable operator. It works best from nearby South Indian cities, not for multi-day road journeys.',
+                price: 'INR 700-2.5k',
+                comfort: 'Medium',
+                distance: 'Best under 700 km',
+                arrival: 'Useful city connection',
+                href: 'https://onlineksrtcswift.com/',
+                action: 'Check KSRTC-SWIFT'
+            }
+        ];
+        const audienceGuidance = {
+            family: 'For families, a direct flight or overnight AC train usually gives the cleanest start. Reserve adjacent seats and leave arrival day flexible.',
+            student: 'For student groups, compare direct train availability first; an AC coach can be the value pick from nearby South Indian cities.',
+            senior: 'For senior travellers, prioritise a nonstop flight or AC 2-tier train, request assistance where needed, and avoid a tight same-day connection.'
+        };
+        const transportGrid = transportSection.querySelector('[data-transport-options]');
+        const guidance = transportSection.querySelector('[data-transport-guidance]');
+        const audience = transportSection.dataset.transportAudience || 'family';
+
+        if (guidance) guidance.textContent = audienceGuidance[audience] || audienceGuidance.family;
+
+        if (transportGrid) {
+            transportGrid.innerHTML = transportRecommendations.map(option => `
+                <article class="transport-option-card">
+                    <div class="transport-card-topline">
+                        <span class="transport-mode-icon" aria-hidden="true"><i class="fa-solid ${option.icon}"></i></span>
+                        <span class="transport-pick-label">${option.label}</span>
+                    </div>
+                    <div class="transport-title-row">
+                        <div><span class="transport-mode">${option.mode}</span><h3>${option.title}</h3></div>
+                        <div class="transport-score" aria-label="${option.score} out of 10 planning score"><strong>${option.score}</strong><span>/10</span></div>
+                    </div>
+                    <p>${option.summary}</p>
+                    <dl class="transport-metrics">
+                        <div><dt>Typical fare*</dt><dd>${option.price}</dd></div>
+                        <div><dt>Comfort</dt><dd>${option.comfort}</dd></div>
+                        <div><dt>Journey fit</dt><dd>${option.distance}</dd></div>
+                        <div><dt>Arrival</dt><dd>${option.arrival}</dd></div>
+                    </dl>
+                    <a href="${option.href}" target="_blank" rel="noopener">${option.action} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                </article>
+            `).join('');
+
+            if (window.FontAwesome?.dom?.i2svg) window.FontAwesome.dom.i2svg();
+        }
     }
 
     // Expandable day schedules keep the overview clean while making every stop actionable.
