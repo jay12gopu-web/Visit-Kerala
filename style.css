@@ -4795,10 +4795,26 @@ p {
 
 .phrase-panel-intro {
     max-width: 780px;
-    margin: 0 0 24px;
+    margin: 0 0 10px;
     color: var(--muted-gray);
     font-size: 0.8rem;
     line-height: 1.7;
+}
+
+.phrase-pronunciation-status {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+    margin: 0 0 22px;
+    color: var(--primary-green);
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.phrase-pronunciation-status.is-unavailable {
+    color: var(--muted-gray);
+    font-weight: 400;
 }
 
 .travel-phrase-groups {
@@ -4831,8 +4847,9 @@ p {
 
 .travel-phrase-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-    gap: 14px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) 42px;
+    gap: 12px;
+    align-items: center;
     padding: 14px 16px;
     border-bottom: 1px solid rgba(10, 50, 34, 0.08);
 }
@@ -4855,6 +4872,43 @@ p {
     color: var(--muted-gray);
     font-size: 0.72rem;
     line-height: 1.55;
+}
+
+.phrase-sound-button {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(10, 50, 34, 0.17);
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--primary-green);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.phrase-sound-button:hover:not(:disabled) {
+    border-color: var(--accent-gold);
+    background: rgba(197, 160, 89, 0.14);
+    transform: translateY(-1px);
+}
+
+.phrase-sound-button:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 2px;
+}
+
+.phrase-sound-button.is-speaking {
+    border-color: var(--primary-green);
+    background: var(--primary-green);
+    color: #ffffff;
+}
+
+.phrase-sound-button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
 }
 
 @keyframes phrasePanelOpen {
@@ -4962,7 +5016,18 @@ p {
     .phrase-summary-copy em { font-size: 0.68rem; line-height: 1.5; }
     .phrase-panel-chevron { width: 36px; height: 36px; }
     .travel-phrase-content { padding: 20px 16px; }
-    .travel-phrase-row { grid-template-columns: 1fr; gap: 5px; }
+    .travel-phrase-row {
+        grid-template-columns: minmax(0, 1fr) 44px;
+        gap: 5px 12px;
+    }
+    .travel-phrase-row strong,
+    .travel-phrase-row > span { grid-column: 1; }
+    .phrase-sound-button {
+        width: 44px;
+        height: 44px;
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
     .destination-card-actions a,
     .recent-recommendation-actions a { width: 100%; justify-content: center; }
 }
@@ -4973,6 +5038,7 @@ p {
     .travel-style-grid a { transition: none; }
     .travel-phrase-content { animation: none; }
     .phrase-panel-chevron { transition: none; }
+    .phrase-sound-button { transition: none; }
 }
 
 /* ==========================================================================

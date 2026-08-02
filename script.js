@@ -2679,3 +2679,135 @@ document.addEventListener('DOMContentLoaded', () => {
     filterButtons.forEach(button => button.addEventListener('click', () => applyFilter(button.dataset.destinationFilter)));
     window.__keralaDestinationFilters = { apply: applyFilter, categories: filterButtons.map(button => button.dataset.destinationFilter), count: cards.length };
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const phrasePanel = document.querySelector('.travel-phrase-panel');
+    if (!phrasePanel) return;
+
+    const phraseRows = [...phrasePanel.querySelectorAll('.travel-phrase-row')];
+    const intro = phrasePanel.querySelector('.phrase-panel-intro');
+    const status = document.createElement('p');
+    status.className = 'phrase-pronunciation-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = 'Checking for a Malayalam pronunciation voice...';
+    intro?.insertAdjacentElement('afterend', status);
+
+    const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    const synthesiser = speechSupported ? window.speechSynthesis : null;
+    let malayalamVoice = null;
+    let activeButton = null;
+
+    const buttons = phraseRows.map(row => {
+        const malayalamText = row.querySelector('[lang="ml"]')?.textContent.trim() || '';
+        const transliteration = row.querySelector('strong span:not([lang])')?.textContent.trim() || 'this phrase';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'phrase-sound-button';
+        button.disabled = true;
+        button.dataset.phrase = malayalamText;
+        button.dataset.phraseName = transliteration;
+        button.setAttribute('aria-label', `Hear ${transliteration} pronounced in Malayalam`);
+        button.setAttribute('aria-pressed', 'false');
+        button.title = 'Checking Malayalam voice availability';
+        button.innerHTML = '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>';
+        row.append(button);
+        return button;
+    });
+
+    const stopPlaybackState = () => {
+        if (!activeButton) return;
+        activeButton.classList.remove('is-speaking');
+        activeButton.setAttribute('aria-pressed', 'false');
+        activeButton = null;
+    };
+
+    const setVoiceAvailability = voice => {
+        malayalamVoice = voice || null;
+        buttons.forEach(button => {
+            button.disabled = !malayalamVoice;
+            button.title = malayalamVoice
+                ? `Hear ${button.dataset.phraseName} pronounced`
+                : 'Malayalam pronunciation is unavailable in this browser';
+        });
+
+        status.classList.toggle('is-unavailable', !malayalamVoice);
+        status.textContent = malayalamVoice
+            ? 'Use the speaker buttons to hear each phrase at a slower learning pace.'
+            : 'Malayalam pronunciation is unavailable in this browser. Installing a Malayalam system voice may enable it.';
+    };
+
+    const findMalayalamVoice = () => {
+        if (!synthesiser) return null;
+        return synthesiser.getVoices().find(voice => /^ml(?:-|_)/i.test(voice.lang));
+    };
+
+    if (!speechSupported) {
+        setVoiceAvailability(null);
+        return;
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (!malayalamVoice || !synthesiser) return;
+
+            synthesiser.cancel();
+            stopPlaybackState();
+
+            const utterance = new SpeechSynthesisUtterance(button.dataset.phrase);
+            utterance.lang = 'ml-IN';
+            utterance.voice = malayalamVoice;
+            utterance.rate = 0.78;
+            utterance.pitch = 1;
+
+            utterance.onstart = () => {
+                activeButton = button;
+                button.classList.add('is-speaking');
+                button.setAttribute('aria-pressed', 'true');
+                status.textContent = `Playing ${button.dataset.phraseName}.`;
+            };
+            utterance.onend = () => {
+                stopPlaybackState();
+                status.textContent = `Finished ${button.dataset.phraseName}.`;
+            };
+            utterance.onerror = event => {
+                stopPlaybackState();
+                if (event.error !== 'interrupted' && event.error !== 'canceled') {
+                    status.textContent = 'Pronunciation could not be played on this device.';
+                }
+            };
+
+            synthesiser.speak(utterance);
+        });
+    });
+
+    const refreshVoice = () => {
+        const voice = findMalayalamVoice();
+        if (voice) setVoiceAvailability(voice);
+        return Boolean(voice);
+    };
+
+    if (typeof synthesiser.addEventListener === 'function') {
+        synthesiser.addEventListener('voiceschanged', refreshVoice);
+    }
+
+    if (!refreshVoice()) {
+        window.setTimeout(refreshVoice, 300);
+        window.setTimeout(() => {
+            if (!malayalamVoice) setVoiceAvailability(null);
+        }, 1200);
+    }
+
+    phrasePanel.addEventListener('toggle', () => {
+        if (!phrasePanel.open && synthesiser?.speaking) {
+            synthesiser.cancel();
+            stopPlaybackState();
+        }
+    });
+
+    window.__keralaPhraseAudio = {
+        buttons: buttons.length,
+        getVoice: () => malayalamVoice?.lang || null,
+        isAvailable: () => Boolean(malayalamVoice)
+    };
+});
