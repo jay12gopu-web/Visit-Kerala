@@ -1227,7 +1227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: 'Trip budget',
             questions: ['How much does a Kerala trip cost?', 'Is Kerala expensive?', 'What budget should I keep for Kerala?', 'Can I travel Kerala cheaply?', 'What is included in the plan budgets?', 'Do the budgets include flights?'],
             terms: ['trip cost', 'kerala budget', 'how expensive', 'travel cheaply', 'include flights'],
-            text: "The plan budgets cover stays, travel within Kerala, meals, and core activities for one traveller sharing rooms. They exclude travel to and from Kerala. Every plan has value, comfortable, and premium estimates with a detailed breakdown.",
+            text: "Each plan has a group budget estimator for Value, Comfortable and Premium travel. Enter the adults, children, seniors and infants travelling to calculate accommodation, local Kerala transport, meals, core activities and the listed cruise. Travel to and from Kerala is excluded.",
             link: ['itineraries.html', 'Compare plan budgets'],
             related: ['budget-3', 'budget-5', 'budget-7', 'budget-10']
         },
@@ -1236,7 +1236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: '3-day cost',
             questions: ['How much does the 3-day Kerala trip cost?', 'What is the budget for three days?', 'Can I do Kerala in three days under 20000 rupees?', 'What is the comfortable budget for the 3-day plan?', 'How much is a short Kochi and Alappuzha trip?'],
             terms: ['3 day cost', 'three day budget', '3 day budget', 'under 20000'],
-            text: "The 3-day plan estimates INR 13,000-18,000 value, INR 24,000-34,000 comfortable, or INR 48,000-75,000 premium per traveller sharing. Peak dates and private houseboats can increase it.",
+            text: "The 3-day total depends on your group, travel month, room arrangement and comfort tier. Open its Budget section and enter the travellers to compare Value, Comfortable and Premium group estimates.",
             link: ['plan-3-days.html#budget', 'See the 3-day budget'],
             related: ['plan-3', 'hotel-prices', 'houseboat']
         },
@@ -1245,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: '5-day cost',
             questions: ['How much does the 5-day Kerala trip cost?', 'What is the budget for five days?', 'Can I do the 5-day plan cheaply?', 'What is the comfortable budget for five days?', 'How much is the Kochi Munnar Thekkady trip?'],
             terms: ['5 day cost', 'five day budget', '5 day budget', 'cost for five days'],
-            text: "The 5-day plan estimates INR 24,000-34,000 value, INR 45,000-64,000 comfortable, or INR 88,000-135,000 premium per traveller sharing. Travel to Kerala is separate.",
+            text: "The 5-day total depends on your group, travel month, rooms, vehicle and houseboat cabin needs. Its Budget section calculates three planning ranges for the entire entered group; travel to Kerala remains separate.",
             link: ['plan-5-days.html#budget', 'See the 5-day budget'],
             related: ['plan-5', 'hotel-prices', 'transport']
         },
@@ -1254,7 +1254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: '7-day cost',
             questions: ['How much does the 7-day Kerala trip cost?', 'What is the budget for one week?', 'How much money do I need for seven days?', 'What is the comfortable budget for the 7-day plan?', 'Is the one-week itinerary expensive?'],
             terms: ['7 day cost', 'seven day budget', 'one week budget', '7 day budget'],
-            text: "The 7-day plan estimates INR 36,000-52,000 value, INR 66,000-95,000 comfortable, or INR 130,000-195,000 premium per traveller sharing. Holiday weekends can raise rates.",
+            text: "The 7-day total is calculated for your actual group using the season, room count, route transport, meals and listed experiences. Use the plan's Budget section for Value, Comfortable and Premium group estimates.",
             link: ['plan-7-days.html#budget', 'See the 7-day budget'],
             related: ['plan-7', 'hotel-prices', 'offbeat']
         },
@@ -1263,7 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestion: '10-day cost',
             questions: ['How much does the 10-day Kerala trip cost?', 'What is the budget for ten days?', 'How much money do I need for the long trip?', 'What is the comfortable budget for the 10-day plan?', 'Is north Kerala costly to include?'],
             terms: ['10 day cost', 'ten day budget', '10 day budget', 'long trip cost'],
-            text: "The 10-day plan estimates INR 58,000-82,000 value, INR 105,000-150,000 comfortable, or INR 200,000-295,000 premium per traveller sharing. Its long north-south transfers make transport a major cost.",
+            text: "The 10-day estimator accounts for its long cross-Kerala transfers, group-size vehicle, rooms, meals and activities. Enter your group and month in the Budget section to see all three indicative 2026 planning ranges.",
             link: ['plan-10-days.html#budget', 'See the 10-day budget'],
             related: ['plan-10', 'transport', 'hotel-prices']
         },
@@ -1924,8 +1924,6 @@ document.addEventListener('DOMContentLoaded', () => {
         active: 'Active'
     };
 
-    const familyPriceNote = 'Estimated 2026 total for a family of four. Budget estimate for two adults and two children. Includes accommodation, local transport, meals and selected activities; travel to and from Kerala is excluded.';
-
     const plans = [
         {
             id: 'three-day',
@@ -1943,8 +1941,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 students: 'Use social stays, shared transfers and one group meeting point.',
                 senior: 'Use shorter walks, private transfers and additional rest time.'
             },
-            prices: { value: 'INR 13,000-18,000', comfortable: 'INR 24,000-34,000', premium: 'INR 48,000-75,000' },
-            priceNote: familyPriceNote,
             mapFrom: 'Kochi',
             mapTo: 'Alappuzha'
         },
@@ -1964,8 +1960,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 students: 'Use shared transfers and group-friendly stays while keeping one flexible evening.',
                 senior: 'Replace optional walks with viewpoints, use private transfers and add rest after hill roads.'
             },
-            prices: { value: 'INR 24,000-34,000', comfortable: 'INR 45,000-64,000', premium: 'INR 88,000-135,000' },
-            priceNote: familyPriceNote,
             mapFrom: 'Kochi',
             mapTo: 'Alappuzha'
         },
@@ -1985,8 +1979,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 students: 'Use group rooms and shared transfers, then prioritise the three most important activities.',
                 senior: 'Use a private vehicle, shorten walking days and keep a rest block after each major transfer.'
             },
-            prices: { value: 'INR 36,000-52,000', comfortable: 'INR 66,000-95,000', premium: 'INR 130,000-195,000' },
-            priceNote: familyPriceNote,
             mapFrom: 'Kochi',
             mapTo: 'Varkala'
         },
@@ -2006,8 +1998,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 students: 'Use overnight transport selectively and protect one lighter day after the northbound transfer.',
                 senior: 'Use a private vehicle, add rest blocks and consider removing one northern stop to reduce major transfers.'
             },
-            prices: { value: 'INR 58,000-82,000', comfortable: 'INR 105,000-150,000', premium: 'INR 200,000-295,000' },
-            priceNote: familyPriceNote,
             mapFrom: 'Kochi',
             mapTo: 'Bekal'
         },
@@ -2022,10 +2012,8 @@ document.addEventListener('DOMContentLoaded', () => {
             experiences: ['hills', 'backwaters', 'culture', 'food'],
             budgetFit: { value: 3, comfortable: 2, premium: 1 },
             strengths: ['Group-friendly stays', 'Shared travel savings', 'Social active pace'],
-            limitations: ['Pricing assumes four friends sharing', 'No wildlife or beach stay'],
+            limitations: ['Shared accommodation works best for groups', 'No wildlife or beach stay'],
             adjustments: {},
-            prices: { value: 'INR 14,000-20,000', comfortable: 'INR 23,000-32,000', premium: 'INR 36,000-52,000' },
-            priceNote: 'Indicative 2026 cost per adult student, assuming four friends share rooms and local transfers. Travel to and from Kerala is excluded.',
             mapFrom: 'Kochi',
             mapTo: 'Alappuzha',
             specialist: 'students'
@@ -2042,11 +2030,8 @@ document.addEventListener('DOMContentLoaded', () => {
             experiences: ['backwaters', 'culture', 'food', 'wellness'],
             budgetFit: { value: 2, comfortable: 3, premium: 3 },
             strengths: ['Only two overnight bases', 'Private road transfers', 'Lighter sightseeing'],
-            limitations: ['No hill-country or wildlife stay', 'Estimate assumes two people sharing'],
+            limitations: ['No hill-country or wildlife stay', 'Accessibility requirements must be confirmed before booking'],
             adjustments: {},
-            prices: { value: 'INR 34,000-48,000', comfortable: 'INR 52,000-72,000', premium: 'INR 90,000-135,000' },
-            priceNote: 'Indicative 2026 cost per senior traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.',
-            neutralPriceNote: 'Indicative 2026 cost per traveller, based on two people sharing rooms and a private air-conditioned car. Travel to and from Kerala and medical expenses are excluded.',
             mapFrom: 'Kochi',
             mapTo: 'Kumarakom',
             specialist: 'senior'
@@ -2098,10 +2083,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const publicPlanName = (plan, answers) => plan.id === 'senior' && answers.traveller !== 'senior'
         ? plan.alternativeName
         : plan.publicName;
-
-    const planPriceNote = (plan, answers) => plan.id === 'senior' && answers.traveller !== 'senior'
-        ? plan.neutralPriceNote
-        : plan.priceNote;
 
     const evaluatePlan = (plan, answers) => {
         const selectedDurationIndex = durationLevels.indexOf(answers.days);
@@ -2178,7 +2159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return `This five-day route uses only two overnight bases, private transfers and lighter sightseeing, making it the strongest match for a relaxed senior journey${matchedText ? ` focused on ${matchedText}` : ''}.`;
         }
         if (plan.id === 'senior') {
-            return `This relaxed five-day Kochi and Kumarakom route matches your couple travel style${matchedText ? ` and interest in ${matchedText}` : ''}. The route uses two overnight bases and private transfers; the displayed estimate is per traveller based on two people sharing.`;
+            return `This relaxed five-day Kochi and Kumarakom route matches your couple travel style${matchedText ? ` and interest in ${matchedText}` : ''}. The route uses two overnight bases and private transfers; use the group estimator for a total based on your actual room arrangement.`;
         }
 
         const durationOpening = plan.days === answers.days
@@ -2283,9 +2264,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: primary.plan.id,
             name: publicPlanName(primary.plan, answers),
             url: primary.plan.url,
-            price: primary.plan.prices[answers.budget],
-            priceNote: planPriceNote(primary.plan, answers),
             selectedBudget: answers.budget,
+            budgetUrl: `${primary.plan.url}?budget=${encodeURIComponent(answers.budget)}#budget`,
             explanation: buildPrimaryReason(primary, answers),
             warning: buildPrimaryWarning(primary, answers),
             mapUrl: `map.html?from=${encodeURIComponent(primary.plan.mapFrom)}&to=${encodeURIComponent(primary.plan.mapTo)}&plan=${encodeURIComponent(primary.plan.id)}`,
@@ -2297,9 +2277,8 @@ document.addEventListener('DOMContentLoaded', () => {
             id: alternative.plan.id,
             name: publicPlanName(alternative.plan, answers),
             url: alternative.plan.url,
-            price: alternative.plan.prices[answers.budget],
-            priceNote: planPriceNote(alternative.plan, answers),
             selectedBudget: answers.budget,
+            budgetUrl: `${alternative.plan.url}?budget=${encodeURIComponent(answers.budget)}#budget`,
             reason: buildAlternativeReason(alternative, primary, answers),
             difference: buildAlternativeDifference(alternative, primary, answers)
         };
@@ -2390,9 +2369,10 @@ document.addEventListener('DOMContentLoaded', () => {
         finder.querySelector('[data-result-duration]').textContent = `${primary.plan.days} days`;
         finder.querySelector('[data-result-route]').textContent = primary.plan.route;
         finder.querySelector('[data-result-pace]').textContent = paceNames[primary.plan.pace];
-        finder.querySelector('[data-result-price]').textContent = `${budgetNames[answers.budget]}: ${primary.price}`;
-        finder.querySelector('[data-result-price-note]').textContent = primary.priceNote;
+        finder.querySelector('[data-result-price]').textContent = `${budgetNames[answers.budget]} tier selected`;
+        finder.querySelector('[data-result-price-note]').textContent = 'Budget depends on your traveller group. Enter your group, travel month and room preference for an indicative 2026 total.';
         finder.querySelector('[data-result-link]').href = primary.url;
+        finder.querySelector('[data-result-budget-link]').href = primary.budgetUrl;
         finder.querySelector('[data-result-map-link]').href = primary.mapUrl;
         renderChips(finder.querySelector('[data-result-matched]'), primary.matchedPreferences, 'No strong matches');
         renderChips(finder.querySelector('[data-result-missing]'), primary.missingPreferences, 'No major gaps');
@@ -2401,8 +2381,8 @@ document.addEventListener('DOMContentLoaded', () => {
         finder.querySelector('[data-alternative-name]').textContent = alternative.name;
         finder.querySelector('[data-alternative-reason]').textContent = alternative.reason;
         finder.querySelector('[data-alternative-difference]').textContent = alternative.difference;
-        finder.querySelector('[data-alternative-price]').textContent = `${budgetNames[answers.budget]}: ${alternative.price}`;
-        finder.querySelector('[data-alternative-price-note]').textContent = alternative.priceNote;
+        finder.querySelector('[data-alternative-price]').textContent = `${budgetNames[answers.budget]} tier; calculate for your group`;
+        finder.querySelector('[data-alternative-price-note]').textContent = 'The alternative plan has the same personalised group estimator.';
         finder.querySelector('[data-alternative-link]').href = alternative.url;
     };
 
@@ -2474,7 +2454,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (traveller === 'solo' && primary.id === 'student') failures.push({ answers, issue: 'Student plan recommended to solo traveller' });
                 else if (plans.some(plan => plan.days === days && isPrimaryEligible(plan, recommendation.answers)) && primary.plan.days !== days) failures.push({ answers, issue: 'Exact duration was not respected' });
                 else if (primary.matchPercentage < 0 || primary.matchPercentage > 100 || alternative.matchPercentage < 0 || alternative.matchPercentage > 100) failures.push({ answers, issue: 'Match percentage outside 0-100' });
-                else if (primary.price !== primary.plan.prices[budget] || alternative.price !== alternative.plan.prices[budget]) failures.push({ answers, issue: 'Incorrect budget price' });
+                else if (primary.selectedBudget !== budget || alternative.selectedBudget !== budget) failures.push({ answers, issue: 'Incorrect budget preference' });
+                else if (![primary.budgetUrl, alternative.budgetUrl].every(url => url.includes(`?budget=${budget}#budget`))) failures.push({ answers, issue: 'Incorrect budget-estimator link' });
                 else if (JSON.stringify(primary.missingExperiences) !== JSON.stringify(expectedMissing)) failures.push({ answers, issue: 'Missing experiences are inaccurate' });
                 else if (![primary.url, alternative.url].every(url => plans.some(plan => plan.url === url))) failures.push({ answers, issue: 'Unknown plan link' });
             } catch (testError) {
