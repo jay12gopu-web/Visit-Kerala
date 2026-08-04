@@ -2,6 +2,8 @@
     const PLAN_DATA = {
         'three-day': {
             name: '3-Day Kochi + Backwaters',
+            route: 'Kochi → Fort Kochi → Alappuzha → Kochi',
+            pageUrl: 'plan-3-days.html',
             days: 3,
             nights: 2,
             hotelNights: 1,
@@ -20,6 +22,8 @@
         },
         'five-day': {
             name: '5-Day Hills + Houseboat',
+            route: 'Kochi → Munnar → Thekkady → Alappuzha → Kochi',
+            pageUrl: 'plan-5-days.html',
             days: 5,
             nights: 4,
             hotelNights: 3,
@@ -38,6 +42,8 @@
         },
         'seven-day': {
             name: '7-Day Classic + Offbeat Kerala',
+            route: 'Kochi → Kadamakkudy → Munnar → Thekkady → Munroe Island → Varkala',
+            pageUrl: 'plan-7-days.html',
             days: 7,
             nights: 6,
             hotelNights: 6,
@@ -56,6 +62,8 @@
         },
         'ten-day': {
             name: '10-Day Kerala Deep Dive',
+            route: 'Kochi → Kadamakkudy → Munroe Island → Munnar → Thekkady → Wayanad → Valiyaparamba → Bekal',
+            pageUrl: 'plan-10-days.html',
             days: 10,
             nights: 9,
             hotelNights: 9,
@@ -74,6 +82,8 @@
         },
         student: {
             name: '5-Day Kerala Student Plan',
+            route: 'Kochi → Munnar → Alappuzha → Kochi',
+            pageUrl: 'plan-5-days-students.html',
             days: 5,
             nights: 4,
             hotelNights: 4,
@@ -92,6 +102,8 @@
         },
         senior: {
             name: '5-Day Easy-Paced Senior Plan',
+            route: 'Kochi → Kumarakom → Kochi',
+            pageUrl: 'plan-5-days-seniors.html',
             days: 5,
             nights: 4,
             hotelNights: 4,
@@ -193,6 +205,8 @@
     };
 
     const TIER_IDS = Object.keys(TIERS);
+    const ENQUIRY_STORAGE_KEY = 'visitKeralaSelectedEstimate';
+    const PRICING_REVIEW_DATE = 'August 2026';
     const roundHundred = value => Math.max(0, Math.round(value / 100) * 100);
     const clamp = (value, minimum, maximum) => Math.min(maximum, Math.max(minimum, value));
     const plural = (count, singular, pluralForm = `${singular}s`) => `${count} ${count === 1 ? singular : pluralForm}`;
@@ -446,6 +460,94 @@
                 ? 'Canoe experience'
                 : 'No cruise included';
 
+    const serialiseRange = range => ({
+        minimum: range.lower,
+        maximum: range.upper,
+        formatted: formatRange(range)
+    });
+
+    const createEnquiryPayload = (estimate, selectedTier) => {
+        if (!estimate?.plan || estimate.totalTravellers < 1) throw new Error('A valid personalised estimate is required.');
+        if (!TIER_IDS.includes(selectedTier)) throw new Error('Choose a supported comfort tier.');
+        const tier = estimate.tiers[selectedTier];
+        if (!tier?.total || tier.total.lower < 0 || tier.total.upper < tier.total.lower) throw new Error('The selected estimate is incomplete.');
+        const rangeFor = category => serialiseRange(tier.ranges[category] || { lower: 0, upper: 0 });
+        const assistanceId = estimate.input.assistance || 'none';
+        const privateTransportRequired = estimate.plan.seniorFocused || ['private', 'wheelchair'].includes(assistanceId);
+
+        return {
+            version: 1,
+            createdAt: new Date().toISOString(),
+            plan: {
+                id: estimate.planId,
+                name: estimate.plan.name,
+                duration: `${estimate.plan.days} days`,
+                days: estimate.plan.days,
+                nights: estimate.plan.nights,
+                hotelNights: estimate.plan.hotelNights,
+                route: estimate.plan.route,
+                itineraryPageUrl: estimate.plan.pageUrl,
+                budgetSectionReturnUrl: `${estimate.plan.pageUrl}?budget=${selectedTier}#budget`
+            },
+            selectedBudget: {
+                tierId: tier.id,
+                tierName: tier.name,
+                estimatedMinimumAmount: tier.total.lower,
+                estimatedMaximumAmount: tier.total.upper,
+                formattedEstimateRange: formatRange(tier.total),
+                pricingAssumptionsReviewDate: PRICING_REVIEW_DATE
+            },
+            travellers: {
+                adults: estimate.group.adults,
+                seniorTravellers: estimate.group.seniors,
+                children: estimate.group.children,
+                infants: estimate.group.infants,
+                childAges: [...estimate.group.childAges],
+                infantAges: [...estimate.group.infantAges],
+                totalTravellerCount: estimate.totalTravellers
+            },
+            travelDetails: {
+                selectedTravelMonth: MONTHS[estimate.input.month - 1],
+                selectedTravelMonthNumber: estimate.input.month,
+                holidayOrPeakPeriodSelected: Boolean(estimate.input.holidayPeak),
+                seasonLabel: estimate.season.label,
+                seasonalMultiplier: estimate.season.multiplier
+            },
+            accommodation: {
+                roomPreferenceId: estimate.input.roomPreference,
+                roomPreference: ROOM_PREFERENCES[estimate.input.roomPreference],
+                calculatedHotelRooms: estimate.rooms.rooms,
+                calculatedExtraBeds: estimate.rooms.extraBeds,
+                houseboatCabins: estimate.rooms.cabins,
+                hotelNights: estimate.plan.hotelNights
+            },
+            transportAndAssistance: {
+                assistanceRequirementId: assistanceId,
+                assistanceRequirement: ASSISTANCE[assistanceId]?.label || ASSISTANCE.none.label,
+                privateTransportRequired,
+                recommendedVehicle: estimate.vehicle.name,
+                passengerLoadAssumption: estimate.vehicle.passengerLoad
+            },
+            waterExperience: {
+                id: estimate.plan.cruise,
+                label: cruiseLabel(estimate.plan)
+            },
+            estimateBreakdown: {
+                accommodation: rangeFor('accommodation'),
+                childExtraBeds: rangeFor('childExtraBeds'),
+                localTransport: rangeFor('transport'),
+                meals: rangeFor('meals'),
+                experiencesAndEntryFees: rangeFor('experiences'),
+                waterExperience: rangeFor('cruise'),
+                accessibilityAllowance: rangeFor('accessibility'),
+                taxesAndContingency: rangeFor('contingency'),
+                finalTotal: serialiseRange(tier.total)
+            },
+            assumptions: [...estimate.assumptions],
+            disclaimer: estimate.disclaimer
+        };
+    };
+
     const renderAgeSelectors = (container, type, ages) => {
         const isChild = type === 'child';
         const minimum = isChild ? 3 : 0;
@@ -479,6 +581,7 @@
                 <strong class="budget-group-total-label">Estimated total for your entire group</strong>
                 <p class="budget-per-person">Approximately ${formatCurrency(tier.perPayingTraveller)} per paying traveller</p>
                 <ul class="group-budget-breakdown">${breakdown}<li class="total"><span>Total estimated group cost</span><strong>${formatRange(tier.total)}</strong></li></ul>
+                <button class="budget-confirm-estimate" type="button" data-budget-confirm="${tier.id}" aria-label="Confirm ${tier.name} estimate for the ${plan.name} plan"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Confirm This Estimate</button>
             </article>
         `;
     };
@@ -652,6 +755,19 @@
         };
 
         root.addEventListener('click', event => {
+            const confirmButton = event.target.closest('[data-budget-confirm]');
+            if (confirmButton && latestEstimate) {
+                try {
+                    const tierId = confirmButton.dataset.budgetConfirm;
+                    const payload = createEnquiryPayload(latestEstimate, tierId);
+                    sessionStorage.setItem(ENQUIRY_STORAGE_KEY, JSON.stringify(payload));
+                    window.location.assign(`trip-enquiry.html?plan=${encodeURIComponent(payload.plan.id)}&tier=${encodeURIComponent(tierId)}`);
+                } catch {
+                    const status = result.querySelector('[data-budget-copy-status]');
+                    if (status) status.textContent = 'The estimate could not be prepared. Recalculate the budget and try again.';
+                }
+                return;
+            }
             const counter = event.target.closest('[data-budget-count]');
             if (counter) {
                 const type = counter.dataset.budgetCount;
@@ -847,17 +963,40 @@
         if (!extraBedEstimate.rooms.extraBeds || extraBedEstimate.tiers.value.ranges.childExtraBeds.lower <= 0) failures.push({ issue: 'Child extra-bed charge was not included' });
         if (fullRoomChildEstimate.rooms.childDrivenRooms && fullRoomChildEstimate.tiers.value.ranges.childExtraBeds.lower > 0) failures.push({ issue: 'Child room and extra bed were double-counted' });
         if (cruiseLabel(PLAN_DATA['seven-day']) !== 'Canoe experience' || cruiseLabel(PLAN_DATA['three-day']) !== 'Overnight houseboat' || cruiseLabel(PLAN_DATA['ten-day']) !== 'Day cruise') failures.push({ issue: 'Plan-specific water-experience labels are incorrect' });
-        if (Object.values(PLAN_DATA).some(plan => !plan.days || !plan.nights || !plan.routeIntensity || !plan.transportUnits || !plan.activityUnits || !plan.paidActivities?.length || !plan.accessibilityRelevant)) failures.push({ issue: 'Incomplete plan pricing data' });
+        if (Object.values(PLAN_DATA).some(plan => !plan.name || !plan.route || !plan.pageUrl || !plan.days || !plan.nights || !plan.routeIntensity || !plan.transportUnits || !plan.activityUnits || !plan.paidActivities?.length || !plan.accessibilityRelevant)) failures.push({ issue: 'Incomplete plan pricing data' });
+
+        let enquiryCases = 0;
+        Object.keys(PLAN_DATA).forEach(planId => {
+            const input = planId === 'student'
+                ? { adults: 4, seniors: 0, children: 0, infants: 0, month: 8, roomPreference: 'fewer' }
+                : planId === 'senior'
+                    ? { adults: 0, seniors: 2, children: 0, infants: 0, month: 10, roomPreference: 'seniorShared', assistance: 'private' }
+                    : { adults: 2, seniors: 0, children: 2, childAges: [6, 10], infants: 0, month: 11, roomPreference: 'practical' };
+            const estimate = calculateEstimate(planId, input);
+            TIER_IDS.forEach(tierId => {
+                enquiryCases += 1;
+                try {
+                    const payload = createEnquiryPayload(estimate, tierId);
+                    if (payload.plan.id !== planId || payload.selectedBudget.tierId !== tierId) failures.push({ planId, tierId, issue: 'Enquiry selection mismatch' });
+                    if (payload.selectedBudget.formattedEstimateRange !== formatRange(estimate.tiers[tierId].total)) failures.push({ planId, tierId, issue: 'Enquiry total mismatch' });
+                    if (payload.travellers.totalTravellerCount !== estimate.totalTravellers || !payload.plan.budgetSectionReturnUrl.endsWith(`#budget`)) failures.push({ planId, tierId, issue: 'Incomplete enquiry transfer' });
+                } catch (error) {
+                    failures.push({ planId, tierId, issue: error.message });
+                }
+            });
+        });
 
         const validation = runValidationTests();
         validation.results.filter(result => !result.passed).forEach(result => failures.push({ caseId: result.id, issue: 'Validation case was not blocked' }));
-        return { calculations, validationCases: validation.cases, invariantChecks: 19, passed: calculations + validation.cases + 19 - failures.length, failures };
+        return { calculations, enquiryCases, validationCases: validation.cases, invariantChecks: 19, passed: calculations + enquiryCases + validation.cases + 19 - failures.length, failures };
     };
 
     const testingApi = {
         plans: PLAN_DATA,
         tiers: TIERS,
+        enquiryStorageKey: ENQUIRY_STORAGE_KEY,
         calculate: calculateEstimate,
+        createEnquiryPayload,
         calculateRooms,
         selectVehicle,
         cruiseLabel,
