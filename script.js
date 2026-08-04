@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: ['Are homestays good in Kerala?', 'Should I stay in a homestay?', 'Where can I find village stays?', 'Is Munroe Island good for a homestay?', 'Are homestays suitable for families?'],
             terms: ['homestay', 'village stay', 'local stay', 'stay with a family'],
             text: "Homestays are especially rewarding on Munroe Island, in Wayanad, and around quieter backwater villages. Check recent reviews, room access, meal arrangements, transport pickup, and whether the host can organise local activities.",
-            link: ['destination-islands.html', 'Explore island stays'],
+            link: ['destination-munroe-island.html', 'Explore Munroe Island stays'],
             related: ['munroe', 'wayanad', 'booking']
         },
         {
@@ -1496,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: ['What are the Kadamakkudy Islands?', 'How do I visit Kadamakkudy?', 'Is Kadamakkudy near Kochi?', 'What time should I visit Kadamakkudy?', 'Can I cycle at Kadamakkudy?', 'Is Kadamakkudy included in a plan?'],
             terms: ['kadamakkudy', 'kadamakkudy islands', 'islands near kochi'],
             text: "Kadamakkudy is a cluster of lived-in islands near Kochi with wetlands, fishing scenes, paddy fields, and narrow village roads. Visit early, carry water, travel quietly, and avoid blocking local traffic.",
-            link: ['destination-islands.html', 'Explore Kerala islands'],
+            link: ['destination-kadamakkudy.html', 'Explore Kadamakkudy'],
             related: ['offbeat', 'kochi', 'plan-7']
         },
         {
@@ -1505,7 +1505,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: ['What can I do on Munroe Island?', 'Is Munroe Island worth visiting?', 'How many nights should I stay on Munroe Island?', 'Where can I take a small canoe ride?', 'Is Munroe Island better than a houseboat?', 'Can I stay in a village homestay?'],
             terms: ['munroe island', 'munro island', 'small canoe', 'ashtamudi canals'],
             text: "Munroe Island offers narrow-canal canoe trips, quiet village roads, homestays, and Ashtamudi backwater scenery. Stay one night and arrange the canoe through a reliable local host, with timing adjusted for water and weather.",
-            link: ['destination-islands.html', 'Explore Munroe Island'],
+            link: ['destination-munroe-island.html', 'Explore Munroe Island'],
             related: ['backwater-choice', 'homestays', 'plan-7']
         },
         {
@@ -1514,8 +1514,17 @@ document.addEventListener('DOMContentLoaded', () => {
             questions: ['What is Valiyaparamba?', 'Where are the north Kerala islands?', 'Is Valiyaparamba worth visiting?', 'Can I combine Bekal and Valiyaparamba?', 'How do I reach Valiyaparamba?', 'What can I do near Bekal?'],
             terms: ['valiyaparamba', 'bekal', 'north kerala islands', 'kasaragod backwaters'],
             text: "Valiyaparamba is a quieter north Kerala island-backwater area that pairs well with Bekal Fort and Malabar food. It is best for the 10-day route because reaching Kasaragod from the south takes time.",
-            link: ['destination-islands.html', 'Explore the north Kerala islands'],
+            link: ['destination-valiyaparamba.html', 'Explore Valiyaparamba'],
             related: ['plan-10', 'offbeat', 'transport']
+        },
+        {
+            id: 'poovar',
+            suggestion: 'Poovar',
+            questions: ['What can I do in Poovar?', 'Is Poovar worth visiting?', 'Is Poovar near Kovalam?', 'Can I take a boat ride at Poovar?', 'Does Poovar have a beach?', 'How long should I spend in Poovar?'],
+            terms: ['poovar', 'poovar island', 'neyyar estuary', 'poovar beach', 'poovar boat'],
+            text: "Poovar is a southern estuary where the Neyyar River approaches the Arabian Sea. Allow half or a full day from Kovalam for a mangrove-lined boat journey and sandbar views, with tide, weather and life-jacket arrangements confirmed locally.",
+            link: ['destination-poovar.html', 'Explore Poovar'],
+            related: ['kovalam', 'offbeat', 'beach-safety']
         },
         {
             id: 'offbeat',
