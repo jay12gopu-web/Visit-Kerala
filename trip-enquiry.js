@@ -1,8 +1,7 @@
 (() => {
     const ESTIMATE_STORAGE_KEY = 'visitKeralaSelectedEstimate';
-    const SUCCESS_STORAGE_KEY = 'visitKeralaEnquirySubmitted';
+    const PENDING_STORAGE_KEY = 'visitKeralaEnquiryPending';
     const PREFERENCES_STORAGE_KEY = 'visitKeralaTripPreferences';
-    const FORM_ENDPOINT = 'https://formsubmit.co/ajax/jay12.gopu@gmail.com';
     const PLAN_OPTIONS = {
         'three-day': { name: '3-Day Kochi + Backwaters', pageUrl: 'plan-3-days.html' },
         'five-day': { name: '5-Day Hills + Houseboat', pageUrl: 'plan-5-days.html' },
@@ -146,10 +145,14 @@
     const initialiseSuccessPage = () => {
         const successPage = document.querySelector('[data-enquiry-success]');
         if (!successPage) return false;
-        const confirmed = sessionStorage.getItem(SUCCESS_STORAGE_KEY) === '1';
+        const parameters = new URLSearchParams(window.location.search);
+        const providerRedirect = /^https:\/\/formsubmit\.co(?:\/|$)/i.test(document.referrer);
+        const confirmed = parameters.get('submitted') === '1'
+            && sessionStorage.getItem(PENDING_STORAGE_KEY) === '1'
+            && providerRedirect;
         if (confirmed) {
             sessionStorage.removeItem(ESTIMATE_STORAGE_KEY);
-            sessionStorage.removeItem(SUCCESS_STORAGE_KEY);
+            sessionStorage.removeItem(PENDING_STORAGE_KEY);
             document.title = 'Trip Enquiry Sent | Visit Kerala';
             setText('enquiry-success-kicker', 'Enquiry Received');
             setText('enquiry-success-title', 'Trip Enquiry Sent');
@@ -232,7 +235,6 @@
                 return row;
             }));
             document.getElementById('enquiry-subject').value = `New Visit Kerala Trip Enquiry - ${payload.plan.name} - ${payload.selectedBudget.tierName}`;
-            document.getElementById('enquiry-next').value = new URL('enquiry-success.html?submitted=1', window.location.href).href;
             emptyState.hidden = true;
             summaryContent.hidden = false;
             contactFields.disabled = false;
@@ -321,29 +323,22 @@
             event.currentTarget.querySelector('summary').setAttribute('aria-expanded', String(event.currentTarget.open));
         });
 
-        form.addEventListener('submit', async event => {
-            event.preventDefault();
-            if (submitting || !validateContactForm()) return;
+        form.addEventListener('submit', event => {
+            if (submitting) {
+                event.preventDefault();
+                return;
+            }
+            if (!validateContactForm()) {
+                event.preventDefault();
+                return;
+            }
             submitting = true;
             populateHiddenFields(contactValues());
             submitButton.disabled = true;
             submitButton.setAttribute('aria-busy', 'true');
             submitLabel.textContent = 'Sending Enquiry…';
-            status.textContent = 'Sending your trip enquiry securely…';
-            try {
-                const response = await fetch(FORM_ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-                const result = await response.json().catch(() => ({}));
-                if (!response.ok || ![true, 'true'].includes(result.success)) throw new Error('Submission was not accepted.');
-                sessionStorage.setItem(SUCCESS_STORAGE_KEY, '1');
-                window.location.assign('enquiry-success.html?submitted=1');
-            } catch {
-                submitting = false;
-                submitButton.removeAttribute('aria-busy');
-                submitLabel.textContent = 'Send Trip Enquiry';
-                updateSelectionState();
-                status.textContent = 'Your enquiry could not be sent. Please check your connection and try again.';
-                status.focus?.();
-            }
+            status.textContent = 'Sending your trip enquiry…';
+            sessionStorage.setItem(PENDING_STORAGE_KEY, '1');
         });
 
         if (payload) showPayload(); else showMissingEstimate();
