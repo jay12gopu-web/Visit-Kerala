@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,196 +6,22 @@
     <title>Vacation Plans | Visit Kerala</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="style.css?v=20260804-enquiry1">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%2064%2064%22><rect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%23062217%22/><text x=%2232%22 y=%2246%22 font-size=%2246%22 text-anchor=%22middle%22 fill=%22%23c59d4b%22>%26</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="style.css?v=20260723-3">
 </head>
-<body id="top">
-<nav class="navbar scrolled"><div class="nav-container"><a href="index.html" class="logo"><span class="text-gold">&amp;</span> VISIT KERALA</a><ul class="nav-links" id="primary-navigation"><li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="itineraries.html" class="active" aria-current="page">Plans</a></li><li><a href="map.html">Map</a></li><li><a href="experiences.html">Experiences</a></li><li><a href="travel-info.html">Travel Info</a></li><li><a href="reviews.html">Reviews</a></li></ul><div class="nav-actions"><a href="Visit-Kerala-Travel-Brochure.pdf" download="Visit-Kerala-Travel-Brochure.pdf" class="btn-nav brochure-nav-cta" aria-label="Download Kerala brochure"><i class="fa-solid fa-download" aria-hidden="true"></i><span class="brochure-cta-copy" aria-hidden="true"><span class="brochure-cta-main">Brochure</span><span class="brochure-cta-sub">For Kerala</span></span></a><a href="profile.html" class="profile-link" title="Trip Preferences" aria-label="Open trip preferences"><i class="fa-regular fa-user"></i></a></div><button class="menu-toggle" id="mobile-menu" type="button" aria-label="Open navigation" aria-controls="primary-navigation" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div></nav>
+<body>
+<nav class="navbar scrolled"><div class="nav-container"><a href="index.html" class="logo">VISIT KERALA</a><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="itineraries.html" class="active">Plans</a></li><li><a href="experiences.html">Experiences</a></li><li><a href="travel-info.html">Travel Info</a></li></ul><div class="nav-actions"><a href="plan-7-days.html" class="btn-nav">7-Day Plan</a><a href="profile.html" class="profile-link" title="Profile" aria-label="Open traveller profile"><i class="fa-regular fa-user"></i></a></div><div class="menu-toggle" id="mobile-menu"><i class="fa-solid fa-bars"></i></div></div></nav>
 <header class="page-hero compact-hero"><img src="https://www.keralatourism.org/ktadmin/img/pages/tablet/aqua-tourism-in-alappuzha-1721740960_19f1417aa79c4026d0c1.webp" alt="A houseboat travelling through the Alappuzha backwaters"><div class="hero-overlay"></div><div class="page-hero-content reveal"><span class="hero-subtitle">3 to 10 Days</span><h1 class="hero-title">Kerala Vacation Plans</h1><p class="hero-description">Choose a route, then explore its complete day-by-day schedule, expected budget, possible hotels, travel notes, and downloadable brochure.</p></div></header>
-<main>
-<section class="section-padding trip-finder-section" aria-labelledby="trip-finder-title">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="subtitle">A Route That Fits You</span>
-            <h2 class="title" id="trip-finder-title">Find My Perfect Kerala Plan</h2>
-            <div class="divider"></div>
-            <p class="section-intro">Answer five quick questions to match your time, travel style and priorities with one of our six existing itineraries.</p>
-        </div>
-        <div class="trip-finder reveal" data-trip-finder>
-            <div class="trip-finder-progress" aria-label="Quiz progress">
-                <div class="trip-finder-progress-track"><span data-trip-progress-bar></span></div>
-                <p><span data-trip-step-label>Question 1 of 5</span><strong data-trip-progress-text>20% complete</strong></p>
-            </div>
-            <form class="trip-finder-form" data-trip-form novalidate>
-                <fieldset class="trip-finder-step is-active" data-trip-step="1">
-                    <legend><span>01</span> How many days can you travel?</legend>
-                    <div class="trip-choice-grid trip-choice-grid-days">
-                        <label class="trip-choice"><input type="radio" name="days" value="3" required><span><i class="fa-regular fa-calendar"></i><strong>3 days</strong><small>A short Kerala introduction</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="days" value="5"><span><i class="fa-regular fa-calendar"></i><strong>5 days</strong><small>A focused multi-stop journey</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="days" value="7"><span><i class="fa-regular fa-calendar"></i><strong>7 days</strong><small>Classic sights plus quieter places</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="days" value="10"><span><i class="fa-regular fa-calendar"></i><strong>10 days</strong><small>A deeper north-to-south route</small></span></label>
-                    </div>
-                </fieldset>
-                <fieldset class="trip-finder-step" data-trip-step="2" hidden>
-                    <legend><span>02</span> Who is travelling?</legend>
-                    <div class="trip-choice-grid">
-                        <label class="trip-choice"><input type="radio" name="traveller" value="family" required><span><i class="fa-solid fa-people-roof"></i><strong>Family</strong><small>Adults travelling with children</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="traveller" value="couple"><span><i class="fa-solid fa-user-group"></i><strong>Couple</strong><small>A shared scenic escape</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="traveller" value="students"><span><i class="fa-solid fa-graduation-cap"></i><strong>Friends / Students</strong><small>Social and value-conscious</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="traveller" value="solo"><span><i class="fa-solid fa-person-walking-luggage"></i><strong>Solo</strong><small>Flexible independent travel</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="traveller" value="senior"><span><i class="fa-solid fa-person-cane"></i><strong>Senior Travellers</strong><small>Gentle pacing and fewer changes</small></span></label>
-                    </div>
-                </fieldset>
-                <fieldset class="trip-finder-step" data-trip-step="3" hidden>
-                    <legend><span>03</span> Which experiences matter most?</legend>
-                    <div class="trip-experience-guidance">
-                        <p class="trip-finder-hint">Choose up to three experiences, starting with what matters most.</p>
-                        <span class="trip-experience-count" data-experience-count aria-live="polite">0 of 3 selected</span>
-                    </div>
-                    <div class="trip-choice-grid trip-choice-grid-experiences">
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="hills"><span><i class="fa-solid fa-mountain-sun"></i><strong>Hills</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="backwaters"><span><i class="fa-solid fa-water"></i><strong>Backwaters</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="beaches"><span><i class="fa-solid fa-umbrella-beach"></i><strong>Beaches</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="wildlife"><span><i class="fa-solid fa-binoculars"></i><strong>Wildlife</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="culture"><span><i class="fa-solid fa-masks-theater"></i><strong>Culture</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="food"><span><i class="fa-solid fa-utensils"></i><strong>Food</strong></span></label>
-                        <label class="trip-choice"><input type="checkbox" name="experiences" value="wellness"><span><i class="fa-solid fa-spa"></i><strong>Wellness</strong></span></label>
-                    </div>
-                    <p class="trip-experience-limit" data-experience-limit role="status" aria-live="polite"></p>
-                </fieldset>
-                <fieldset class="trip-finder-step" data-trip-step="4" hidden>
-                    <legend><span>04</span> What pace feels right?</legend>
-                    <div class="trip-choice-grid trip-choice-grid-three">
-                        <label class="trip-choice"><input type="radio" name="pace" value="relaxed" required><span><i class="fa-solid fa-leaf"></i><strong>Relaxed</strong><small>Longer pauses and lighter days</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="pace" value="balanced"><span><i class="fa-solid fa-scale-balanced"></i><strong>Balanced</strong><small>A comfortable mix of activity and rest</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="pace" value="active"><span><i class="fa-solid fa-person-hiking"></i><strong>Active</strong><small>More places and fuller days</small></span></label>
-                    </div>
-                </fieldset>
-                <fieldset class="trip-finder-step" data-trip-step="5" hidden>
-                    <legend><span>05</span> Which travel comfort level suits you?</legend>
-                    <div class="trip-choice-grid trip-choice-grid-three">
-                        <label class="trip-choice"><input type="radio" name="budget" value="value" required><span><i class="fa-solid fa-wallet"></i><strong>Value</strong><small>Simple stays and practical transport</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="budget" value="comfortable"><span><i class="fa-solid fa-bed"></i><strong>Comfortable</strong><small>Better stays and easier transfers</small></span></label>
-                        <label class="trip-choice"><input type="radio" name="budget" value="premium"><span><i class="fa-solid fa-gem"></i><strong>Premium</strong><small>Upgraded stays and private travel</small></span></label>
-                    </div>
-                </fieldset>
-                <p class="trip-finder-error" data-trip-error role="alert"></p>
-                <div class="trip-finder-actions">
-                    <button class="trip-finder-back" type="button" data-trip-back hidden><i class="fa-solid fa-arrow-left"></i> Back</button>
-                    <button class="trip-finder-next" type="button" data-trip-next>Next <i class="fa-solid fa-arrow-right"></i></button>
-                    <button class="trip-finder-submit" type="submit" data-trip-submit hidden>Find my plan <i class="fa-solid fa-wand-magic-sparkles"></i></button>
-                </div>
-            </form>
-            <section class="trip-finder-result" data-trip-result aria-live="polite" tabindex="-1" hidden>
-                <article class="trip-result-primary" aria-labelledby="trip-best-match-name">
-                    <div class="trip-result-heading">
-                        <div>
-                            <span class="trip-result-badge" data-result-badge>Best Match</span>
-                            <span class="trip-result-strength" data-result-strength></span>
-                        </div>
-                        <div class="trip-match-ring" data-result-match-ring role="img" aria-label="Match percentage"><strong data-result-percentage></strong><span>match</span></div>
-                    </div>
-                    <h3 id="trip-best-match-name" data-result-name></h3>
-                    <p class="trip-result-reason" data-result-reason></p>
-                    <p class="trip-result-warning" data-result-warning hidden></p>
-                    <dl class="trip-result-details">
-                        <div><dt><i class="fa-regular fa-calendar" aria-hidden="true"></i> Duration</dt><dd data-result-duration></dd></div>
-                        <div><dt><i class="fa-solid fa-route" aria-hidden="true"></i> Main route</dt><dd data-result-route></dd></div>
-                        <div><dt><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Travel pace</dt><dd data-result-pace></dd></div>
-                        <div><dt><i class="fa-solid fa-wallet" aria-hidden="true"></i> Comfort preference</dt><dd data-result-price></dd></div>
-                    </dl>
-                    <p class="trip-result-price-note" data-result-price-note></p>
-                    <div class="trip-preference-grid">
-                        <section aria-labelledby="matched-preferences-title">
-                            <h4 id="matched-preferences-title"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Matched preferences</h4>
-                            <div class="trip-preference-chips matched" data-result-matched></div>
-                        </section>
-                        <section aria-labelledby="missing-preferences-title">
-                            <h4 id="missing-preferences-title"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Not fully included</h4>
-                            <div class="trip-preference-chips missing" data-result-missing></div>
-                        </section>
-                    </div>
-                    <div class="trip-result-actions">
-                        <a class="primary" data-result-link href="itineraries.html">View Full Plan <i class="fa-solid fa-arrow-right-long"></i></a>
-                        <a data-result-budget-link href="itineraries.html"><i class="fa-solid fa-calculator"></i> Estimate This Plan</a>
-                        <a data-result-map-link href="map.html">View on Map <i class="fa-solid fa-map-location-dot"></i></a>
-                        <button type="button" data-trip-edit><i class="fa-solid fa-pen"></i> Edit Answers</button>
-                        <button type="button" data-trip-reset><i class="fa-solid fa-rotate-left"></i> Try Again</button>
-                    </div>
-                </article>
-                <article class="trip-result-alternative" aria-labelledby="trip-alternative-name">
-                    <div class="trip-alternative-topline"><span>Good Alternative</span><strong data-alternative-percentage></strong></div>
-                    <h4 id="trip-alternative-name" data-alternative-name></h4>
-                    <p data-alternative-reason></p>
-                    <dl><div><dt>Main difference</dt><dd data-alternative-difference></dd></div><div><dt>Budget</dt><dd data-alternative-price></dd></div></dl>
-                    <p class="trip-result-price-note" data-alternative-price-note></p>
-                    <a data-alternative-link href="itineraries.html">View Alternative <i class="fa-solid fa-arrow-right-long"></i></a>
-                </article>
-            </section>
-        </div>
-    </div>
-</section>
-<section class="section-padding"><div class="container plan-stack">
+<main><section class="section-padding"><div class="container plan-stack">
     <a class="plan-card plan-card-link reveal" id="three-day" href="plan-3-days.html" aria-label="Explore the full 3-day Kochi and Backwaters plan"><div class="plan-number">3</div><div><span class="subtitle">Short Vacation</span><h2>3-Day Kochi + Backwaters</h2><p>Best when you have limited time and want Kerala's most recognizable mix: heritage streets and houseboat life.</p><div class="day-route"><span>Day 1</span><p>Arrive Kochi. Fort Kochi, Mattancherry, local cafes, evening Kathakali show.</p><span>Day 2</span><p>Drive to Alappuzha. Board a houseboat through canals, village scenery, and paddy fields.</p><span>Day 3</span><p>Breakfast on the backwaters, return to Kochi, shop for spices and crafts.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 3-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
-    <a class="plan-card plan-card-link reveal" id="five-day" href="plan-5-days.html" aria-label="Explore the full 5-day Munnar, Thekkady and Alappuzha plan"><div class="plan-number">5</div><div><span class="subtitle">Balanced Escape</span><h2>5-Day Munnar, Thekkady &amp; Alappuzha</h2><p>Best for first-time travellers who want hills, wildlife, spices, and a backwater cruise without rushing too hard.</p><div class="day-route"><span>Day 1</span><p>Kochi arrival and heritage walk.</p><span>Day 2</span><p>Munnar tea plantations, viewpoints, and cool highland stay.</p><span>Day 3</span><p>Thekkady or Periyar region for spice plantations and wildlife-style experiences.</p><span>Day 4</span><p>Alappuzha houseboat cruise.</p><span>Day 5</span><p>Return to Kochi for departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 5-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
-    <a class="plan-card plan-card-link featured-plan reveal" id="seven-day" href="plan-7-days.html" aria-label="Explore the full 7-day Classic and Offbeat Kerala plan"><div class="plan-number">7</div><div><span class="subtitle">Recommended Classic + Offbeat</span><h2>7-Day Classic + Offbeat Kerala</h2><p>Best overall option: Kerala's famous hill route with Kadamakkudy and Munroe Island woven into the journey, followed by a Varkala finish.</p><div class="day-route"><span>Days 1-2</span><p>Fort Kochi heritage plus a sunrise visit to Kadamakkudy's island roads and wetlands.</p><span>Days 3-4</span><p>Munnar tea estates, valleys, plantation experiences, and highland viewpoints.</p><span>Day 5</span><p>Thekkady and Periyar for spice gardens, lake country, and soft adventure.</p><span>Day 6</span><p>Munroe Island homestay and a small-canoe journey through narrow village canals.</p><span>Day 7</span><p>Varkala cliff walk, beach or Ayurveda session, then departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 7-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
-    <a class="plan-card plan-card-link reveal" id="ten-day" href="plan-10-days.html" aria-label="Explore the full 10-day Kerala Deep Dive plan"><div class="plan-number">10</div><div><span class="subtitle">Offbeat Deep Dive</span><h2>10-Day Kerala Deep Dive</h2><p>Best for travellers who want the classic hills plus three quieter island experiences across south, central, and north Kerala.</p><div class="day-route"><span>Days 1-3</span><p>Kochi and Kadamakkudy, followed by a Munroe Island canoe and homestay night.</p><span>Days 4-6</span><p>Munnar and Thekkady for hills, tea, spices, and wildlife experiences.</p><span>Days 7-8</span><p>Wayanad forests, waterfalls, plantations, and caves.</p><span>Days 9-10</span><p>Valiyaparamba's island backwaters, Malabar food, and Bekal Fort before departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 10-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
+    <a class="plan-card plan-card-link reveal" id="five-day" href="plan-5-days.html" aria-label="Explore the full 5-day Munnar, Thekkady and Alappuzha plan"><div class="plan-number">5</div><div><span class="subtitle">Balanced Escape</span><h2>5-Day Munnar, Thekkady &amp; Alappuzha</h2><p>Best for first-time travelers who want hills, wildlife, spices, and a backwater cruise without rushing too hard.</p><div class="day-route"><span>Day 1</span><p>Kochi arrival and heritage walk.</p><span>Day 2</span><p>Munnar tea plantations, viewpoints, and cool highland stay.</p><span>Day 3</span><p>Thekkady or Periyar region for spice plantations and wildlife-style experiences.</p><span>Day 4</span><p>Alappuzha houseboat cruise.</p><span>Day 5</span><p>Return to Kochi for departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 5-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
+    <a class="plan-card plan-card-link featured-plan reveal" id="seven-day" href="plan-7-days.html" aria-label="Explore the full 7-day Classic and Offbeat Kerala plan"><div class="plan-number">7</div><div><span class="subtitle">Recommended Classic + Offbeat</span><h2>7-Day Islands, Hills + Coast</h2><p>Best overall option: Kerala's famous hill route with Kadamakkudy and Munroe Island woven into the journey, followed by a Varkala finish.</p><div class="day-route"><span>Days 1-2</span><p>Fort Kochi heritage plus a sunrise visit to Kadamakkudy's island roads and wetlands.</p><span>Days 3-4</span><p>Munnar tea estates, valleys, plantation experiences, and highland viewpoints.</p><span>Day 5</span><p>Thekkady and Periyar for spice gardens, lake country, and soft adventure.</p><span>Day 6</span><p>Munroe Island homestay and a small-canoe journey through narrow village canals.</p><span>Day 7</span><p>Varkala cliff walk, beach or Ayurveda session, then departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 7-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
+    <a class="plan-card plan-card-link reveal" id="ten-day" href="plan-10-days.html" aria-label="Explore the full 10-day North and South Offbeat Kerala plan"><div class="plan-number">10</div><div><span class="subtitle">Offbeat Deep Dive</span><h2>10-Day Kerala North + South</h2><p>Best for travellers who want the classic hills plus three quieter island experiences across south, central, and north Kerala.</p><div class="day-route"><span>Days 1-3</span><p>Kochi and Kadamakkudy, followed by a Munroe Island canoe and homestay night.</p><span>Days 4-6</span><p>Munnar and Thekkady for hills, tea, spices, and wildlife experiences.</p><span>Days 7-8</span><p>Wayanad forests, waterfalls, plantations, and caves.</p><span>Days 9-10</span><p>Valiyaparamba's island backwaters, Malabar food, and Bekal Fort before departure.</p></div><div class="plan-card-features" aria-label="Plan includes"><span><i class="fa-regular fa-map"></i> Daily route</span><span><i class="fa-solid fa-indian-rupee-sign"></i> Budget</span><span><i class="fa-solid fa-hotel"></i> Hotels</span><span><i class="fa-solid fa-file-arrow-down"></i> Brochure</span></div><span class="plan-cta">Explore full 10-day plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
 </div></section>
 <section class="section-padding bg-cream audience-plans-section" aria-labelledby="audience-plans-title"><div class="container"><div class="section-header reveal"><span class="subtitle">5-Day Special Plans</span><h2 class="title" id="audience-plans-title">A Better Pace For Every Traveller</h2><div class="divider"></div><p class="section-intro">Two focused Kerala routes: one keeps student groups active and affordable, while the other reduces hotel changes, stairs, long walks and rushed mornings for senior travellers.</p></div><div class="audience-plan-grid">
-    <a class="audience-plan-card student-plan-card reveal" href="plan-5-days-students.html" aria-label="Explore the full 5-day Kerala plan for students"><div class="audience-plan-image"><img src="https://www.keralatourism.org/ktadmin/img/pages/tablet/munnar-1707133423_2fda65e0bdee7a03a49d.webp" alt="Munnar's green tea hills"><span class="audience-plan-badge"><i class="fa-solid fa-graduation-cap"></i>Students</span></div><div class="audience-plan-content"><span class="subtitle">Social + Budget Friendly</span><h3>5-Day Kerala With Friends</h3><p>Kochi culture, Munnar viewpoints and Alappuzha backwaters with hostels, shared transport and flexible group activities.</p><div class="audience-plan-meta"><span><i class="fa-solid fa-calculator"></i><strong>Personalised estimate</strong> for your group</span><span><i class="fa-solid fa-person-hiking"></i><strong>Active</strong> pace</span><span><i class="fa-solid fa-location-dot"></i><strong>3</strong> bases</span></div><div class="audience-plan-route"><span>Kochi</span><i class="fa-solid fa-arrow-right"></i><span>Munnar</span><i class="fa-solid fa-arrow-right"></i><span>Alappuzha</span></div><span class="plan-cta">Explore student plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
-    <a class="audience-plan-card senior-plan-card reveal" href="plan-5-days-seniors.html" aria-label="Explore the full easy-paced 5-day Kerala plan for senior travellers"><div class="audience-plan-image"><img src="https://www.keralatourism.org/ktadmin/img/pages/tablet/kumarakom-1724149556_b218f24068b6ad3ca5f9.webp" alt="Calm backwaters and greenery at Kumarakom"><span class="audience-plan-badge"><i class="fa-solid fa-person-cane"></i> Senior Travellers</span></div><div class="audience-plan-content"><span class="subtitle">Gentle + Comfortable</span><h3>5-Day Easy-Paced Kerala</h3><p>Two restful bases, private road transfers, short heritage visits and a calm daytime backwater cruise without an overnight boat change.</p><div class="audience-plan-meta"><span><i class="fa-solid fa-calculator"></i><strong>Personalised estimate</strong> for your group</span><span><i class="fa-solid fa-leaf"></i><strong>Gentle</strong> pace</span><span><i class="fa-solid fa-location-dot"></i><strong>2</strong> bases</span></div><div class="audience-plan-route"><span>Kochi</span><i class="fa-solid fa-arrow-right"></i><span>Kumarakom</span><i class="fa-solid fa-arrow-right"></i><span>Kochi</span></div><span class="plan-cta">Explore senior plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
+    <a class="audience-plan-card student-plan-card reveal" href="plan-5-days-students.html" aria-label="Explore the full 5-day Kerala plan for students"><div class="audience-plan-image"><img src="https://www.keralatourism.org/ktadmin/img/pages/tablet/munnar-1707133423_2fda65e0bdee7a03a49d.webp" alt="Munnar's green tea hills"><span class="audience-plan-badge"><i class="fa-solid fa-graduation-cap"></i>Students</span></div><div class="audience-plan-content"><span class="subtitle">Social + Budget Friendly</span><h3>5-Day Kerala With Friends</h3><p>Kochi culture, Munnar viewpoints and Alappuzha backwaters with hostels, shared transport and flexible group activities.</p><div class="audience-plan-meta"><span><i class="fa-solid fa-indian-rupee-sign"></i><strong>From 14k</strong> per student</span><span><i class="fa-solid fa-person-hiking"></i><strong>Active</strong> pace</span><span><i class="fa-solid fa-location-dot"></i><strong>3</strong> bases</span></div><div class="audience-plan-route"><span>Kochi</span><i class="fa-solid fa-arrow-right"></i><span>Munnar</span><i class="fa-solid fa-arrow-right"></i><span>Alappuzha</span></div><span class="plan-cta">Explore student plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
+    <a class="audience-plan-card senior-plan-card reveal" href="plan-5-days-seniors.html" aria-label="Explore the full easy-paced 5-day Kerala plan for senior travellers"><div class="audience-plan-image"><img src="https://www.keralatourism.org/ktadmin/img/pages/tablet/kumarakom-1724149556_b218f24068b6ad3ca5f9.webp" alt="Calm backwaters and greenery at Kumarakom"><span class="audience-plan-badge"><i class="fa-solid fa-person-cane"></i> Senior Travellers</span></div><div class="audience-plan-content"><span class="subtitle">Gentle + Comfortable</span><h3>5-Day Easy-Paced Kerala</h3><p>Two restful bases, private road transfers, short heritage visits and a calm daytime backwater cruise without an overnight boat change.</p><div class="audience-plan-meta"><span><i class="fa-solid fa-indian-rupee-sign"></i><strong>From 34k</strong> per traveller</span><span><i class="fa-solid fa-leaf"></i><strong>Gentle</strong> pace</span><span><i class="fa-solid fa-location-dot"></i><strong>2</strong> bases</span></div><div class="audience-plan-route"><span>Kochi</span><i class="fa-solid fa-arrow-right"></i><span>Kumarakom</span><i class="fa-solid fa-arrow-right"></i><span>Kochi</span></div><span class="plan-cta">Explore senior plan <i class="fa-solid fa-arrow-right-long"></i></span></div></a>
 </div></div></section></main>
-<footer class="site-footer" aria-labelledby="site-footer-heading">
-    <div class="container site-footer-grid">
-        <section class="site-footer-brand">
-            <h2 id="site-footer-heading" class="site-footer-logo-heading"><a href="index.html" class="site-footer-logo" aria-label="Visit Kerala home"><span aria-hidden="true">&amp;</span> VISIT KERALA</a></h2>
-            <p>A student-created Kerala tourism planning project for educational and exhibition purposes. This is not an official Kerala Tourism or booking website.</p>
-            <a href="Visit-Kerala-Travel-Brochure.pdf" download class="footer-brochure-button" aria-label="Download Visit Kerala travel brochure"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Travel Brochure</a>
-        </section>
-        <nav class="site-footer-column" aria-labelledby="footer-explore-heading">
-            <h3 id="footer-explore-heading">Explore</h3>
-            <a href="index.html">Home</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="itineraries.html">Plans</a>
-            <a href="map.html">Interactive Map</a>
-            <a href="experiences.html">Experiences</a>
-            <a href="travel-info.html">Travel Info</a>
-            <a href="reviews.html">Reviews</a>
-        </nav>
-        <nav class="site-footer-column" aria-labelledby="footer-tools-heading">
-            <h3 id="footer-tools-heading">Planning Tools</h3>
-            <a href="itineraries.html#trip-finder-title">Find My Perfect Plan</a>
-            <a href="itineraries.html" title="Choose a plan to estimate its personalised group budget">Personalised Budget Estimator</a>
-            <a href="profile.html">Trip Preferences</a>
-            <a href="plan-5-days-students.html">Student Plan</a>
-            <a href="plan-5-days-seniors.html">Senior-Friendly Plan</a>
-        </nav>
-        <nav class="site-footer-column" aria-labelledby="footer-resources-heading">
-            <h3 id="footer-resources-heading">Official Resources</h3>
-            <a href="https://www.keralatourism.org/" target="_blank" rel="noopener">Kerala Tourism <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-            <a href="https://www.keralatourism.org/destination/" target="_blank" rel="noopener">Official Destinations <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-            <a href="https://www.keralatourism.org/plan-your-itinerary/" target="_blank" rel="noopener">Plan Your Itinerary <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-            <a href="https://112.gov.in/" target="_blank" rel="noopener">Government Emergency Response <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-        </nav>
-    </div>
-    <div class="container site-footer-disclaimer" role="note">
-        <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-        <p>Prices, routes, travel times, public ratings and availability are planning estimates and may change. Verify final details with official sources and service providers.</p>
-    </div>
-    <div class="site-footer-bottom">
-        <div class="container site-footer-bottom-inner">
-            <div class="site-footer-notice">
-                <p>&copy; 2026 Visit Kerala Student Tourism Project</p>
-                <p>Created for educational and exhibition purposes. Not affiliated with or endorsed by Kerala Tourism.</p>
-            </div>
-            <div class="footer-utility-actions">
-                <a href="#top" class="footer-utility-control" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to top</a>
-                <button type="button" class="footer-utility-control footer-copy-link" data-copy-page-link aria-label="Copy this page link"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy Page Link</button>
-                <span class="footer-copy-status" data-copy-page-status role="status" aria-live="polite"></span>
-            </div>
-        </div>
-    </div>
-</footer>
-<script src="script.js?v=20260804-offbeat1"></script>
+<footer><div class="container footer-content"><div class="footer-brand"><a href="index.html" class="logo">VISIT KERALA</a><p class="mt-2">Vacation plans adapted from official Kerala Tourism destination guidance.</p></div><div class="footer-links-wrapper"><div class="footer-column"><h4>Next</h4><a href="destinations.html">Destinations</a><a href="experiences.html">Experiences</a><a href="travel-info.html">Travel Info</a></div></div></div><div class="footer-bottom"><p>&copy; 2026 Visit Kerala concept website.</p></div></footer>
+<script src="script.js?v=20260723-3"></script>
 </body>
 </html>
