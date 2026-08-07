@@ -146,10 +146,8 @@
         const successPage = document.querySelector('[data-enquiry-success]');
         if (!successPage) return false;
         const parameters = new URLSearchParams(window.location.search);
-        const providerRedirect = /^https:\/\/formsubmit\.co(?:\/|$)/i.test(document.referrer);
         const confirmed = parameters.get('submitted') === '1'
-            && sessionStorage.getItem(PENDING_STORAGE_KEY) === '1'
-            && providerRedirect;
+            && sessionStorage.getItem(PENDING_STORAGE_KEY) === '1';
         if (confirmed) {
             sessionStorage.removeItem(ESTIMATE_STORAGE_KEY);
             sessionStorage.removeItem(PENDING_STORAGE_KEY);
