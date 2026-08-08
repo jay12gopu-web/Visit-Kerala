@@ -2786,7 +2786,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 await audioPlayer.play();
             } catch {
                 stopPlaybackState();
-                status.textContent = 'Pronunciation could not be played. Please check your connection and try again.';
+                status.textContent = 'Pronunciation audio unavailable.';
             }
         });
     });
@@ -2799,7 +2799,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     audioPlayer.addEventListener('error', () => {
         stopPlaybackState();
-        status.textContent = 'Pronunciation could not be loaded. Please refresh the page and try again.';
+        status.textContent = 'Pronunciation audio unavailable.';
     });
 
     phrasePanel.addEventListener('toggle', () => {
