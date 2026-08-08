@@ -413,9 +413,13 @@ p {
     display: block;
 }
 
+.hero-title-lead {
+    font-size: 0.82em;
+}
+
 .hero-title-slogan {
     margin-top: 8px;
-    font-size: 0.82em;
+    font-size: 0.86em;
     line-height: 1.14;
 }
 
