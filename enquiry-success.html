@@ -4,15 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trip Enquiry Status | Visit Kerala</title>
-    <meta name="description" content="Trip enquiry status for the Visit Kerala student tourism project.">
+    <meta name="description" content="Confirmation of a Kerala trip enquiry submitted through the Visit Kerala student tourism project.">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><link rel="stylesheet" href="style.css?v=20260807-restored1">
+    <link rel="stylesheet" href="enquiry-success.css?v=20260808-1">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%2064%2064%22><rect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%23062217%22/><text x=%2232%22 y=%2246%22 font-size=%2246%22 text-anchor=%22middle%22 fill=%22%23c59d4b%22>%26</text></svg>">
 </head>
 <body id="top" class="enquiry-success-page" data-enquiry-success>
 <nav class="navbar scrolled"><div class="nav-container"><a href="index.html" class="logo"><span class="text-gold">&amp;</span> VISIT KERALA</a><ul class="nav-links" id="primary-navigation"><li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li><li><a href="itineraries.html">Plans</a></li><li><a href="map.html">Map</a></li><li><a href="experiences.html">Experiences</a></li><li><a href="travel-info.html">Travel Info</a></li><li><a href="reviews.html">Reviews</a></li></ul><div class="nav-actions"><a href="Visit-Kerala-Travel-Brochure.pdf" download="Visit-Kerala-Travel-Brochure.pdf" class="btn-nav brochure-nav-cta" aria-label="Download Kerala brochure"><i class="fa-solid fa-download" aria-hidden="true"></i><span class="brochure-cta-copy" aria-hidden="true"><span class="brochure-cta-main">Brochure</span><span class="brochure-cta-sub">For Kerala</span></span></a><a href="profile.html" class="profile-link" title="Trip Preferences" aria-label="Open trip preferences"><i class="fa-regular fa-user" aria-hidden="true"></i></a></div><button class="menu-toggle" id="mobile-menu" type="button" aria-label="Open navigation" aria-controls="primary-navigation" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div></nav>
-<main class="enquiry-success-main"><section class="enquiry-success-card" aria-live="polite"><span class="enquiry-success-icon"><i class="fa-regular fa-paper-plane" aria-hidden="true"></i></span><span class="subtitle" id="enquiry-success-kicker">Enquiry Status</span><h1 id="enquiry-success-title">Checking your enquiry</h1><p id="enquiry-success-message">Please wait while we confirm the submission status.</p><div class="enquiry-success-actions"><a href="index.html">Return Home</a><a href="itineraries.html">Explore Plans</a><a href="map.html">View Interactive Map</a></div></section></main>
+<main class="enquiry-success-main">
+    <article class="enquiry-success-card">
+        <section class="enquiry-success-intro">
+            <div class="enquiry-success-visual" data-confirmed-only aria-hidden="true">
+                <svg viewBox="0 0 900 420" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <defs>
+                        <linearGradient id="successSky" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#e8d4a8"/>
+                            <stop offset="0.48" stop-color="#b9d5c9"/>
+                            <stop offset="1" stop-color="#6c9f8d"/>
+                        </linearGradient>
+                        <linearGradient id="successWater" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0" stop-color="#2f776d"/>
+                            <stop offset="1" stop-color="#0a4338"/>
+                        </linearGradient>
+                        <filter id="successShadow" x="-30%" y="-30%" width="160%" height="180%">
+                            <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#062217" flood-opacity=".28"/>
+                        </filter>
+                    </defs>
+                    <rect width="900" height="420" fill="url(#successSky)"/>
+                    <circle cx="705" cy="87" r="43" fill="#efd798" opacity=".72"/>
+                    <path d="M0 190C95 147 164 153 244 188C335 228 404 213 493 172C594 126 680 151 756 181C816 205 864 200 900 179V274H0Z" fill="#346b52" opacity=".72"/>
+                    <path d="M0 219C94 191 168 210 247 239C337 271 434 242 517 210C625 169 722 198 803 224C844 237 877 235 900 226V294H0Z" fill="#174b38" opacity=".9"/>
+                    <g class="success-palms">
+                        <path d="M96 229C93 180 87 133 82 92" fill="none" stroke="#163f2d" stroke-width="12" stroke-linecap="round"/>
+                        <g class="success-palm-crown" transform="translate(82 91)">
+                            <path d="M0 0C-23-38-59-51-85-48C-54-18-31-5 0 0Z" fill="#174b38"/>
+                            <path d="M0 0C15-43 42-61 70-64C47-28 29-8 0 0Z" fill="#174b38"/>
+                            <path d="M0 0C-2-45 16-73 39-87C32-46 20-18 0 0Z" fill="#1e5b42"/>
+                            <path d="M0 0C-31-26-64-28-87-18C-54 3-26 8 0 0Z" fill="#1e5b42"/>
+                            <path d="M0 0C28-26 59-29 82-18C53 2 27 8 0 0Z" fill="#174b38"/>
+                        </g>
+                        <path d="M826 241C832 194 842 151 852 112" fill="none" stroke="#163f2d" stroke-width="11" stroke-linecap="round"/>
+                        <g class="success-palm-crown success-palm-crown-right" transform="translate(852 111)">
+                            <path d="M0 0C-22-34-55-45-78-41C-50-17-27-5 0 0Z" fill="#174b38"/>
+                            <path d="M0 0C16-38 42-53 66-54C44-24 27-7 0 0Z" fill="#174b38"/>
+                            <path d="M0 0C-1-40 14-65 35-77C29-41 18-16 0 0Z" fill="#1e5b42"/>
+                            <path d="M0 0C-28-23-57-25-78-16C-49 3-24 8 0 0Z" fill="#1e5b42"/>
+                        </g>
+                    </g>
+                    <path d="M0 258C156 236 256 274 403 257C554 240 686 226 900 264V420H0Z" fill="url(#successWater)"/>
+                    <g fill="none" stroke="#c5d9ce" stroke-linecap="round" opacity=".44">
+                        <path class="success-ripple success-ripple-one" d="M54 305C216 283 333 320 492 299C638 279 748 300 854 286"/>
+                        <path class="success-ripple success-ripple-two" d="M118 354C262 332 368 366 529 347C642 333 728 348 817 337"/>
+                        <path class="success-ripple success-ripple-three" d="M41 392C190 372 307 397 426 382C572 364 692 388 872 366"/>
+                    </g>
+                    <g class="success-houseboat" filter="url(#successShadow)">
+                        <path d="M301 280H595L568 327H343C323 327 309 314 301 280Z" fill="#5c321e"/>
+                        <path d="M334 273C346 220 390 191 449 191H512C552 191 578 220 583 273Z" fill="#d6ad58"/>
+                        <path d="M358 267C368 229 400 208 447 208H510C536 208 554 230 560 267Z" fill="#f1dfb2"/>
+                        <path d="M329 274H588" stroke="#e6c675" stroke-width="10" stroke-linecap="round"/>
+                        <path d="M371 206C400 179 454 166 522 184" fill="none" stroke="#8d6b32" stroke-width="8" stroke-linecap="round"/>
+                        <rect x="391" y="226" width="46" height="32" rx="3" fill="#155040"/>
+                        <rect x="458" y="226" width="46" height="32" rx="3" fill="#155040"/>
+                        <circle cx="550" cy="296" r="7" fill="#e6c675"/>
+                    </g>
+                    <g class="success-check-marker" transform="translate(712 150)">
+                        <path d="M0 35C0 15 16 0 36 0S72 15 72 35C72 61 36 96 36 96S0 61 0 35Z" fill="#c9a24f"/>
+                        <circle cx="36" cy="35" r="23" fill="#fff8e8"/>
+                        <path class="success-check" d="M25 35L33 43L49 27" fill="none" stroke="#0b4a36" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="enquiry-success-copy">
+                <span class="enquiry-success-icon" data-confirmed-only><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                <span class="subtitle" id="enquiry-success-kicker">Enquiry Status</span>
+                <div role="status" aria-live="polite">
+                    <h1 id="enquiry-success-title">Checking your enquiry</h1>
+                    <p id="enquiry-success-message">Please wait while we confirm the submission status.</p>
+                </div>
+                <div class="enquiry-unconfirmed-actions" data-unconfirmed-only hidden>
+                    <a href="itineraries.html#trip-finder-title" class="btn btn-primary">Open Plan Finder <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a href="index.html" class="btn btn-outline">Return Home</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="enquiry-next-steps" data-confirmed-only aria-labelledby="enquiry-next-heading">
+            <div class="enquiry-section-heading">
+                <span class="subtitle">What Happens Next</span>
+                <h2 id="enquiry-next-heading">A calm start to your Kerala journey</h2>
+                <p>Your enquiry has been received. Review the travel ideas below while you continue exploring Kerala.</p>
+            </div>
+            <ol class="enquiry-progress" aria-label="Trip enquiry progress">
+                <li class="is-complete">
+                    <span class="enquiry-progress-marker"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                    <span><strong>Enquiry Received</strong><small>Your trip details were submitted.</small></span>
+                </li>
+                <li>
+                    <span class="enquiry-progress-marker">2</span>
+                    <span><strong>Review</strong><small>Use the project guides to review your route.</small></span>
+                </li>
+                <li>
+                    <span class="enquiry-progress-marker">3</span>
+                    <span><strong>Response</strong><small>Continue planning with verified travel sources.</small></span>
+                </li>
+            </ol>
+        </section>
+
+        <section class="enquiry-keep-exploring" data-confirmed-only aria-labelledby="keep-exploring-heading">
+            <div class="enquiry-section-heading">
+                <span class="subtitle">Explore While You Are Here</span>
+                <h2 id="keep-exploring-heading">Keep Exploring Kerala</h2>
+            </div>
+            <div class="enquiry-explore-grid">
+                <a href="destination-munnar.html" class="enquiry-explore-card">
+                    <img src="68.jpg" alt="Travellers overlooking the tea hills around Munnar" loading="lazy">
+                    <span class="enquiry-explore-overlay"></span>
+                    <span class="enquiry-explore-content"><small>Hill Country</small><strong>Munnar</strong><span>Misty tea hills and mountain views</span><em>Explore Munnar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></em></span>
+                </a>
+                <a href="destination-alappuzha.html" class="enquiry-explore-card">
+                    <img src="munroe-island-canoe.jpg" alt="Visitors travelling by canoe through Kerala's backwaters" loading="lazy">
+                    <span class="enquiry-explore-overlay"></span>
+                    <span class="enquiry-explore-content"><small>Backwaters</small><strong>Alappuzha</strong><span>Slow journeys through Kerala's waterways</span><em>See the Backwaters <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></em></span>
+                </a>
+                <a href="itineraries.html" class="enquiry-explore-card">
+                    <img src="Varkala-Beach.webp" alt="Varkala's red cliffs and sandy coastline" loading="lazy">
+                    <span class="enquiry-explore-overlay"></span>
+                    <span class="enquiry-explore-content"><small>Plan Your Journey</small><strong>Travel Plans</strong><span>Find an itinerary that fits your trip</span><em>View Travel Plans <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></em></span>
+                </a>
+            </div>
+        </section>
+
+        <div class="enquiry-success-final-actions" data-confirmed-only>
+            <a href="destinations.html" class="btn btn-primary">Explore Kerala <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <a href="index.html" class="btn btn-outline">Return Home</a>
+        </div>
+    </article>
+</main>
 <footer class="site-footer" aria-labelledby="site-footer-heading">
     <div class="container site-footer-grid"><section class="site-footer-brand"><h2 id="site-footer-heading" class="site-footer-logo-heading"><a href="index.html" class="site-footer-logo" aria-label="Visit Kerala home"><span aria-hidden="true">&amp;</span> VISIT KERALA</a></h2><p>A student-created Kerala tourism planning project for educational and exhibition purposes. This is not an official Kerala Tourism or booking website.</p><a href="Visit-Kerala-Travel-Brochure.pdf" download class="footer-brochure-button" aria-label="Download Visit Kerala travel brochure"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download Travel Brochure</a></section>
         <nav class="site-footer-column" aria-labelledby="footer-explore-heading"><h3 id="footer-explore-heading">Explore</h3><a href="index.html">Home</a><a href="destinations.html">Destinations</a><a href="itineraries.html">Plans</a><a href="map.html">Interactive Map</a><a href="experiences.html">Experiences</a><a href="travel-info.html">Travel Info</a><a href="reviews.html">Reviews</a></nav>
@@ -21,6 +151,6 @@
     <div class="container site-footer-disclaimer" role="note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><p>Prices, routes, travel times, public ratings and availability are planning estimates and may change. Verify final details with official sources and service providers.</p></div>
     <div class="site-footer-bottom"><div class="container site-footer-bottom-inner"><div class="site-footer-notice"><p>&copy; 2026 Visit Kerala Student Tourism Project</p><p>Created for educational and exhibition purposes. Not affiliated with or endorsed by Kerala Tourism.</p></div><div class="footer-utility-actions"><a href="#top" class="footer-utility-control" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Back to top</a><button type="button" class="footer-utility-control footer-copy-link" data-copy-page-link aria-label="Copy this page link"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy Page Link</button><span class="footer-copy-status" data-copy-page-status role="status" aria-live="polite"></span></div></div></div>
 </footer>
-<script src="script.js?v=20260807-restored1"></script><script src="trip-enquiry.js?v=20260807-restored1"></script>
+<script src="script.js?v=20260807-restored1"></script><script src="trip-enquiry.js?v=20260807-restored1"></script><script src="enquiry-success.js?v=20260808-1"></script>
 </body>
 </html>
