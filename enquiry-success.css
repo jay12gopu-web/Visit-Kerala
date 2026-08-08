@@ -2,6 +2,33 @@
     background: #f7f4ec;
 }
 
+.enquiry-success-page .navbar,
+.enquiry-success-page .navbar.scrolled {
+    height: 70px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(10, 50, 34, 0.96);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+}
+
+.enquiry-success-page .logo,
+.enquiry-success-page .nav-links a,
+.enquiry-success-page .btn-nav,
+.enquiry-success-page .profile-link,
+.enquiry-success-page .menu-toggle {
+    color: #fff;
+}
+
+.enquiry-success-page .nav-links a {
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.enquiry-success-page .nav-links a:hover,
+.enquiry-success-page .nav-links a:focus-visible,
+.enquiry-success-page .nav-links a.active {
+    color: #d9b565;
+}
+
 .enquiry-success-page [hidden] {
     display: none !important;
 }
