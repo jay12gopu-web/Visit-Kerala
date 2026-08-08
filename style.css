@@ -400,9 +400,23 @@ p {
 }
 
 .hero-title {
-    font-size: 4.5rem;
-    line-height: 1.15;
+    max-width: 900px;
+    margin-inline: auto;
+    font-size: 4rem;
+    line-height: 1.08;
     margin-bottom: 24px;
+    text-wrap: balance;
+}
+
+.hero-title-lead,
+.hero-title-slogan {
+    display: block;
+}
+
+.hero-title-slogan {
+    margin-top: 8px;
+    font-size: 0.82em;
+    line-height: 1.14;
 }
 
 .hero-description {
@@ -1686,7 +1700,8 @@ p {
     .day-route { grid-template-columns: 1fr; gap: 8px; }
     .left-title, .place-row h2, .plan-card h2, .experience-card h2, .info-panel h2 { font-size: 1.65rem; }
     .package-card { min-height: auto; }
-    .hero-title { font-size: 2.65rem; }
+    .hero-title { font-size: 2.4rem; line-height: 1.12; }
+    .hero-title-slogan { margin-top: 6px; }
     .hero-description { font-size: 1rem; }
     .plan-detail-hero { min-height: 62vh; padding: 135px 24px 80px; }
     .route-overview { grid-template-columns: 1fr; gap: 28px; }
